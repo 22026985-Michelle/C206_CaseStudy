@@ -13,14 +13,23 @@
  * @author Michelle Armirola, 22026985
 */
 public class Administrator {
+	private int adId;
 	private String adUsername;
   	private String adEmail;
   	private String adPassword;
   	
 	public Administrator(String adUsername, String adEmail, String adPassword) {
+		this.adId = 0;
 		this.adUsername = adUsername;
 		this.adEmail = adEmail;
 		this.adPassword = adPassword;
+	}
+	
+	public boolean login(String username, String password) {
+		if (username.equals(getAdUsername()) && password.equals(getAdPassword())) {
+			return true;
+		}
+		return false;
 	}
 
 	public String getAdUsername() {
@@ -45,6 +54,10 @@ public class Administrator {
 
 	public void setAdPassword(String adPassword) {
 		this.adPassword = adPassword;
+	}
+
+	public int getAdId() {
+		return adId;
 	}
   	
   	
