@@ -130,20 +130,20 @@ public class C206_CaseStudy {
 				// Manage Quotes (Edmund)
 				//Option 1: View Quotes
 				//Option 2: Reply Quotes
-				System.out.println("Test 1");
+
 				
 			} else if (sPOption == 2) {
 				// Manage Appoinment (Cheryl)
 				//Option 1: View Appoinment
 				//Option 2: Add Appoinment
 				//Option 3: Delete Appoinment
-				System.out.println("Test 2");
+
 			} else if (sPOption == 3) {
 				// Manage Appoinment Request (Xavier)
 				//Option 1: View Appoinment Request
 				//Option 2: Add Appoinment Request
 				//Option 3: Delete Appoinment Request
-				System.out.println("Test 3");
+
 			} else if (sPOption == 4) {
 				System.out.println("Logging out.");
 			}
