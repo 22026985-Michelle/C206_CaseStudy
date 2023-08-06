@@ -48,8 +48,9 @@ public class C206_CaseStudy {
 						}
 					} else if (opt1 == 3) { // Login as Service Provider (Iz)
 						ServiceProvider loginAccSP = getLoginAccountSP(sPList);
+						if (loginAccSP != null) {
 						runsP(loginAccSP);
-
+						}
 					} else if (opt1 == 4) {
 						System.out.println("Bye!");
 					} else {
