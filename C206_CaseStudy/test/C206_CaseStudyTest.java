@@ -71,9 +71,9 @@ public class C206_CaseStudyTest {
 		
 		//test if the expected output string same as the list of Users retrieved from the C206_CaseStudy	
 		allUsers = C206_CaseStudy.retrieveAllUsers(userList);
-		testOutput = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","1", "Addy", "addy@gmail.com", 
+		testOutput = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","3", "Addy", "addy@gmail.com", 
 				"password1", "95846024", "Choa Chu Kang St 21 Blk 398 #05-28 ");
-		testOutput += String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","2", "Billy", "billy@yahoo.com", 
+		testOutput += String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","4", "Billy", "billy@yahoo.com", 
 				"password2", "86957206", "Hougang St 3 Blk 864 #21-09 ");
 	
 		assertEquals("Test that ViewAllUserslist", testOutput, allUsers);
@@ -83,7 +83,7 @@ public class C206_CaseStudyTest {
 	@Test
 	public void testDeleteUser() {
 		// Redirect System.in for testing input
-	    ByteArrayInputStream inputStream = new ByteArrayInputStream("Y\n".getBytes());
+	    ByteArrayInputStream inputStream = new ByteArrayInputStream("Y\nY\n".getBytes());
 	    System.setIn(inputStream);
 	    
 	    // Ensure there is a valid User ArrayList to delete from
@@ -106,7 +106,7 @@ public class C206_CaseStudyTest {
 	    assertEquals("Test that User ArrayList size is 1 after deletion", 1, userList.size());
 
 	    // Get the expected output after deleting the User
-	    String expectedOutput = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","2" ,"Billy", 
+	    String expectedOutput = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n","8" ,"Billy", 
 	            "billy@yahoo.com", "password2", "86957206", "Hougang St 3 Blk 864 #21-09 ");
 
 	    // Retrieve all Users from the list
@@ -127,8 +127,8 @@ public class C206_CaseStudyTest {
 		a1 = null;
 		a2 = null;
 		a3 = null;
-		userList = null;
-		adminList = null;
+		userList.clear(); // Clear the list to reset the state
+	    adminList.clear(); // Clear the list to reset the state
 	}
 
 }
