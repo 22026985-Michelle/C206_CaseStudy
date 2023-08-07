@@ -40,6 +40,8 @@ public class C206_CaseStudyTest {
 		userList = new ArrayList<User>();
 		adminList =  new ArrayList<Administrator>();
 	}
+	
+	
 
 	@After
 	public void tearDown() throws Exception {

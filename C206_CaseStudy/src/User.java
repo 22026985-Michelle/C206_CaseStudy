@@ -91,8 +91,4 @@ public class User {
 	public int getUrId() {
 		return urId;
 	}
-	
-	
-	
-	
 }

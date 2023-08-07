@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+
+
 public class C206_CaseStudy {
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
@@ -9,13 +11,10 @@ public class C206_CaseStudy {
 
 		userList.add(new User("Addy", "addy@gmail.com", "password1", "95846024", "Choa Chu Kang St 21 Blk 398 #05-28"));
 		userList.add(new User("Billy", "billy@yahoo.com", "password2", "86957206", "Hougang St 3 Blk 864 #21-09"));
-		userList.add(new User("Celine", "celine@yahoo.com", "password3", "95726174",
-				"Tampines 53 Pan Pacific Drive #11-35"));
-		userList.add(new User("Daniel", "daniel@yahoo.com", "password4", "82910569",
-				"Sengkang St 54 Rochester Drive #09-08"));
-		userList.add(
-				new User("Emilly", "emilly@gmail.com", "password5", "92847563", "Bukit Timah St 18 Waterway #09-08"));
-		adminList.add(new Administrator("robert", "robert@gmail.com", "p"/* "adpassword1" */));
+		userList.add(new User("Celine", "celine@yahoo.com", "password3", "95726174", "Tampines 53 Pan Pacific Drive #11-35"));
+		userList.add(new User("Daniel", "daniel@yahoo.com", "password4", "82910569", "Sengkang St 54 Rochester Drive #09-08"));
+		userList.add(new User("Emilly", "emilly@gmail.com", "password5", "92847563", "Bukit Timah St 18 Waterway #09-08"));
+		adminList.add(new Administrator("robert", "robert@gmail.com", "p"/*"adpassword1"*/));
 		adminList.add(new Administrator("thomas", "thomas@gmail.com", "adpassword2"));
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		sPList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1",
@@ -34,8 +33,10 @@ public class C206_CaseStudy {
 			if (option == 1) {
 
 				while (option != 4) {
+					
 					loginMenu();
 					opt1 = Helper.readInt("Enter an option > ");
+					
 					if (opt1 == 1) {
 						User loginAccUser = getLoginAccountUser(userList);
 						if (loginAccUser != null) {
@@ -52,7 +53,8 @@ public class C206_CaseStudy {
 						runsP(loginAccSP);
 						}
 					} else if (opt1 == 4) {
-						System.out.println("Bye!");
+						System.out.println("Returning to main menu...");
+						break;
 					} else {
 						System.out.println("Invalid option");
 					}
@@ -106,14 +108,23 @@ public class C206_CaseStudy {
 			} else if (memberOption == 2) {
 				// Search for a user
 				int opt = Helper.readInt("Search by 1. Username or 2. ID? > ");
-				if (opt == 1) {
+				if (opt==1) {
 					searchUsernameUser(userList);
-				} else {
+				}
+				else {
 					searchIdUser(userList);
 				}
 			} else if (memberOption == 3) {
 				// Delete a user
-				deleteUser(userList);
+				int opt1 = Helper.readInt("Delete by 1. Username or 2. ID? > ");
+				if (opt1==1) {
+					String ur = inputUserDeleteUsername();
+					C206_CaseStudy.deleteUserByUsername(userList, ur);
+				}
+				else {
+					int ur = inputUserDeleteId();
+					C206_CaseStudy.deleteUserById(userList, ur);
+				}
 			} else if (memberOption == 4) {
 				System.out.println("Logging out.");
 			}
@@ -173,38 +184,42 @@ public class C206_CaseStudy {
 	}
 
 	private static User getLoginAccountUser(ArrayList<User> userList) {
-		User loginAcc = null;
-		String inputUsername = Helper.readString("Username > ");
-		String inputPassword = Helper.readString("Password > ");
+	    User loginAcc = null;
+	    String inputUsername = Helper.readString("Username > ");
+	    String inputPassword = Helper.readString("Password > ");
+	    
+	    for (User ur : userList) {
+	        if (ur.login(inputUsername, inputPassword) == true) {
+	            loginAcc = ur;
+	            break;
+	        }
+	        
+	    }
 
-		for (User ur : userList) {
-			if (ur.login(inputUsername, inputPassword) == true) {
-				loginAcc = ur;
-				break;
-			} else {
-				System.out.println("Invalid username or password!");
-				break;
-			}
-		}
-		return loginAcc;
+	    if (loginAcc == null) {
+	        System.out.println("Invalid username or password!");
+	    }
+	    
+	    return loginAcc;
 	}
 
 	private static Administrator getLoginAccountAdmin(ArrayList<Administrator> adminList) {
 		Administrator loginAcc = null;
 		String inputUsername = Helper.readString("Username > ");
 		String inputPassword = Helper.readString("Password > ");
-
+		
 		for (Administrator ad : adminList) {
-			if (ad.login(inputUsername, inputPassword) == true) {
+			if (ad.login(inputUsername, inputPassword)==true) {
 				loginAcc = ad;
-				break;
-			} else {
-				System.out.println("Invalid username or password!");
 				break;
 			}
 		}
+		if (loginAcc == null) {
+			System.out.println("Invalid username or password!");
+		}
 		return loginAcc;
 	}
+	
 
 	private static ServiceProvider getLoginAccountSP(ArrayList<ServiceProvider> sPList) {
 		ServiceProvider loginAcc = null;
@@ -243,7 +258,7 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader("WELCOME BACK, ADMIN");
 		System.out.println("1. View all users");
 		System.out.println("2. Search for a user by username or id");
-		System.out.println("3. Delete a user");
+		System.out.println("3. Delete a user by username or id");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 
@@ -287,8 +302,7 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 	}
 
-	// ================================= Option 1 View (CRUD - Read)
-	// ========================================
+	// ================================= Option 1 View (CRUD - Read) ========================================
 
 	// ========================= Option 1 View Users =========================
 	public static String retrieveAllUsers(ArrayList<User> userList) {
@@ -301,8 +315,6 @@ public class C206_CaseStudy {
 		return output;
 	}
 	
-	
-
 	public static void viewAllUsers(ArrayList<User> userList) {
 		C206_CaseStudy.setHeader("USER LIST");
 		if (userList.isEmpty()) {
@@ -316,8 +328,7 @@ public class C206_CaseStudy {
 	}
 	
 
-	// ================================= Option 2 Add (CRUD -
-	// Create)=================================
+	// ================================= Option 2 Add (CRUD - Create)=================================
 
 	// ========================= Option 2 Add User =============================
 	public static User inputUser() {
@@ -339,11 +350,10 @@ public class C206_CaseStudy {
 				return;
 		}
 		userList.add(ur);
-		System.out.println("Registration successful!");
+		System.out.println("\nRegistration successful!");
 
 	}
-	// ================================= Option 3 Loan (CURD-
-	// Update)=================================
+	// ================================= Option 3 Loan (CURD - Update)=================================
 
 	// ========================= Option 3 Delete User =========================
 	public static boolean searchUsernameUser(ArrayList<User> userList) {
@@ -392,37 +402,79 @@ public class C206_CaseStudy {
 		return success;
 	}
 
-	public static void deleteUser(ArrayList<User> userList) {
-		boolean success = false;
-		boolean success1 = false;
+	// ================================= Option 3 Delete (CURD- Update)=================================
+	
+	// ========================= Option 3 Delete User =========================
+		
+	public static String inputUserDeleteUsername() {
 		viewAllUsers(userList);
-
-		int id = Helper.readInt("Enter the ID user to delete > ");
-		id--;
-		for (User ur : userList) {
-			if (id == ur.getUrId()) {
-				String option = String.format(Helper.readString("Delete user %d? (Y/N) > "), ur.getUrId());
-				if (option.equalsIgnoreCase("Y")) {
-					String confirm = String.format(Helper.readString("Confirm deletion of user %d? (Y/N) > "),
-							ur.getUrId());
-					if (confirm.equalsIgnoreCase("Y")) {
-						userList.remove(ur.getUrId());
-						System.out.println("\nUser successfully deleted!");
-						success = true;
-
-					}
-				}
-				success1 = true;
-			}
-
-		}
-		if (success == false) {
-			System.out.println("Deletion aborted.");
-		}
-		if (success1 == false) {
-			System.out.println("Invalid user!");
-		}
-
+		
+		String username = Helper.readString("Enter username > ");
+		return username;
+	}
+	
+	public static void deleteUserByUsername(ArrayList<User> userList, String userName) {
+		for (int i = 0; i < userList.size(); i++) {
+	        User user = userList.get(i);
+	        if (user.getUrUsername().equals(userName)) {
+	            String option = Helper.readString("Delete user " + userName + "? (Y/N) > ");
+	            if (option.equalsIgnoreCase("Y")) {
+	                String opt = Helper.readString("Confirm deletion of user " + userName + "? (Y/N) > ");
+	                if (opt.equalsIgnoreCase("Y")) {
+	                    userList.remove(i);
+	                    System.out.println("User with Username " + userName + " deleted successfully.");
+	                } else if (opt.equalsIgnoreCase("N")) {
+	                    System.out.println("Deletion aborted.");
+	                } else {
+	                    System.out.println("Invalid input. Deletion aborted.");
+	                }
+	                return;
+	            } else if (option.equalsIgnoreCase("N")) {
+	                System.out.println("Deletion aborted.");
+	                return;
+	            } else {
+	                System.out.println("Invalid input. Deletion aborted.");
+	                return;
+	            }
+	        }
+	    }
+	    System.out.println("User with username " + userName + " not found.");
+    	return;
+	}
+	
+	public static int inputUserDeleteId() {
+		viewAllUsers(userList);
+		
+		int id = Helper.readInt("Enter the ID of the user to delete > ");
+		return id;
+	}
+	
+	public static void deleteUserById(ArrayList<User> userList, int id) {
+	    for (int i = 0; i < userList.size(); i++) {
+	        User user = userList.get(i);
+	        if (user.getUrId() == id) {
+	            String option = Helper.readString("Delete user " + id + "? (Y/N) > ");
+	            if (option.equalsIgnoreCase("Y")) {
+	                String opt = Helper.readString("Confirm deletion of user " + id + "? (Y/N) > ");
+	                if (opt.equalsIgnoreCase("Y")) {
+	                    userList.remove(i);
+	                    System.out.println("User with ID " + id + " deleted successfully.");
+	                } else if (opt.equalsIgnoreCase("N")) {
+	                    System.out.println("Deletion aborted.");
+	                } else {
+	                    System.out.println("Invalid input. Deletion aborted.");
+	                }
+	                return;
+	            } else if (option.equalsIgnoreCase("N")) {
+	                System.out.println("Deletion aborted.");
+	                return;
+	            } else {
+	                System.out.println("Invalid input. Deletion aborted.");
+	                return;
+	            }
+	        }
+	    }
+	    System.out.println("User with id " + id + " not found.");
 	}
 
 }
