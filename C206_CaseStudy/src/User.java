@@ -34,7 +34,7 @@ public class User {
 	public String toString() {
 		
 		// Write your codes here
-		String userInfo = String.format("%-5s %-10s %-20s %-10s %-16s %-20s",
+		String userInfo = String.format("%-5s %-10s %-35s %-20s %-16s %-20s",
 				urId,
 				urUsername,
 				urEmail, 

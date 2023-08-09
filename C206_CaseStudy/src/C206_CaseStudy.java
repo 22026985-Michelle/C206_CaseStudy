@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 
-
 public class C206_CaseStudy {
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
@@ -169,7 +168,6 @@ public class C206_CaseStudy {
 				// Create a new User account
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
-				System.out.println("User added");
 			} else if (memberOption == 3) {
 				System.out.println("Returning to main menu...");
 			}
@@ -313,7 +311,7 @@ public class C206_CaseStudy {
 		if (userList.isEmpty()) {
 			System.out.println("No users available");
 		} else {
-			String output = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
+			String output = String.format("%-5s %-10s %-35s %-20s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
 					"CONTACT NUMBER", "ADDRESS");
 			output += retrieveAllUsers(userList);
 			System.out.println(output);
@@ -324,7 +322,7 @@ public class C206_CaseStudy {
 	// ================================= Option 2 Add (CRUD - Create)=================================
 
 	// ========================= Option 2 Add User ============================= (Michelle)
-	public static User inputUser() {
+	/*public static User inputUser() {
 		String username = Helper.readString("Enter username > ");
 		String email = Helper.readString("Enter email address > ");
 		String password = Helper.readString("Enter password > ");
@@ -333,25 +331,109 @@ public class C206_CaseStudy {
 
 		User ur = new User(username, email, password, contactNum, address);
 		return ur;
-	}
+	}*/
+	public static User inputUser() {
+	    User ur;
 
+	    String username;
+	    do {
+	        username = Helper.readString("Enter username > ");
+	        if (!isUsernameUnique(userList, username)) {
+	            System.out.println("Username " + username + " is already taken. Please choose a different username.\n");
+	        }
+	    } while (!isUsernameUnique(userList, username));
+
+	    String email = Helper.readString("Enter email address > ");
+
+	    String password;
+	    do {
+	        password = Helper.readString("Enter password > ");
+	        if (!isStrongPassword(password)) {
+	            System.out.println("Password is not strong enough. Please choose a stronger password.");
+	            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
+	        }
+	    } while (!isStrongPassword(password));
+
+	    String contactNum;
+	    do {
+	        contactNum = Helper.readString("Enter contact number > ");
+	        if (!isContactNumUnique(userList, contactNum)) {
+	            System.out.println("Contact number " + contactNum + " is already registered.\n");
+	        }
+	    } while (!isContactNumUnique(userList, contactNum));
+
+	    String address = Helper.readString("Enter address > ");
+
+	    ur = new User(username, email, password, contactNum, address);
+	    return ur;
+	}
+	
 	public static void addUser(ArrayList<User> userList, User ur) {
 		User user;
 		for (int i = 0; i < userList.size(); i++) {
 			user = userList.get(i);
-			if (user.getUrUsername().equalsIgnoreCase(ur.getUrUsername()))
+			if (user.getUrUsername().equals(ur.getUrUsername()))
 				return;
 		}
 		userList.add(ur);
 		System.out.println("\nRegistration successful!");
 
 	}
-	// ================================= Option 3 Loan (CURD - Update)=================================
+	
+	public static boolean isUsernameUnique(ArrayList<User> userList, String username) {
+	    for (User user : userList) {
+	        if (user.getUrUsername().equalsIgnoreCase(username)) {
+	            return false; // Username is not unique
+	        }
+	    }
+	    return true; // Username is unique
+	}
 
-	// ========================= Option 3 Delete User ========================= (Michelle)
+	public static boolean isContactNumUnique(ArrayList<User> userList, String contactNum) {
+	    for (User user : userList) {
+	        if (user.getUrContactNum().equals(contactNum)) {
+	            return false; // Contact number is not unique
+	        }
+	    }
+	    return true; // Contact number is unique
+	}
+
+	public static boolean isStrongPassword(String password) {
+	    // Define password strength criteria
+	    int minLength = 8; // Minimum length of the password
+	    boolean hasUppercase = false; // Whether the password has at least one uppercase letter
+	    boolean hasLowercase = false; // Whether the password has at least one lowercase letter
+	    boolean hasDigit = false; // Whether the password has at least one digit
+	    boolean hasSpecialChar = false; // Whether the password has at least one special character
+
+	    // Check password length
+	    if (password.length() < minLength) {
+	        return false;
+	    }
+
+	    // Check for character types
+	    for (char ch : password.toCharArray()) {
+	        if (Character.isUpperCase(ch)) {
+	            hasUppercase = true;
+	        } else if (Character.isLowerCase(ch)) {
+	            hasLowercase = true;
+	        } else if (Character.isDigit(ch)) {
+	            hasDigit = true;
+	        } else {
+	            hasSpecialChar = true;
+	        }
+	    }
+
+	    // Check if all criteria are met
+	    return hasUppercase && hasLowercase && hasDigit && hasSpecialChar;
+	}
+
+	// ================================= Option 3 Search =================================
+
+	// ========================= Option 3 Search User ========================= (Michelle)
 	public static boolean searchUsernameUser(ArrayList<User> userList) {
 		boolean successUN = false;
-		String output = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
+		String output = String.format("%-5s %-10s %-35s %-20s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
 				"CONTACT NUM", "ADDRESS");
 		String username = Helper.readString("Enter username > ");
 
@@ -374,7 +456,7 @@ public class C206_CaseStudy {
 
 	public static boolean searchIdUser(ArrayList<User> userList) {
 		boolean success = false;
-		String output = String.format("%-5s %-10s %-20s %-10s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
+		String output = String.format("%-5s %-10s %-35s %-20s %-16s %-20s\n", "ID", "USERNAME", "EMAIL", "PASSWORD",
 				"CONTACT NUM", "ADDRESS");
 		int id = Helper.readInt("Enter the ID of user > ");
 
@@ -395,7 +477,7 @@ public class C206_CaseStudy {
 		return success;
 	}
 
-	// ================================= Option 3 Delete (CURD- Update)=================================
+	// ================================= Option 3 Delete (CRUD- Deletes)=================================
 	
 	// ========================= Option 3 Delete User ========================= (Michelle)
 	
