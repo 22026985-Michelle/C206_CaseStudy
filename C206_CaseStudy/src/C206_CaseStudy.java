@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class C206_CaseStudy {
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
-	private static ArrayList<ServiceProvider> sPList = new ArrayList<ServiceProvider>();
+	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
 
 	public static void main(String[] args) {
 
@@ -16,10 +16,8 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("robert", "robert@gmail.com", "p"/*"adpassword1"*/));
 		adminList.add(new Administrator("thomas", "thomas@gmail.com", "adpassword2"));
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
-		sPList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1",
-				"Renovation Description A"));
-		sPList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2",
-				"Renovation Description B"));
+		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A"));
+		serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B"));
 
 		int option = 0;
 		int opt1 = 0;
@@ -47,7 +45,7 @@ public class C206_CaseStudy {
 							runAdmin(loginAccAdmin);
 						}
 					} else if (opt1 == 3) { // Login as Service Provider (Iz)
-						ServiceProvider loginAccSP = getLoginAccountSP(sPList);
+						ServiceProvider loginAccSP = getLoginAccountServiceProvider(serviceProviderList);
 						if (loginAccSP != null) {
 						runsP(loginAccSP);
 						}
@@ -97,7 +95,7 @@ public class C206_CaseStudy {
 	private static void runAdmin(Administrator loginAcc) {
 		int memberOption = -1;
 
-		while (memberOption != 4) {
+		while (memberOption != 7) {
 			adminMenu();
 			memberOption = Helper.readInt("Enter choice > ");
 
@@ -117,7 +115,17 @@ public class C206_CaseStudy {
 			    // Delete a user
 		        User userToDelete = inputUserToDelete(userList);
 		        C206_CaseStudy.deleteUser(userList, userToDelete);
-			} else if (memberOption == 4) {
+			} else if (memberOption == 4) { //View all service providers
+				viewAllServiceProviders(serviceProviderList);
+				
+			}else if (memberOption == 5) { //Add service providers
+				ServiceProvider SP = inputServiceProvider();
+				C206_CaseStudy.addServiceProvider(serviceProviderList, SP);
+				System.out.println("Service Provider added");
+				
+			}else if (memberOption == 6) { //delete service providers
+				
+			}else if (memberOption == 7) {
 				System.out.println("Logging out.");
 			}
 		}
@@ -212,15 +220,15 @@ public class C206_CaseStudy {
 	}
 	
 
-	private static ServiceProvider getLoginAccountSP(ArrayList<ServiceProvider> sPList) {
+	private static ServiceProvider getLoginAccountServiceProvider(ArrayList<ServiceProvider> serviceProviderList) {
 		ServiceProvider loginAcc = null;
 		String inputUsername = Helper.readString("Username > ");
 		String inputPassword = Helper.readString("Password > ");
-		for (ServiceProvider sp : sPList) {
+		for (ServiceProvider sp : serviceProviderList) {
 			if (sp.login(inputUsername, inputPassword) == true) {
 				loginAcc = sp;
 				break;
-			} else {
+			} else {	
 				System.out.println("Invalid username or password!");
 				break;
 			}
@@ -533,4 +541,50 @@ public class C206_CaseStudy {
 	        System.out.println("User not found.");
 	    }
 	}
+	// ================================= Option 4 View (CRUD - Read) ========================================
+
+	// =============================== Option 4 View Service Providers ====================================== (Izdihar)
+		public static String retrieveAllServcieProviders(ArrayList<ServiceProvider> serviceProviderList) {
+			String output = "";
+			for (int i = 0; i < serviceProviderList.size(); i++) {
+				output += String.format("%-84s \n", serviceProviderList.get(i).toString());
+			}
+			return output;
+		}
+		
+		public static void viewAllServiceProviders(ArrayList<ServiceProvider> serviceProviderList) {
+			C206_CaseStudy.setHeader("SERVICE PROVIDER LIST");
+			if (serviceProviderList.isEmpty()) {
+				System.out.println("No Service Provider available");
+			} else {
+				String output = String.format("%-5s %-20s %-30s %-15s %-20s\n", "ID", "SP NAME", "EMAIL", "PASSWORD", "DESCRIPTION");
+				output += retrieveAllServcieProviders(serviceProviderList);
+				System.out.println(output);
+			}
+		}
+		
+	// ================================= Option 5 Add (CRUD - Create)=================================
+
+	// ======================================= Option 5 Add User ===================================== (Izdihar)
+		public static ServiceProvider inputServiceProvider() {
+			String username = Helper.readString("Enter username > ");
+			String email = Helper.readString("Enter email address > ");
+			String password = Helper.readString("Enter password > ");
+			String description = Helper.readString("Enter service description > ");
+
+			ServiceProvider SP = new ServiceProvider(username, email, password, description);
+			return SP;
+		}
+
+		public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
+			ServiceProvider serviceProvider;
+			for (int i = 0; i < serviceProviderList.size(); i++) {
+				serviceProvider = serviceProviderList.get(i);
+				if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
+					return;
+			}
+			serviceProviderList.add(SP);
+			System.out.println("\nRegistration successful!");
+
+		}
 }
