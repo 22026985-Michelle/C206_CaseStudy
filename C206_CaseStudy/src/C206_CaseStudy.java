@@ -2,6 +2,46 @@ import java.util.ArrayList;
 
 
 public class C206_CaseStudy {
+	
+	
+	/**
+	 * 
+	 */
+	private static final int VISITOR_OPTION_CREATE_USER = 2;
+	/**
+	 * 
+	 */
+	private static final int VISITOR_OPTION_QUIT = 3;
+	/**
+	 * 
+	 */
+	private static final int ADMIN_OPTION_DELETE_USER = 3;
+	/**
+	 * 
+	 */
+	private static final int ADMIN_OPTION_SEARCH_USER = 2;
+	/**
+	 * 
+	 */
+	private static final int ADMIN_OPTION_VIEW_USERS = 1;
+	/**
+	 * 
+	 */
+	private static final int ADMIN_OPTION_QUIT = 7;
+	/**
+	 * 
+	 */
+	private static final int USER_OPTION_ADD_USER = 2;
+	/**
+	 * 
+	 */
+	private static final int USER_OPTION_QUIT = 4;
+	private static final int LOGIN_OPTION_ADMINISTRATOR = 2;
+	private static final int MAINMENU_OPTION_LOGIN = 1;
+	private static final int LOGIN_OPTION_USER = 1;
+	private static final int LOGIN_OPTION_QUIT = 4;
+	private static final int MAINMENU_OPTION_VISITOR = 2;
+	private static final int MAINMENU_OPTION_QUIT = 3;
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
 	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
@@ -22,24 +62,24 @@ public class C206_CaseStudy {
 		int option = 0;
 		int opt1 = 0;
 
-		while (option != 3) {
+		while (option != MAINMENU_OPTION_QUIT) {
 
 			mainMenu();
 			option = Helper.readInt("Enter an option > ");
 
-			if (option == 1) {
+			if (option == MAINMENU_OPTION_LOGIN) {
 
-				while (option != 4) {
+				while (option != LOGIN_OPTION_QUIT) {
 					
 					loginMenu();
 					opt1 = Helper.readInt("Enter an option > ");
 					
-					if (opt1 == 1) {
+					if (opt1 == LOGIN_OPTION_USER) {
 						User loginAccUser = getLoginAccountUser(userList);
 						if (loginAccUser != null) {
 							runUser(loginAccUser);
 						}
-					} else if (opt1 == 2) {
+					} else if (opt1 == LOGIN_OPTION_ADMINISTRATOR) {
 						Administrator loginAccAdmin = getLoginAccountAdmin(adminList);
 						if (loginAccAdmin != null) {
 							runAdmin(loginAccAdmin);
@@ -49,7 +89,7 @@ public class C206_CaseStudy {
 						if (loginAccSP != null) {
 							runServiceProvider(loginAccSP);
 						}
-					} else if (opt1 == 4) {
+					} else if (opt1 == LOGIN_OPTION_QUIT) {
 						System.out.println("Returning to main menu...");
 						break;
 					} else {
@@ -57,9 +97,9 @@ public class C206_CaseStudy {
 					}
 				}
 
-			} else if (option == 2) {
+			} else if (option == MAINMENU_OPTION_VISITOR) {
 				runVisitor();
-			} else if (option == 3) {
+			} else if (option == MAINMENU_OPTION_QUIT) {
 				System.out.println("Bye!");
 			} else {
 				System.out.println("Invalid option");
@@ -71,22 +111,22 @@ public class C206_CaseStudy {
 	private static void runUser(User loginAcc) {
 		int memberOption = -1;
 
-		while (memberOption != 4) {
+		while (memberOption != USER_OPTION_QUIT) {
 			userMenu();
 			memberOption = Helper.readInt("Enter choice > ");
 
 			if (memberOption == 1) {
-				// View renovation services
+				// View renovation services (Thiha)
 
-			} else if (memberOption == 2) {
+			} else if (memberOption == USER_OPTION_ADD_USER) {
 				// Create a new User account
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
 				System.out.println("User added");
 			} else if (memberOption == 3) {
-				// Request quote
+				// Request quote (Edmund)
 
-			} else if (memberOption == 4) {
+			} else if (memberOption == USER_OPTION_QUIT) {
 				System.out.println("Logging out.");
 			}
 		}
@@ -95,14 +135,14 @@ public class C206_CaseStudy {
 	private static void runAdmin(Administrator loginAcc) {
 		int memberOption = -1;
 
-		while (memberOption != 7) {
+		while (memberOption != ADMIN_OPTION_QUIT) {
 			adminMenu();
 			memberOption = Helper.readInt("Enter choice > ");
 
-			if (memberOption == 1) {
+			if (memberOption == ADMIN_OPTION_VIEW_USERS) {
 				// View users
 				viewAllUsers(userList);
-			} else if (memberOption == 2) {
+			} else if (memberOption == ADMIN_OPTION_SEARCH_USER) {
 				// Search for a user
 				int opt = Helper.readInt("Search by 1. Username or 2. ID? > ");
 				if (opt==1) {
@@ -111,7 +151,7 @@ public class C206_CaseStudy {
 				else {
 					searchIdUser(userList);
 				}
-			} else if (memberOption == 3) {
+			} else if (memberOption == ADMIN_OPTION_DELETE_USER) {
 			    // Delete a user
 		        User userToDelete = inputUserToDelete(userList);
 		        C206_CaseStudy.deleteUser(userList, userToDelete);
@@ -164,18 +204,18 @@ public class C206_CaseStudy {
 	private static void runVisitor() {
 		int memberOption = -1;
 
-		while (memberOption != 3) {
+		while (memberOption != VISITOR_OPTION_QUIT) {
 			visitorMenu();
 			memberOption = Helper.readInt("Enter choice > ");
 
 			if (memberOption == 1) {
-				// View renovation services
+				// View renovation services (Thiha)
 
-			} else if (memberOption == 2) {
+			} else if (memberOption == VISITOR_OPTION_CREATE_USER) {
 				// Create a new User account
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
-			} else if (memberOption == 3) {
+			} else if (memberOption == VISITOR_OPTION_QUIT) {
 				System.out.println("Returning to main menu...");
 			}
 		}
