@@ -25,6 +25,7 @@ public class C206_CaseStudy {
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
 	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
 	private static ArrayList<Request> quoteList = new ArrayList<Request>();
+	private static ArrayList<Request> requestList = new ArrayList<Request>();
 	private static int loggedUrID = 0; // Keep track of which user is logged in
 	private static int loggedSpID = 0; // Keep track of which service provider is logged in
 
@@ -174,6 +175,7 @@ public class C206_CaseStudy {
 
 			} else if (serviceproviderOption == 3) {
 				// Manage Appoinment Request (Xavier)
+				runRequest();
 				//Option 1: View Appoinment Request
 				//Option 2: Add Appoinment Request
 				//Option 3: Delete Appoinment Request
@@ -184,6 +186,32 @@ public class C206_CaseStudy {
 		}
 	}
 
+	private static void runRequest() {
+		
+		int requestOption = -1;
+
+		while (requestOption != 4) {
+		    requestMenu();
+		    requestOption = Helper.readInt("Enter choice > ");
+
+		    if (requestOption == 1) {
+				C206_CaseStudy.addRequest(serviceProviderList, requestList);
+		    }
+		    
+		    else if (requestOption == 2) {
+		    	viewAllRequests(requestList);
+		    }
+
+		    else if (requestOption == 3) {
+		       
+		    }
+		    
+		    else if (requestOption == 4) {
+				System.out.println("Exiting request menu...");
+		    }
+		}
+	}
+	
 	private static void runVisitor() {
 		int memberOption = -1;
 
@@ -300,8 +328,8 @@ public class C206_CaseStudy {
 	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
 		System.out.println("1. Manage Quotes");
-		System.out.println("2. Manage Appoinment"); 
-		System.out.println("3. Manage Appoinment Request");
+		System.out.println("2. Manage Appointment"); 
+		System.out.println("3. Manage Appointment Request");
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
 
@@ -316,6 +344,16 @@ public class C206_CaseStudy {
 		Helper.line(80, "-");
 
 	}
+	
+	// Managing Appointment Requests
+	public static void requestMenu() {
+		C206_CaseStudy.setHeader("MANAGE APPOINTMENT REQUESTS");
+		System.out.println("1. Add New Appointment Request");
+		System.out.println("2. View Appointment Requests");
+		System.out.println("3. Delete Appointment Request");
+		System.out.println("4. Quit");
+		Helper.line(80, "-");
+    }
 
 	public static void setHeader(String header) {
 		Helper.line(80, "-");
@@ -624,6 +662,65 @@ public class C206_CaseStudy {
 					reqList.add(quote);
 					System.out.println("Quote succesfully added");
 				}
+			}
+		}
+		
+		// ================================= Option 1 Add (CRUD - Create)=================================
+
+		// ========================= Option 1 Add Appointment Request ============================= (Xavier)
+		
+		public static void addRequest(ArrayList<ServiceProvider> spList, ArrayList<Request> requestList) {
+			boolean flag = false;
+			
+			while(!flag) {
+				
+				int spID = Helper.readInt("Enter Service Provider ID > ");
+				
+				for (ServiceProvider sp: spList) {
+					
+					if (spID == sp.getSpId()) {
+						  flag = true;
+					}
+				}
+	
+				if (flag) {
+					String newRequest = Helper.readString("Enter Date (dd/MM/yyyy format) > ");
+					LocalDate requestDate = LocalDate.parse(newRequest, dtFormat);
+					String serviceType = Helper.readString("Enter renovation service type > ");
+					String details = Helper.readString("Enter details for enquired renovation service request > ");
+					
+					Request request = new Request(loggedUrID, spID, requestDate, serviceType, details);
+					requestList.add(request);
+					System.out.println("Request succesfully added");
+				}
+			}
+		}
+		
+		// ================================= Option 2 View (CRUD - Read) ========================================
+
+		// ========================= Option 2 View Appointment Requests ========================= (Xavier)
+		
+		public static String retrieveAllRequests(ArrayList<Request> requestList) {
+			String output = "";
+
+			for (int i = 0; i < requestList.size(); i++) {
+
+				output += String.format("%-84s \n", requestList.get(i).toString());
+			}
+			return output;
+		}
+		
+		public static void viewAllRequests(ArrayList<Request> requestList) {
+			C206_CaseStudy.setHeader("APPOINTMENT REQUEST LIST");
+			if (requestList.isEmpty()) {
+				System.out.println("No requests available");
+			} 
+			
+			else {
+				String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+	                      "TIME SLOT", "SERVICE", "DETAILS");
+				output += retrieveAllRequests(requestList);
+				System.out.println(output);
 			}
 		}
 }

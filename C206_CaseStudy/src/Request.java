@@ -16,6 +16,19 @@ public class Request {
 		this.requestService = requestService;
 		this.requestDetails = requestDetails;
 	}
+	
+    public String toString() {
+		
+		// Write your codes here
+		String requestInfo = String.format("%-10s %-25s %-15s %-25s %-16s\n",
+				reqUrID,
+				reqSpID,
+				requestTimeSlot, 
+				requestService,
+				requestDetails);
+		
+		return requestInfo;
+	}
 
 	public String getRequestDetails() {
 		return requestDetails;
