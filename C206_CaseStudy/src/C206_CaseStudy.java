@@ -3,38 +3,14 @@ import java.util.ArrayList;
 
 public class C206_CaseStudy {
 	
-	
-	/**
-	 * 
-	 */
+	private static final int ADMIN_OPTION_SEARCH_USER_USERNAME = 1;
 	private static final int VISITOR_OPTION_CREATE_USER = 2;
-	/**
-	 * 
-	 */
 	private static final int VISITOR_OPTION_QUIT = 3;
-	/**
-	 * 
-	 */
 	private static final int ADMIN_OPTION_DELETE_USER = 3;
-	/**
-	 * 
-	 */
 	private static final int ADMIN_OPTION_SEARCH_USER = 2;
-	/**
-	 * 
-	 */
 	private static final int ADMIN_OPTION_VIEW_USERS = 1;
-	/**
-	 * 
-	 */
 	private static final int ADMIN_OPTION_QUIT = 7;
-	/**
-	 * 
-	 */
 	private static final int USER_OPTION_ADD_USER = 2;
-	/**
-	 * 
-	 */
 	private static final int USER_OPTION_QUIT = 4;
 	private static final int LOGIN_OPTION_ADMINISTRATOR = 2;
 	private static final int MAINMENU_OPTION_LOGIN = 1;
@@ -122,7 +98,6 @@ public class C206_CaseStudy {
 				// Create a new User account
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
-				System.out.println("User added");
 			} else if (memberOption == 3) {
 				// Request quote (Edmund)
 
@@ -145,7 +120,7 @@ public class C206_CaseStudy {
 			} else if (memberOption == ADMIN_OPTION_SEARCH_USER) {
 				// Search for a user
 				int opt = Helper.readInt("Search by 1. Username or 2. ID? > ");
-				if (opt==1) {
+				if (opt==ADMIN_OPTION_SEARCH_USER_USERNAME) {
 					searchUsernameUser(userList);
 				}
 				else {
@@ -231,13 +206,10 @@ public class C206_CaseStudy {
 	            loginAcc = ur;
 	            break;
 	        }
-	        
 	    }
-
 	    if (loginAcc == null) {
 	        System.out.println("Invalid username or password!");
 	    }
-	    
 	    return loginAcc;
 	}
 
@@ -292,18 +264,18 @@ public class C206_CaseStudy {
 	}
 
 	// Log in as Administrator
-		public static void adminMenu() {
-			C206_CaseStudy.setHeader("WELCOME BACK, ADMIN");
-			System.out.println("1. View all users");
-			System.out.println("2. Search for a user by username or id");
-			System.out.println("3. Delete a user by username or id");
-			System.out.println("4. View all Service Providers");
-			System.out.println("5. Add a Service Provider");
-			System.out.println("6. Delete a Service Provider");
-			System.out.println("7. Quit");
-			Helper.line(80, "-");
+	public static void adminMenu() {
+		C206_CaseStudy.setHeader("WELCOME BACK, ADMIN");
+		System.out.println("1. View all users");
+		System.out.println("2. Search for a user by username or id");
+		System.out.println("3. Delete a user by username or id");
+		System.out.println("4. View all Service Providers");
+		System.out.println("5. Add a Service Provider");
+		System.out.println("6. Delete a Service Provider");
+		System.out.println("7. Quit");
+		Helper.line(80, "-");
 
-		}
+	}
 
 	// Log in as User
 	public static void userMenu() {
@@ -351,7 +323,7 @@ public class C206_CaseStudy {
 
 		for (int i = 0; i < userList.size(); i++) {
 
-			output += String.format("%-84s \n", userList.get(i).toString());
+			output += String.format("%-84s\n", userList.get(i).toString());
 		}
 		return output;
 	}
@@ -372,16 +344,6 @@ public class C206_CaseStudy {
 	// ================================= Option 2 Add (CRUD - Create)=================================
 
 	// ========================= Option 2 Add User ============================= (Michelle)
-	/*public static User inputUser() {
-		String username = Helper.readString("Enter username > ");
-		String email = Helper.readString("Enter email address > ");
-		String password = Helper.readString("Enter password > ");
-		String contactNum = Helper.readString("Enter contact number > ");
-		String address = Helper.readString("Enter address > ");
-
-		User ur = new User(username, email, password, contactNum, address);
-		return ur;
-	}*/
 	public static User inputUser() {
 	    User ur;
 
