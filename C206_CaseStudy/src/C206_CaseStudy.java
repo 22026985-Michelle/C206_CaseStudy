@@ -1,5 +1,7 @@
 import java.util.ArrayList;
-
+import java.util.Locale;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class C206_CaseStudy {
 	
@@ -18,9 +20,13 @@ public class C206_CaseStudy {
 	private static final int LOGIN_OPTION_QUIT = 4;
 	private static final int MAINMENU_OPTION_VISITOR = 2;
 	private static final int MAINMENU_OPTION_QUIT = 3;
+	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH); // Date time format
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
 	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
+	private static ArrayList<Request> quoteList = new ArrayList<Request>();
+	private static int loggedUrID = 0; // Keep track of which user is logged in
+	private static int loggedSpID = 0; // Keep track of which service provider is logged in
 
 	public static void main(String[] args) {
 
@@ -54,6 +60,7 @@ public class C206_CaseStudy {
 						User loginAccUser = getLoginAccountUser(userList);
 						if (loginAccUser != null) {
 							runUser(loginAccUser);
+							loggedUrID = loginAccUser.getUrId();
 						}
 					} else if (opt1 == LOGIN_OPTION_ADMINISTRATOR) {
 						Administrator loginAccAdmin = getLoginAccountAdmin(adminList);
@@ -64,6 +71,7 @@ public class C206_CaseStudy {
 						ServiceProvider loginAccSP = getLoginAccountServiceProvider(serviceProviderList);
 						if (loginAccSP != null) {
 							runServiceProvider(loginAccSP);
+							loggedSpID = loginAccSP.getSpId();
 						}
 					} else if (opt1 == LOGIN_OPTION_QUIT) {
 						System.out.println("Returning to main menu...");
@@ -100,7 +108,7 @@ public class C206_CaseStudy {
 				C206_CaseStudy.addUser(userList, ur);
 			} else if (memberOption == 3) {
 				// Request quote (Edmund)
-
+				addQuote(serviceProviderList, quoteList);
 			} else if (memberOption == USER_OPTION_QUIT) {
 				System.out.println("Logging out.");
 			}
@@ -592,5 +600,30 @@ public class C206_CaseStudy {
 			serviceProviderList.add(SP);
 			System.out.println("\nRegistration successful!");
 
+		}
+		
+		// ======================================= Option 5 Add Quote ===================================== (Edmund)
+
+		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Request> reqList) {
+			boolean flag = false;
+			while(!flag) {
+				int serviceID = Helper.readInt("Input Service ID > ");
+				for (ServiceProvider sp: spList) {
+					if(serviceID == sp.getSpId()) {
+						flag = true;
+					}
+				}
+	
+				if(flag) {
+					String date = Helper.readString("Input Date (dd/MM/yyyy) > ");
+					LocalDate cvDate = LocalDate.parse(date, dtFormat);
+					String serviceType = Helper.readString("Input service type > ");
+					String details = Helper.readString("Input details > ");
+					
+					Request quote = new Request(loggedUrID,serviceID, cvDate, serviceType, details);
+					reqList.add(quote);
+					System.out.println("Quote succesfully added");
+				}
+			}
 		}
 }
