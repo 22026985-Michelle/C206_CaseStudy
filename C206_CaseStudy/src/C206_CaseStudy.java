@@ -47,7 +47,7 @@ public class C206_CaseStudy {
 					} else if (opt1 == 3) { // Login as Service Provider (Iz)
 						ServiceProvider loginAccSP = getLoginAccountServiceProvider(serviceProviderList);
 						if (loginAccSP != null) {
-						runsP(loginAccSP);
+							runServiceProvider(loginAccSP);
 						}
 					} else if (opt1 == 4) {
 						System.out.println("Returning to main menu...");
@@ -131,32 +131,31 @@ public class C206_CaseStudy {
 		}
 	}
 	
-	private static void runsP(ServiceProvider loginAcc) {
-		int sPOption = -1;
+	private static void runServiceProvider(ServiceProvider loginAcc) {
+		int serviceproviderOption = -1;
 
-		while (sPOption != 4) {
-			sPMenu();
-			sPOption = Helper.readInt("Enter choice > ");
+		while (serviceproviderOption != 4) {
+			serviceProviderMenu();
+			serviceproviderOption = Helper.readInt("Enter choice > ");
 
-			if (sPOption == 1) {
+			if (serviceproviderOption == 1) {
 				// Manage Quotes (Edmund)
 				//Option 1: View Quotes
 				//Option 2: Reply Quotes
-
 				
-			} else if (sPOption == 2) {
+			} else if (serviceproviderOption == 2) {
 				// Manage Appoinment (Cheryl)
 				//Option 1: View Appoinment
 				//Option 2: Add Appoinment
 				//Option 3: Delete Appoinment
 
-			} else if (sPOption == 3) {
+			} else if (serviceproviderOption == 3) {
 				// Manage Appoinment Request (Xavier)
 				//Option 1: View Appoinment Request
 				//Option 2: Add Appoinment Request
 				//Option 3: Delete Appoinment Request
 
-			} else if (sPOption == 4) {
+			} else if (serviceproviderOption == 4) {
 				System.out.println("Logging out.");
 			}
 		}
@@ -222,7 +221,7 @@ public class C206_CaseStudy {
 
 	private static ServiceProvider getLoginAccountServiceProvider(ArrayList<ServiceProvider> serviceProviderList) {
 		ServiceProvider loginAcc = null;
-		String inputUsername = Helper.readString("Username > ");
+		String inputUsername = Helper.readString("Name > ");
 		String inputPassword = Helper.readString("Password > ");
 		for (ServiceProvider sp : serviceProviderList) {
 			if (sp.login(inputUsername, inputPassword) == true) {
@@ -253,15 +252,18 @@ public class C206_CaseStudy {
 	}
 
 	// Log in as Administrator
-	public static void adminMenu() {
-		C206_CaseStudy.setHeader("WELCOME BACK, ADMIN");
-		System.out.println("1. View all users");
-		System.out.println("2. Search for a user by username or id");
-		System.out.println("3. Delete a user by username or id");
-		System.out.println("4. Quit");
-		Helper.line(80, "-");
+		public static void adminMenu() {
+			C206_CaseStudy.setHeader("WELCOME BACK, ADMIN");
+			System.out.println("1. View all users");
+			System.out.println("2. Search for a user by username or id");
+			System.out.println("3. Delete a user by username or id");
+			System.out.println("4. View all Service Providers");
+			System.out.println("5. Add a Service Provider");
+			System.out.println("6. Delete a Service Provider");
+			System.out.println("7. Quit");
+			Helper.line(80, "-");
 
-	}
+		}
 
 	// Log in as User
 	public static void userMenu() {
@@ -275,7 +277,7 @@ public class C206_CaseStudy {
 	}
 	
 	// Log in as Service Provider
-	public static void sPMenu() {
+	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
 		System.out.println("1. Manage Quotes");
 		System.out.println("2. Manage Appoinment"); 
@@ -416,6 +418,8 @@ public class C206_CaseStudy {
 
 	    // Check password length
 	    if (password.length() < minLength) {
+	        return false;
+	    }if (password.length()==0) {
 	        return false;
 	    }
 
