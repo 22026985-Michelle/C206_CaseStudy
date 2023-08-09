@@ -1,49 +1,48 @@
+import java.time.LocalDate;
 
 public class Request {
 
-	private static int nextRequestId = 1; // Static variable to keep track of the next ID
-    private int requestId;
-	private String requestTimeSlot;
+	private int reqUrID;
+	private int reqSpID;
+	private LocalDate requestTimeSlot;
 	private String requestService;
 	private String requestDetails;
 	
-	
-	public Request(String requestId, String requestTimeSlot, String requestService, String requestDetails) {
-		this.requestId = nextRequestId; // Assign the current nextRequestId value to RequestId
-        nextRequestId++; // Increment nextRequestId for the next user
+	public Request(int reqUrID, int reqSpID, LocalDate requestTimeSlot, String requestService, String requestDetails) {
+		super();
+		this.reqUrID = reqUrID;
+		this.reqSpID = reqSpID;
 		this.requestTimeSlot = requestTimeSlot;
 		this.requestService = requestService;
 		this.requestDetails = requestDetails;
 	}
-	
-	public int getRequestId() {
-		return requestId;
+
+	public String getRequestDetails() {
+		return requestDetails;
 	}
-	
-	
-	
-	public String getRequestTimeSlot() {
+
+	public void setRequestDetails(String requestDetails) {
+		this.requestDetails = requestDetails;
+	}
+
+	public int getReqUrID() {
+		return reqUrID;
+	}
+
+	public int getReqSpID() {
+		return reqSpID;
+	}
+
+	public LocalDate getRequestTimeSlot() {
 		return requestTimeSlot;
 	}
-	
-	public void setRequestTimeSlot(String requestTimeSlot) {
-		this.requestTimeSlot = requestTimeSlot;
-	}
-	
+
 	public String getRequestService() {
 		return requestService;
 	}
 	
-	public void setRequestService(String requestService) {
-		this.requestService = requestService;
-	}
+
 	
-	public String getRequestDetails() {
-		return requestDetails;
-	}
-	
-	public void setRequestDetails(String requestDetails) {
-		this.requestDetails = requestDetails;
-	}
+
 	
 }
