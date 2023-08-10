@@ -1,19 +1,28 @@
 
 public class Quote {
-	private int reqUrID;
-	private int reqSpID;
+	private static int nextQuoteId = 0;
+	private int quoteId;
+	private int quoteUrID;
+	private int quoteSpID;
 	private String quoteService;
 	private String quoteDetails;
 	private double quoteAmount;
 	private boolean quoteCheck;
 	
 	public Quote(int reqUrID, int reqSpID, String quoteService, String quoteDetails, double quoteAmount) {
-		this.reqUrID = reqUrID;
-		this.reqSpID = reqSpID;
+		this.quoteId = nextQuoteId;
+		this.quoteUrID = reqUrID;
+		this.quoteSpID = reqSpID;
 		this.quoteService = quoteService;
 		this.quoteDetails = quoteDetails;
 		this.quoteAmount = quoteAmount;
 		this.quoteCheck = false;
+		
+		nextQuoteId++;
+	}
+	
+	public int getQuoteId() {
+		return quoteId;
 	}
 
 	public String getQuoteService() {
@@ -48,12 +57,12 @@ public class Quote {
 		this.quoteCheck = quoteCheck;
 	}
 
-	public int getReqUrID() {
-		return reqUrID;
+	public int GetQuoteUrID() {
+		return quoteUrID;
 	}
 
-	public int getReqSpID() {
-		return reqSpID;
+	public int getQuoteSpID() {
+		return quoteSpID;
 	}
 
 	

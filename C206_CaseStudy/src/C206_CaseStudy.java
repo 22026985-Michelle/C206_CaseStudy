@@ -13,7 +13,7 @@ public class C206_CaseStudy {
 	private static final int ADMIN_OPTION_VIEW_USERS = 1;
 	private static final int ADMIN_OPTION_QUIT = 7;
 	private static final int USER_OPTION_ADD_USER = 2;
-	private static final int USER_OPTION_QUIT = 6;
+	private static final int USER_OPTION_QUIT = 7;
 	private static final int LOGIN_OPTION_ADMINISTRATOR = 2;
 	private static final int MAINMENU_OPTION_LOGIN = 1;
 	private static final int LOGIN_OPTION_USER = 1;
@@ -114,8 +114,11 @@ public class C206_CaseStudy {
 				addQuote(serviceProviderList, quoteList, serviceList);
 			} else if (memberOption == 4){
 				// View quote
-				viewQuote(quoteList);
+				viewQuote(quoteList, loggedUrID);
 			}else if (memberOption == 5){
+				// Delete quote 
+				deleteQuote(quoteList, loggedUrID);
+				}else if (memberOption == 6){
 				// View appointment (Create user view for appointments)
 				
 			}else if (memberOption == USER_OPTION_QUIT) {
@@ -776,15 +779,45 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 5 View Quote ===================================== (Edmund)
 		
-		public static void viewQuote(ArrayList<Quote> quoteList) {
+		public static void viewQuote(ArrayList<Quote> quoteList, int loggedUr) {
 			String output = String.format("%-7s %-7s %-13s %-30s %-7s\n", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT");
+			int check = 0;
+
 			if(!quoteList.isEmpty()) {
 				for(Quote q: quoteList) {
-					output += String.format("%-7d %-7d %-13s %-30s %-7.2f\n", q.getReqUrID(),q.getReqSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount());
+					if(q.GetQuoteUrID() == loggedUr) {
+						output += String.format("%-7d %-7d %-13s %-30s %-7.2f\n", q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount());
+						check++;
+					}else if(check == 0) {
+						System.out.println("No quotes created by you");
+					}
 				}
 				System.out.println(output);
 			}else {
 				System.out.println("No Quotes");
+			}
+		}
+		
+		// ======================================= Option 6 Delete Quote ===================================== (Edmund)
+		public static void deleteQuote(ArrayList<Quote> quoteList, int loggedUr) {
+			if(!quoteList.isEmpty()) {
+				String output = String.format("%-5s %-7s %-7s %-13s %-30s %-7s\n", "ID", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT");
+				for(Quote q: quoteList) {
+					output += String.format("%-5d %-7d %-7d %-13s %-30s %-7.2f\n", q.getQuoteId(),q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount());
+				}
+				System.out.println(output);
+				int quoteID = Helper.readInt("Insert quote ID you wish to delete > ");
+				int check = 0;
+				for(Quote q: quoteList) {
+					if(q.getQuoteId() == quoteID) {
+						quoteList.remove(q);
+						check++;
+					}else if (check == 0) {
+						System.out.println("No quote ID of " + quoteID + " was found");
+					}
+				}
+			}else {
+				System.out.println("There are no quotes that have been created by you");
 			}
 		}
 		
