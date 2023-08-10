@@ -168,38 +168,32 @@ public class C206_CaseStudy {
 	private static void runServiceProvider(ServiceProvider loginAcc) {
 		int serviceproviderOption = -1;
 
-		while (serviceproviderOption != 7) {
+		while (serviceproviderOption != 6) {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
-			if (serviceproviderOption == 1) {
-				// Manage Quotes (Edmund)
-				//Option 1: View Quotes
-				//Option 2: Reply Quotes
-				
-			} else if (serviceproviderOption == 2) {
+		   	} if (serviceproviderOption == 1) {
 				// Manage Appoinment (Cheryl)
 				//Option 1: View Appoinment
 				//Option 2: Add Appoinment
 				//Option 3: Delete Appoinment
 
-			} else if (serviceproviderOption == 3) {
+			} else if (serviceproviderOption == 2) {
 				// Manage Appoinment Request (Xavier)
 				runRequest();
 				//Option 1: View Appoinment Request
 				//Option 2: Add Appoinment Request
 				//Option 3: Delete Appoinment Request
-			}else if (serviceproviderOption == 4) {
+			}else if (serviceproviderOption == 3) {
 				viewServiceSP(serviceList, loggedSpID);
-			}else if (serviceproviderOption == 5) {
+			}else if (serviceproviderOption == 4) {
 				addService(serviceList, loggedSpID);
-			}else if (serviceproviderOption == 6) {
+			}else if (serviceproviderOption == 5) {
 				deleteService(serviceList, loggedSpID);
-			} else if (serviceproviderOption == 7) {
+			} else if (serviceproviderOption == 6) {
 				System.out.println("Logging out.");
 			}
 		}
-	}
 
 	private static void runRequest() {
 		
@@ -344,13 +338,12 @@ public class C206_CaseStudy {
 	// Log in as Service Provider
 	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
-		System.out.println("1. Manage Requests");
-		System.out.println("2. Manage Appointment"); 
-		System.out.println("3. Manage Appointment Request");
-		System.out.println("4. View Services");
-		System.out.println("5. Add Services");
-		System.out.println("6. Delete Services");
-		System.out.println("7. Quit");
+		System.out.println("1. Manage Appointment"); 
+		System.out.println("2. Manage Appointment Request");
+		System.out.println("3. View Services");
+		System.out.println("4. Add Services");
+		System.out.println("5. Delete Services");
+		System.out.println("6. Quit");
 		Helper.line(80, "-");
 
 	}
