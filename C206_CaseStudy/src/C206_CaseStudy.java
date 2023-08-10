@@ -24,7 +24,7 @@ public class C206_CaseStudy {
 	private static ArrayList<User> userList = new ArrayList<User>();
 	private static ArrayList<Administrator> adminList = new ArrayList<Administrator>();
 	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
-	private static ArrayList<Request> quoteList = new ArrayList<Request>();
+	private static ArrayList<Quote> quoteList = new ArrayList<Quote>();
 	private static ArrayList<Request> requestList = new ArrayList<Request>();
 	private static int loggedUrID = 0; // Keep track of which user is logged in
 	private static int loggedSpID = 0; // Keep track of which service provider is logged in
@@ -699,7 +699,7 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 5 Add Quote ===================================== (Edmund)
 
-		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Request> reqList) {
+		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Quote> quoteList) {
 			boolean flag = false;
 			while(!flag) {
 				int serviceID = Helper.readInt("Input Service ID > ");
@@ -710,13 +710,11 @@ public class C206_CaseStudy {
 				}
 	
 				if(flag) {
-					String date = Helper.readString("Input Date (dd/MM/yyyy) > ");
-					LocalDate cvDate = LocalDate.parse(date, dtFormat);
 					String serviceType = Helper.readString("Input service type > ");
 					String details = Helper.readString("Input details > ");
-					
-					Request quote = new Request(loggedUrID,serviceID, cvDate, serviceType, details);
-					reqList.add(quote);
+					double amount = Helper.readDouble("Input amount > ");
+					Quote quote = new Quote(loggedUrID,serviceID, serviceType, details, amount);
+					quoteList.add(quote);
 					System.out.println("Quote succesfully added");
 				}
 			}
