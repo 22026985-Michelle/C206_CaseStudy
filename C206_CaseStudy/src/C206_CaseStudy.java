@@ -629,16 +629,7 @@ public class C206_CaseStudy {
 		}
 		
 	// ======================================================================================================
-	// ===================================== Option 5 Add User (CREATE) ===================================== (Izdihar)
-//		public static ServiceProvider inputServiceProvider() {
-//			String username = Helper.readString("Enter username > ");
-//			String email = Helper.readString("Enter email address > ");
-//			String password = Helper.readString("Enter password > ");
-//			String description = Helper.readString("Enter service description > ");
-//
-//			ServiceProvider SP = new ServiceProvider(username, email, password, description);
-//			return SP;
-//		}
+	// ============================= Option 5 Add Service Provider (CREATE) ================================= (Izdihar)
 		public static ServiceProvider inputServiceProvider() {
 		    ServiceProvider sp;
 
@@ -688,7 +679,7 @@ public class C206_CaseStudy {
 		}
 		
 		// ==================================================================================================
-		// ============================== Option 6 Delete User (DELETE) ===================================== (Izdihar)
+		// ========================= Option 6 Delete Service Provider (DELETE) ============================== (Izdihar)
 		
 		public static ServiceProvider findServiceProviderById(ArrayList<ServiceProvider> serviceProviderList, int id) {
 		    for (ServiceProvider serviceProvider : serviceProviderList) {
