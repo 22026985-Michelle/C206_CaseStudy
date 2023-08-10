@@ -1,20 +1,21 @@
 import java.time.LocalDate;
 
 public class Request {
-
+	private static int nextReqId = 0;
+	private int reqId;
 	private int reqUrID;
 	private int reqSpID;
-	private LocalDate requestTimeSlot;
 	private String requestService;
 	private String requestDetails;
 	
-	public Request(int reqUrID, int reqSpID, LocalDate requestTimeSlot, String requestService, String requestDetails) {
-		super();
+	public Request(int reqUrID, int reqSpID, String requestService, String requestDetails) {
+		this.reqId = nextReqId;
 		this.reqUrID = reqUrID;
 		this.reqSpID = reqSpID;
-		this.requestTimeSlot = requestTimeSlot;
 		this.requestService = requestService;
 		this.requestDetails = requestDetails;
+		
+		nextReqId++;
 	}
 	
     public String toString() {
@@ -23,7 +24,6 @@ public class Request {
 		String requestInfo = String.format("%-10s %-25s %-15s %-25s %-16s\n",
 				reqUrID,
 				reqSpID,
-				requestTimeSlot, 
 				requestService,
 				requestDetails);
 		
@@ -46,8 +46,8 @@ public class Request {
 		return reqSpID;
 	}
 
-	public LocalDate getRequestTimeSlot() {
-		return requestTimeSlot;
+	public int getReqId() {
+		return reqId;
 	}
 
 	public String getRequestService() {
