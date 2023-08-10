@@ -26,6 +26,7 @@ public class C206_CaseStudy {
 	private static ArrayList<ServiceProvider> serviceProviderList = new ArrayList<ServiceProvider>();
 	private static ArrayList<Quote> quoteList = new ArrayList<Quote>();
 	private static ArrayList<Request> requestList = new ArrayList<Request>();
+	private static ArrayList<Service> serviceList = new ArrayList<Service>();
 	private static int loggedUrID = 0; // Keep track of which user is logged in
 	private static int loggedSpID = 0; // Keep track of which service provider is logged in
 
@@ -167,7 +168,7 @@ public class C206_CaseStudy {
 	private static void runServiceProvider(ServiceProvider loginAcc) {
 		int serviceproviderOption = -1;
 
-		while (serviceproviderOption != 4) {
+		while (serviceproviderOption != 7) {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
@@ -188,8 +189,13 @@ public class C206_CaseStudy {
 				//Option 1: View Appoinment Request
 				//Option 2: Add Appoinment Request
 				//Option 3: Delete Appoinment Request
-
-			} else if (serviceproviderOption == 4) {
+			}else if (serviceproviderOption == 4) {
+				viewServiceSP(serviceList, loggedSpID);
+			}else if (serviceproviderOption == 5) {
+				addService(serviceList, loggedSpID);
+			}else if (serviceproviderOption == 6) {
+				deleteService(serviceList, loggedSpID);
+			} else if (serviceproviderOption == 7) {
 				System.out.println("Logging out.");
 			}
 		}
@@ -341,7 +347,10 @@ public class C206_CaseStudy {
 		System.out.println("1. Manage Requests");
 		System.out.println("2. Manage Appointment"); 
 		System.out.println("3. Manage Appointment Request");
-		System.out.println("4. Quit");
+		System.out.println("4. View Services");
+		System.out.println("5. Add Services");
+		System.out.println("6. Delete Services");
+		System.out.println("7. Quit");
 		Helper.line(80, "-");
 
 	}
@@ -835,6 +844,64 @@ public class C206_CaseStudy {
 	                      "TIME SLOT", "SERVICE", "DETAILS");
 				output += retrieveAllRequests(requestList);
 				System.out.println(output);
+			}
+		}
+		
+		// ========================= View Services =========================
+		
+		private static void viewServiceSP(ArrayList<Service> sList, int loggedSp) {
+			String output = String.format("%-7s %-15s\n", "SP ID", "SERVICES");
+			int check = 0;
+			if(!sList.isEmpty()) {
+				for(Service s: sList) {
+					if(s.getSpId() == loggedSp) {
+					output += String.format("%-7d %-15s\n", s.getSpId(),s.getService());
+					check++;
+					}else if(check == 0) {
+						System.out.println("There are no services assigned by you");
+					}
+ 				}
+				System.out.println(output);
+			}else {
+				System.out.println("No services available");
+			}
+		}
+		
+		// ========================= Add Services =========================
+		
+		private static void addService(ArrayList<Service> sList, int loggedSp) {
+			String service = Helper.readString("Input service > ");
+			
+			sList.add(new Service(loggedSp, service));
+			System.out.println("New service succesfully added");
+		}
+		// ========================= Delete Services =========================
+		
+		private static void deleteService(ArrayList<Service> sList, int loggedSp) {
+			String output = String.format("%-7s %-15s\n", "SP ID", "SERVICES");
+			int check = 0;
+			int check2 = 0;
+			if(!sList.isEmpty()) {
+				for(Service s: sList) {
+					if(s.getSpId() == loggedSp) {
+					output += String.format("%-7d %-15s\n", s.getSpId(),s.getService());
+					check++;
+					}else if(check == 0) {
+						System.out.println("There are no services assigned by you");
+					}
+ 				}
+				System.out.println(output);
+				String selectDelete = Helper.readString("Type the service you wish to delete > ");
+				for(Service s: sList) {
+					if(selectDelete.equalsIgnoreCase(s.getService())) {
+						sList.remove(s);
+						check2++;
+					}else if (check2 == 0) {
+						System.out.println("No service found to delete");
+					}
+				}
+			}else {
+				System.out.println("No services available");
 			}
 		}
 }
