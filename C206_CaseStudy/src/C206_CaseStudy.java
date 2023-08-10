@@ -606,7 +606,7 @@ public class C206_CaseStudy {
 	}
 	
 	// ======================================================================================================
-	// =============================== Option 4 View Service Providers ====================================== (Izdihar)
+	// ============================= Option 4 View Service Providers (READ) ================================= (Izdihar)
 		public static String retrieveAllServcieProviders(ArrayList<ServiceProvider> serviceProviderList) {
 			String output = "";
 			for (int i = 0; i < serviceProviderList.size(); i++) {
@@ -627,7 +627,7 @@ public class C206_CaseStudy {
 		}
 		
 	// ======================================================================================================
-	// ======================================= Option 5 Add User ============================================ (Izdihar)
+	// ===================================== Option 5 Add User (CREATE) ===================================== (Izdihar)
 		public static ServiceProvider inputServiceProvider() {
 			String username = Helper.readString("Enter username > ");
 			String email = Helper.readString("Enter email address > ");
@@ -651,7 +651,7 @@ public class C206_CaseStudy {
 		}
 		
 		// ==================================================================================================
-		// ====================================== Option 6 Delete User ====================================== (Izdihar)
+		// ============================== Option 6 Delete User (DELETE) ===================================== (Izdihar)
 		
 		public static ServiceProvider findServiceProviderById(ArrayList<ServiceProvider> serviceProviderList, int id) {
 		    for (ServiceProvider serviceProvider : serviceProviderList) {
@@ -689,7 +689,7 @@ public class C206_CaseStudy {
 		        if (option.equalsIgnoreCase("Y")) {
 		            String opt = Helper.readString("Confirm deletion of Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
 		            if (opt.equalsIgnoreCase("Y")) {
-		                userList.remove(serviceProvider);
+		            	serviceProviderList.remove(serviceProvider);
 		                System.out.println("User with ID " + serviceProvider.getSpId() + " deleted successfully.");
 		            } else if (opt.equalsIgnoreCase("N")) {
 		                System.out.println("Deletion aborted.");
@@ -702,7 +702,7 @@ public class C206_CaseStudy {
 		            System.out.println("Invalid input. Deletion aborted.");
 		        }
 		    } else {
-		        System.out.println("User not found.");
+		        System.out.println("Service Provider not found.");
 		    }
 		}
 		
