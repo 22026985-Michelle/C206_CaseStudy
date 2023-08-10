@@ -27,6 +27,7 @@ public class C206_CaseStudy {
 	private static ArrayList<Quote> quoteList = new ArrayList<Quote>();
 	private static ArrayList<Request> requestList = new ArrayList<Request>();
 	private static ArrayList<Service> serviceList = new ArrayList<Service>();
+	private static ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
 	private static int loggedUrID = 0; // Keep track of which user is logged in
 	private static int loggedSpID = 0; // Keep track of which service provider is logged in
 
@@ -42,6 +43,7 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A"));
 		serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B"));
+		appointmentList.add(new Appointment(2324,"Renovation Service A","Incomplete",LocalDate.parse("23/03/2023", dtFormat),"Renovation Description A"),);
 
 		int option = 0;
 		int opt1 = 0;
@@ -102,7 +104,7 @@ public class C206_CaseStudy {
 			memberOption = Helper.readInt("Enter choice > ");
 
 			if (memberOption == 1) {
-				// View renovation services (Thiha)
+				// View renovation services (Thiha) 
 				
 			} else if (memberOption == USER_OPTION_ADD_USER) {
 				// Create a new User account
@@ -115,7 +117,7 @@ public class C206_CaseStudy {
 				// View quote
 				viewQuote(quoteList);
 			}else if (memberOption == 5){
-				// View appointment
+				// View appointment (Create user view for appointments)
 				
 			}else if (memberOption == USER_OPTION_QUIT) {
 			
@@ -172,11 +174,14 @@ public class C206_CaseStudy {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
-		   	} if (serviceproviderOption == 1) {
+		   	if (serviceproviderOption == 1) {
 				// Manage Appoinment (Cheryl)
 				//Option 1: View Appoinment
 				//Option 2: Add Appoinment
 				//Option 3: Delete Appoinment
+		   		//Option 4: Update Appointment (select field to edit and select record to edit)
+		   		
+		   		viewAppointments()
 
 			} else if (serviceproviderOption == 2) {
 				// Manage Appoinment Request (Xavier)
@@ -193,6 +198,7 @@ public class C206_CaseStudy {
 			} else if (serviceproviderOption == 6) {
 				System.out.println("Logging out.");
 			}
+		   	}
 		}
 
 	private static void runRequest() {
@@ -897,4 +903,8 @@ public class C206_CaseStudy {
 				System.out.println("No services available");
 			}
 		}
+		
+		
 }
+
+

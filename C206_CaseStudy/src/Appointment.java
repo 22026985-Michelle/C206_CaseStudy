@@ -8,18 +8,20 @@ public class Appointment {
 	private String appointmentStatus;
 	private LocalDate appointmentDate;
 	private String appointmentDescription;
-	private int appUserId;
-	private int appSPId;
+	private String urAppointment;
+	private String spAppointment;
+
 	
 	public Appointment(int appointmentId,String appointmentService, String appointmentStatus, LocalDate appointmentDate,
-			String appointmentDescription,int appUserId , int appSPId) {
+			String appointmentDescription,String UrAppointment,String SPAppointment) {
 		this.appointmentId=appointmentId;
 		this.appointmentService = appointmentService;
 		this.appointmentStatus = appointmentStatus;
 		this.appointmentDate = appointmentDate;
 		this.appointmentDescription = appointmentDescription;
-		this.appUserId= appUserId;
-		this.appSPId=appSPId;
+		this.urAppointment = urAppointment;
+		this.spAppointment = spAppointment;
+	
 	}
 
 
@@ -52,7 +54,7 @@ public class Appointment {
 		this.appointmentDate = appointmentDate;
 	}
 
-
+	
 	public String getAppointmentDescription() {
 		return appointmentDescription;
 	}
@@ -63,6 +65,23 @@ public class Appointment {
 	}
 	
 	
+	public String getUrAppointment() {
+		return urAppointment;
+	}
+
+
+	public void setUrAppointment(String urAppointment) {
+		this.urAppointment = urAppointment;
+	}
+	
+	public String getSPAppointment() {
+		return spAppointment;
+	}
+
+
+	public void setSPAppointment(String spAppointment) {
+		this.spAppointment = spAppointment;
+	}
 	
 	
 
