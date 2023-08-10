@@ -13,7 +13,7 @@ public class C206_CaseStudy {
 	private static final int ADMIN_OPTION_VIEW_USERS = 1;
 	private static final int ADMIN_OPTION_QUIT = 7;
 	private static final int USER_OPTION_ADD_USER = 2;
-	private static final int USER_OPTION_QUIT = 4;
+	private static final int USER_OPTION_QUIT = 6;
 	private static final int LOGIN_OPTION_ADMINISTRATOR = 2;
 	private static final int MAINMENU_OPTION_LOGIN = 1;
 	private static final int LOGIN_OPTION_USER = 1;
@@ -102,7 +102,7 @@ public class C206_CaseStudy {
 
 			if (memberOption == 1) {
 				// View renovation services (Thiha)
-
+				
 			} else if (memberOption == USER_OPTION_ADD_USER) {
 				// Create a new User account
 				User ur = inputUser();
@@ -110,7 +110,14 @@ public class C206_CaseStudy {
 			} else if (memberOption == 3) {
 				// Request quote (Edmund)
 				addQuote(serviceProviderList, quoteList);
-			} else if (memberOption == USER_OPTION_QUIT) {
+			} else if (memberOption == 4){
+				// View quote
+				viewQuote(quoteList);
+			}else if (memberOption == 5){
+				// View appointment
+				
+			}else if (memberOption == USER_OPTION_QUIT) {
+			
 				System.out.println("Logging out.");
 			}
 		}
@@ -320,16 +327,18 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader("WELCOME BACK, USER");
 		System.out.println("1. View Renovation Services");
 		System.out.println("2. Create a new User account");
-		System.out.println("3. Request quote"); // add in more options
-		System.out.println("4. Quit");
+		System.out.println("3. Request Quote"); // add in more options
+		System.out.println("4. View Quotes");
+		System.out.println("5. View Appointments");
+		System.out.println("6. Quit");
 		Helper.line(80, "-");
 
 	}
-	
+	 
 	// Log in as Service Provider
 	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
-		System.out.println("1. Manage Quotes");
+		System.out.println("1. Manage Requests");
 		System.out.println("2. Manage Appointment"); 
 		System.out.println("3. Manage Appointment Request");
 		System.out.println("4. Quit");
@@ -697,7 +706,7 @@ public class C206_CaseStudy {
 		    }
 		}
 		
-		// ======================================= Option 5 Add Quote ===================================== (Edmund)
+		// ======================================= Option 4 Add Quote ===================================== (Edmund)
 
 		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Quote> quoteList) {
 			boolean flag = false;
@@ -715,8 +724,23 @@ public class C206_CaseStudy {
 					double amount = Helper.readDouble("Input amount > ");
 					Quote quote = new Quote(loggedUrID,serviceID, serviceType, details, amount);
 					quoteList.add(quote);
+					
 					System.out.println("Quote succesfully added");
 				}
+			}
+		}
+		
+		// ======================================= Option 5 View Quote ===================================== (Edmund)
+		
+		public static void viewQuote(ArrayList<Quote> quoteList) {
+			String output = String.format("%-7s %-7s %-13s %-30s %-7s\n", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT");
+			if(!quoteList.isEmpty()) {
+				for(Quote q: quoteList) {
+					output += String.format("%-7d %-7d %-13s %-30s %-7.2f\n", q.getReqUrID(),q.getReqSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount());
+				}
+				System.out.println(output);
+			}else {
+				System.out.println("No Quotes");
 			}
 		}
 		
@@ -744,8 +768,8 @@ public class C206_CaseStudy {
 					String serviceType = Helper.readString("Enter renovation service type > ");
 					String details = Helper.readString("Enter details for enquired renovation service request > ");
 					
-					Request request = new Request(loggedUrID, spID, requestDate, serviceType, details);
-					requestList.add(request);
+//					Request request = new Request(loggedUrID, spID, requestDate, serviceType, details);
+//					requestList.add(request);
 					System.out.println("Request succesfully added");
 				}
 			}
