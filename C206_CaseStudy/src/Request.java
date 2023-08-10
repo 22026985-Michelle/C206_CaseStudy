@@ -7,13 +7,15 @@ public class Request {
 	private int reqSpID;
 	private String requestService;
 	private String requestDetails;
+	private double reqAmount;
 	
-	public Request(int reqUrID, int reqSpID, String requestService, String requestDetails) {
+	public Request(int reqUrID, int reqSpID, String requestService, String requestDetails, double reqAmount) {
 		this.reqId = nextReqId;
 		this.reqUrID = reqUrID;
 		this.reqSpID = reqSpID;
 		this.requestService = requestService;
 		this.requestDetails = requestDetails;
+		this.reqAmount = reqAmount;
 		
 		nextReqId++;
 	}
@@ -34,10 +36,6 @@ public class Request {
 		return requestDetails;
 	}
 
-	public void setRequestDetails(String requestDetails) {
-		this.requestDetails = requestDetails;
-	}
-
 	public int getReqUrID() {
 		return reqUrID;
 	}
@@ -54,6 +52,9 @@ public class Request {
 		return requestService;
 	}
 	
+	public double getReqAmount() {
+		return reqAmount;
+	}
 
 	
 
