@@ -590,7 +590,7 @@ public class C206_CaseStudy {
 	        return findUserById(userList, id);
 	    }
 	}
-
+	
 	public static void deleteUser(ArrayList<User> userList, User user) {
 	    if (user != null) {
 	        String option = Helper.readString("Delete user " + user.getUrId() + "? (Y/N) > ");

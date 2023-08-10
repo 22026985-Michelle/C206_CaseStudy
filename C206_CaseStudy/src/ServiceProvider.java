@@ -23,6 +23,18 @@ public class ServiceProvider {
 		}
 		return false;
 	}
+	public String toString() {
+		
+		// Write your codes here
+		String userInfo = String.format("%-5s %-20s %-30s %-15s %-20s",
+				spId,
+				spName,
+				spEmail,
+				spPassword, 
+				spServiceDescription);
+		
+		return userInfo;
+	}
 
 	public String getSpName() {
 		return spName;
