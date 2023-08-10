@@ -628,14 +628,40 @@ public class C206_CaseStudy {
 		
 	// ======================================================================================================
 	// ===================================== Option 5 Add User (CREATE) ===================================== (Izdihar)
+//		public static ServiceProvider inputServiceProvider() {
+//			String username = Helper.readString("Enter username > ");
+//			String email = Helper.readString("Enter email address > ");
+//			String password = Helper.readString("Enter password > ");
+//			String description = Helper.readString("Enter service description > ");
+//
+//			ServiceProvider SP = new ServiceProvider(username, email, password, description);
+//			return SP;
+//		}
 		public static ServiceProvider inputServiceProvider() {
-			String username = Helper.readString("Enter username > ");
-			String email = Helper.readString("Enter email address > ");
-			String password = Helper.readString("Enter password > ");
-			String description = Helper.readString("Enter service description > ");
+		    ServiceProvider sp;
 
-			ServiceProvider SP = new ServiceProvider(username, email, password, description);
-			return SP;
+		    String name;
+		    do {
+		    	name = Helper.readString("Enter Service Provider Name > ");
+		        if (!isServiceProviderNameUnique(serviceProviderList, name)) {
+		            System.out.println("Username " + name + " is already taken. Please choose a different username.\n");
+		        }
+		    } while (!isServiceProviderNameUnique(serviceProviderList, name));
+
+		    String email = Helper.readString("Enter email address > ");
+
+		    String password;
+		    do {
+		        password = Helper.readString("Enter password > ");
+		        if (!isStrongPassword(password)) {
+		            System.out.println("Password is not strong enough. Please choose a stronger password.");
+		            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
+		        }
+		    } while (!isContactNumUnique(userList, password));
+		    String description = Helper.readString("Enter service description > ");
+
+		    sp = new ServiceProvider(name, email, password, description );
+		    return sp;
 		}
 
 		public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
@@ -648,6 +674,15 @@ public class C206_CaseStudy {
 			serviceProviderList.add(SP);
 			System.out.println("\nRegistration successful!");
 
+		}
+		
+		public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,String serviceProvider) {
+			for (ServiceProvider sp : serviceProviderList) {
+		        if (sp.getSpName().equalsIgnoreCase(serviceProvider)) {
+		            return false; // Service Provider Name is not unique
+		        }
+		    }
+		    return true; // Service Provider Name is unique
 		}
 		
 		// ==================================================================================================
