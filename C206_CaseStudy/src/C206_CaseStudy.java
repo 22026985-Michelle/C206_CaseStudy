@@ -197,7 +197,9 @@ public class C206_CaseStudy {
 			} else if (serviceproviderOption == 6) {
 				System.out.println("Logging out.");
 			}
-		   	}
+		   	
+		  }
+		
 		}
 
 	private static void runRequest() {
@@ -888,6 +890,7 @@ public class C206_CaseStudy {
 				System.out.println("No requests available");
 			}
 		}
+		
 		
 		
 		// ========================= View Services =========================

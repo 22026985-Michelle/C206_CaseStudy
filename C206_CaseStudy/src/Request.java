@@ -37,6 +37,7 @@ public class Request {
 	public int getReqUrID() {
 		return reqUrID;
 	}
+	
 
 	public int getReqSpID() {
 		return reqSpID;
