@@ -1,5 +1,3 @@
-import java.time.LocalDate;
-
 public class Request {
 	private static int nextReqId = 0;
 	private int reqId;

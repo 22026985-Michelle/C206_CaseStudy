@@ -43,8 +43,7 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A"));
 		serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B"));
-		appointmentList.add(new Appointment(2324,"Renovation Service A","Incomplete",LocalDate.parse("23/03/2023", dtFormat),"Renovation Description A"),);
-
+		requestList.add(new Request(1, 2, "Bathroom", "Replace tiles", 400.00));
 		int option = 0;
 		int opt1 = 0;
 
@@ -176,19 +175,19 @@ public class C206_CaseStudy {
 
 		   	if (serviceproviderOption == 1) {
 				// Manage Appoinment (Cheryl)
-				//Option 1: View Appoinment
-				//Option 2: Add Appoinment
-				//Option 3: Delete Appoinment
+				//Option 1: View Appointment
+				//Option 2: Add Appointment
+				//Option 3: Delete Appointment
 		   		//Option 4: Update Appointment (select field to edit and select record to edit)
 		   		
-		   		viewAppointments()
+		   
 
 			} else if (serviceproviderOption == 2) {
-				// Manage Appoinment Request (Xavier)
+				// Manage Appointment Request (Xavier)
 				runRequest();
-				//Option 1: View Appoinment Request
-				//Option 2: Add Appoinment Request
-				//Option 3: Delete Appoinment Request
+				//Option 1: View Appointment Request
+				//Option 2: Add Appointment Request
+				//Option 3: Delete Appointment Request
 			}else if (serviceproviderOption == 3) {
 				viewServiceSP(serviceList, loggedSpID);
 			}else if (serviceproviderOption == 4) {
@@ -210,7 +209,7 @@ public class C206_CaseStudy {
 		    requestOption = Helper.readInt("Enter choice > ");
 
 		    if (requestOption == 1) {
-				C206_CaseStudy.addRequest(serviceProviderList, requestList);
+		//		C206_CaseStudy.addRequest(serviceProviderList, requestList);
 		    }
 		    
 		    else if (requestOption == 2) {
@@ -218,7 +217,7 @@ public class C206_CaseStudy {
 		    }
 
 		    else if (requestOption == 3) {
-		       
+		       deleteRequest(requestList, loggedSpID);
 		    }
 		    
 		    else if (requestOption == 4) {
@@ -791,60 +790,105 @@ public class C206_CaseStudy {
 
 		// ========================= Option 1 Add Appointment Request ============================= (Xavier)
 		
-		public static void addRequest(ArrayList<ServiceProvider> spList, ArrayList<Request> requestList) {
-			boolean flag = false;
-			
-			while(!flag) {
-				
-				int spID = Helper.readInt("Enter Service Provider ID > ");
-				
-				for (ServiceProvider sp: spList) {
-					
-					if (spID == sp.getSpId()) {
-						  flag = true;
-					}
-				}
-	
-				if (flag) {
-					String newRequest = Helper.readString("Enter Date (dd/MM/yyyy format) > ");
-					LocalDate requestDate = LocalDate.parse(newRequest, dtFormat);
-					String serviceType = Helper.readString("Enter renovation service type > ");
-					String details = Helper.readString("Enter details for enquired renovation service request > ");
-					
-//					Request request = new Request(loggedUrID, spID, requestDate, serviceType, details);
-//					requestList.add(request);
-					System.out.println("Request succesfully added");
-				}
-			}
-		}
+//		public static void addRequest(ArrayList<ServiceProvider> spList, ArrayList<Request> requestList) {
+//			boolean flag = false;
+//			
+//			while(!flag) {
+//				
+//				int spID = Helper.readInt("Enter Service Provider ID > ");
+//				
+//				for (ServiceProvider sp: spList) {
+//					
+//					if (spID == sp.getSpId()) {
+//						  flag = true;
+//					}
+//				}
+//	
+//				if (flag) {
+//					String newRequest = Helper.readString("Enter Date (dd/MM/yyyy format) > ");
+//					LocalDate requestDate = LocalDate.parse(newRequest, dtFormat);
+//					String serviceType = Helper.readString("Enter renovation service type > ");
+//					String details = Helper.readString("Enter details for enquired renovation service request > ");
+//					
+//   				Request request = new Request(loggedUrID, spID, requestDate, serviceType, details);
+//   					requestList.add(request);
+//					System.out.println("Request succesfully added");
+//				}
+//			}
+//		}
 		
 		// ================================= Option 2 View (CRUD - Read) ========================================
 
 		// ========================= Option 2 View Appointment Requests ========================= (Xavier)
 		
-		public static String retrieveAllRequests(ArrayList<Request> requestList) {
-			String output = "";
-
-			for (int i = 0; i < requestList.size(); i++) {
-
-				output += String.format("%-84s \n", requestList.get(i).toString());
-			}
-			return output;
-		}
-		
 		public static void viewAllRequests(ArrayList<Request> requestList) {
-			C206_CaseStudy.setHeader("APPOINTMENT REQUEST LIST");
-			if (requestList.isEmpty()) {
-				System.out.println("No requests available");
-			} 
+			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+	                      "SERVICE", "DETAILS", "AMOUNT");
 			
-			else {
-				String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
-	                      "TIME SLOT", "SERVICE", "DETAILS");
-				output += retrieveAllRequests(requestList);
+			if  (!requestList.isEmpty()) {
+				
+				for (Request r: requestList) {
+					output += String.format("%-10d %-25d %-15s %-25s %-16f\n", 
+							r.getReqUrID(),r.getReqSpID(),r.getRequestService(),r.getRequestDetails(),r.getReqAmount());
+				}
+				
 				System.out.println(output);
 			}
+			
+			else {
+				System.out.println("No requests available");
+			}
+        }
+		
+		// ================================= Option 3 Delete (CRUD - Delete) ========================================
+
+	    // ========================= Option 3 Delete Appointment Request ========================= (Xavier)
+		
+		private static void deleteRequest(ArrayList<Request> requestList, int loggedSp) {
+			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+                    "SERVICE", "DETAILS", "AMOUNT");
+			int check = 0;
+			int check2 = 0;
+			
+			if (!requestList.isEmpty()) {
+				
+				for (Request r: requestList) {
+					
+					if (r.getReqSpID() == loggedSp) {
+						
+						output += String.format("%-10d %-25d %-15s %-25s %-16f\n", 
+								r.getReqUrID(),r.getReqSpID(),r.getRequestService(),r.getRequestDetails(),r.getReqAmount());
+						check++;
+					}
+					
+					else if(check == 0) {
+						System.out.println("There are no services assigned by you");
+					}
+					
+ 				}
+				
+				System.out.println(output);
+				int deleteRequest = Helper.readInt("Enter the request you wish to delete > ");
+				
+				for (Request r: requestList) {
+					
+					if (deleteRequest == r.getReqId()) {
+						requestList.remove(r);
+						check2++;
+					}
+					
+					else if (check2 == 0) {
+						System.out.println("No request found to delete");
+					}
+				}
+			}
+			
+			else {
+				
+				System.out.println("No requests available");
+			}
 		}
+		
 		
 		// ========================= View Services =========================
 		
