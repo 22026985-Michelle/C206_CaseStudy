@@ -110,7 +110,7 @@ public class C206_CaseStudy {
 				C206_CaseStudy.addUser(userList, ur);
 			} else if (memberOption == 3) {
 				// Request quote (Edmund)
-				addQuote(serviceProviderList, quoteList);
+				addQuote(serviceProviderList, quoteList, serviceList);
 			} else if (memberOption == 4){
 				// View quote
 				viewQuote(quoteList);
@@ -745,7 +745,7 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 4 Add Quote ===================================== (Edmund)
 
-		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Quote> quoteList) {
+		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Quote> quoteList, ArrayList<Service> sList) {
 			boolean flag = false;
 			while(!flag) {
 				int serviceID = Helper.readInt("Input Service ID > ");
@@ -756,13 +756,22 @@ public class C206_CaseStudy {
 				}
 	
 				if(flag) {
-					String serviceType = Helper.readString("Input service type > ");
-					String details = Helper.readString("Input details > ");
-					double amount = Helper.readDouble("Input amount > ");
-					Quote quote = new Quote(loggedUrID,serviceID, serviceType, details, amount);
-					quoteList.add(quote);
-					
-					System.out.println("Quote succesfully added");
+					if(!sList.isEmpty()) {
+						String output = String.format("%-7s %-15s\n", "SP ID", "SERVICES");
+						for(Service s: sList) {
+							output += String.format("%-7d %-15s\n", s.getSpId(),s.getService());
+							System.out.println(output);
+						}
+						String serviceType = Helper.readString("Input service > ");
+						String details = Helper.readString("Input details > ");
+						double amount = Helper.readDouble("Input amount > ");
+						Quote quote = new Quote(loggedUrID,serviceID, serviceType, details, amount);
+						quoteList.add(quote);
+						
+						System.out.println("Quote succesfully added");
+					}else {
+						System.out.println("This service provider has no services");
+					}
 				}
 			}
 		}
