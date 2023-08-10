@@ -148,6 +148,8 @@ public class C206_CaseStudy {
 				System.out.println("Service Provider added");
 				
 			}else if (memberOption == 6) { //delete service providers
+				ServiceProvider serviceProviderToDelete = inputServiceProviderToDelete(serviceProviderList);
+		        C206_CaseStudy.deleteServiceProvider(serviceProviderList, serviceProviderToDelete);
 				
 			}else if (memberOption == 7) {
 				System.out.println("Logging out.");
@@ -593,8 +595,8 @@ public class C206_CaseStudy {
 	        System.out.println("User not found.");
 	    }
 	}
-	// ================================= Option 4 View (CRUD - Read) ========================================
-
+	
+	// ======================================================================================================
 	// =============================== Option 4 View Service Providers ====================================== (Izdihar)
 		public static String retrieveAllServcieProviders(ArrayList<ServiceProvider> serviceProviderList) {
 			String output = "";
@@ -615,9 +617,8 @@ public class C206_CaseStudy {
 			}
 		}
 		
-	// ================================= Option 5 Add (CRUD - Create)=================================
-
-	// ======================================= Option 5 Add User ===================================== (Izdihar)
+	// ======================================================================================================
+	// ======================================= Option 5 Add User ============================================ (Izdihar)
 		public static ServiceProvider inputServiceProvider() {
 			String username = Helper.readString("Enter username > ");
 			String email = Helper.readString("Enter email address > ");
@@ -638,6 +639,62 @@ public class C206_CaseStudy {
 			serviceProviderList.add(SP);
 			System.out.println("\nRegistration successful!");
 
+		}
+		
+		// ==================================================================================================
+		// ====================================== Option 6 Delete User ====================================== (Izdihar)
+		
+		public static ServiceProvider findServiceProviderById(ArrayList<ServiceProvider> serviceProviderList, int id) {
+		    for (ServiceProvider serviceProvider : serviceProviderList) {
+		        if (serviceProvider.getSpId() == id) {
+		            return serviceProvider;
+		        }
+		    }
+		    return null;
+		}
+
+		public static ServiceProvider findServiceProviderByName(ArrayList<ServiceProvider> serviceProviderList, String Name) {
+			for (ServiceProvider serviceProvider : serviceProviderList) {
+		        if (serviceProvider.getSpName().equals(Name)) {
+		            return serviceProvider;
+		        }
+		    }
+		    return null;
+		}	
+		
+		public static ServiceProvider inputServiceProviderToDelete(ArrayList<ServiceProvider> serviceProviderList) {
+			viewAllServiceProviders(serviceProviderList);
+		    int id = Helper.readInt("Enter the ID of the Service Provider to delete, or enter 0 to delete by Name > ");
+		    
+		    if (id == 0) {
+		        String Name = Helper.readString("Enter Name > ");
+		        return findServiceProviderByName(serviceProviderList, Name);
+		    } else {
+		        return findServiceProviderById(serviceProviderList, id);
+		    }
+		}
+
+		public static void deleteServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider serviceProvider) {
+		    if (serviceProvider != null) {
+		        String option = Helper.readString("Delete Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
+		        if (option.equalsIgnoreCase("Y")) {
+		            String opt = Helper.readString("Confirm deletion of Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
+		            if (opt.equalsIgnoreCase("Y")) {
+		                userList.remove(serviceProvider);
+		                System.out.println("User with ID " + serviceProvider.getSpId() + " deleted successfully.");
+		            } else if (opt.equalsIgnoreCase("N")) {
+		                System.out.println("Deletion aborted.");
+		            } else {
+		                System.out.println("Invalid input. Deletion aborted.");
+		            }
+		        } else if (option.equalsIgnoreCase("N")) {
+		            System.out.println("Deletion aborted.");
+		        } else {
+		            System.out.println("Invalid input. Deletion aborted.");
+		        }
+		    } else {
+		        System.out.println("User not found.");
+		    }
 		}
 		
 		// ======================================= Option 5 Add Quote ===================================== (Edmund)
