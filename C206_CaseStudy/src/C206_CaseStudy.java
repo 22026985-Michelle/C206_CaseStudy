@@ -435,36 +435,62 @@ public class C206_CaseStudy {
 	    String username;
 	    do {
 	        username = Helper.readString("Enter username > ");
-	        if (!isUsernameUnique(userList, username)) {
+	        if (username.isEmpty()) {
+	            System.out.println("Username cannot be left blank! Please input a username.\n");
+	        } else if (!isUsernameUnique(userList, username)) {
 	            System.out.println("Username " + username + " is already taken. Please choose a different username.\n");
 	        }
-	    } while (!isUsernameUnique(userList, username));
+	    } while (username.isEmpty() || !isUsernameUnique(userList, username));
 
-	    String email = Helper.readString("Enter email address > ");
+	    String email;
+	    do {
+	        email = Helper.readString("Enter email > ");
+	        if (email.isEmpty()) {
+	            System.out.println("Email cannot be left blank! Please input an email.\n");
+	        } else if (!isValidEmail(email)) {
+	            System.out.println("Email " + email + " does not contain '@' and '.'. Please give a different email.\n");
+	        }
+	    } while (!isValidEmail(email));
 
 	    String password;
 	    do {
 	        password = Helper.readString("Enter password > ");
-	        if (!isStrongPassword(password)) {
+	        if (password.isEmpty()) {
+	            System.out.println("Password cannot be left blank! Please input a password.\n");
+	        } else if (!isStrongPassword(password)) {
 	            System.out.println("Password is not strong enough. Please choose a stronger password.");
-	            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
+	            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter,"
+	                    + " one lowercase letter, \none digit, and one special character.\n");
 	        }
-	    } while (!isStrongPassword(password));
+	    } while (password.isEmpty() || !isStrongPassword(password));
 
 	    String contactNum;
+	    boolean isValidContact = false;
 	    do {
 	        contactNum = Helper.readString("Enter contact number > ");
-	        if (!isContactNumUnique(userList, contactNum)) {
+	        if (contactNum.isEmpty()) {
+	            System.out.println("Contact number cannot be left blank! Please input a contact number.\n");
+	        } else if (!isContactNumUnique(userList, contactNum)) {
 	            System.out.println("Contact number " + contactNum + " is already registered.\n");
+	        } else if (!contactNum.matches("[89]\\d{7}")) {
+	            System.out.println("Singapore contact number should start with 9 or 8 followed by 7 digits from 0-9\n");
+	        } else {
+	            isValidContact = true;
 	        }
-	    } while (!isContactNumUnique(userList, contactNum));
+	    } while (contactNum.isEmpty() || !isContactNumUnique(userList, contactNum) || !isValidContact);
 
-	    String address = Helper.readString("Enter address > ");
+	    String address;
+	    do {
+	        address = Helper.readString("Enter address > ");
+	        if (address.isEmpty()) {
+	            System.out.println("Address cannot be left blank! Please input an address.\n");
+	        }
+	    } while (address.isEmpty());
 
 	    ur = new User(username, email, password, contactNum, address);
 	    return ur;
 	}
-	
+
 	public static void addUser(ArrayList<User> userList, User ur) {
 		User user;
 		for (int i = 0; i < userList.size(); i++) {
@@ -479,7 +505,7 @@ public class C206_CaseStudy {
 	
 	public static boolean isUsernameUnique(ArrayList<User> userList, String username) {
 	    for (User user : userList) {
-	        if (user.getUrUsername().equalsIgnoreCase(username)) {
+	        if (user.getUrUsername().equals(username)) {
 	            return false; // Username is not unique
 	        }
 	    }
@@ -494,7 +520,16 @@ public class C206_CaseStudy {
 	    }
 	    return true; // Contact number is unique
 	}
-
+	
+	private static boolean isValidEmail(String email) {
+		if (email.contains("@")&&email.contains(".")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public static boolean isStrongPassword(String password) {
 	    // Define password strength criteria
 	    int minLength = 8; // Minimum length of the password
@@ -505,8 +540,6 @@ public class C206_CaseStudy {
 
 	    // Check password length
 	    if (password.length() < minLength) {
-	        return false;
-	    }if (password.length()==0) {
 	        return false;
 	    }
 
@@ -576,9 +609,9 @@ public class C206_CaseStudy {
 		return success;
 	}
 
-	// ================================= Option 3 Delete (CRUD- Deletes)=================================
+	// ================================= Option 4 Delete (CRUD - Delete)=================================
 	
-	// ========================= Option 3 Delete User ========================= (Michelle)
+	// ========================= Option 4 Delete User ========================= (Michelle)
 	
 	public static User findUserById(ArrayList<User> userList, int id) {
 	    for (User user : userList) {

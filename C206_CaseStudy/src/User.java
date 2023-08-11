@@ -91,4 +91,9 @@ public class User {
 	public int getUrId() {
 		return urId;
 	}
+
+	public void setUrId(int urId) {
+		this.urId = urId;
+	}
+	
 }
