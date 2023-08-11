@@ -54,7 +54,11 @@ public class ServiceProvider {
 	public int getNumOfDesigners() {
 		return numOfDesigners;
 	}
-
+	
+	public String getSpContact() {
+		return spContact;
+	}
+	
 	public String getSpPassword() {
 		return spPassword;
 	}

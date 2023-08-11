@@ -7,37 +7,36 @@ import org.junit.Test;
 
 public class ServiceProviderTest {
 	
-	private Administrator a1;
-	private Administrator a2;
 	private ServiceProvider sp1;
 	private ServiceProvider sp2;
+	private ServiceProvider sp3; 
+	private ServiceProvider sp4;
 	
-	private ArrayList<Administrator> adminList;
 	private ArrayList<ServiceProvider> serviceProviderList;
 	
-//	@Test
-//	public void c206_test() {
-//		//fail("Not yet implemented"); 
-//		assertTrue("C206_CaseStudy_SampleTest ",true);
-//	}
+	@Test
+	public void c206_test() {
+		//fail("Not yet implemented"); 
+		assertTrue("C206_CaseStudy_SampleTest ",true);
+	}
 	
 	@Before
 	public void setUp() throws Exception {
 
-		sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "10", "98778976");
-		sp2 = new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","6", "98777645");
+		sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 10, "98778976");
+		sp2 = new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", 6, "98777645");
 		
 		serviceProviderList = new ArrayList<ServiceProvider>();
 	}
 	
 	// User Story: <View all Service Providers> 
-	//Use Case No. 1
+	// Use Case No. 1
+	// View current serviceProviderList
 	@Test
     public void viewSPTest1() {
 		// Create an ArrayList of service providers.
-        ArrayList<ServiceProvider> serviceProviderList = new ArrayList<>();
-        serviceProviderList.add(sp1);
-        serviceProviderList.add(sp2);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
 		
         // Assert that the number of service providers is 2.
         assertEquals(2, serviceProviderList.size());
@@ -45,12 +44,12 @@ public class ServiceProviderTest {
 	
 	// User Story: <View all Service Providers> 
 	// Use Case No. 2
+	// Delete all service provider and view the serviceProviderList
 	@Test
 	public void viewSPTest2() {
 		// Create an ArrayList of service providers.
-	    ArrayList<ServiceProvider> serviceProviderList = new ArrayList<>();
-	    serviceProviderList.add(sp1);
-	    serviceProviderList.add(sp2);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
 	        
 	    // Delete all service providers.
 	    serviceProviderList.clear();
@@ -61,18 +60,19 @@ public class ServiceProviderTest {
 	
 	// User Story: <View all Service Providers> 
 	// Use Case No. 3
+	// Add a service provider and view the serviceProviderList
 	@Test
 	public void viewSPTest3() {
 		// Create an ArrayList of service providers.
-		ArrayList<ServiceProvider> serviceProviderList = new ArrayList<>();
-		serviceProviderList.add(sp1);
-		serviceProviderList.add(sp2);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
+
 		        
 		// Delete all service providers.
 		serviceProviderList.clear();
 		    
 		// Add a service provider.
-	    serviceProviderList.add(new ServiceProvider("RenoSerV", "RenoSerV@gmail.com", "password3", "10", "98765643"));
+	    serviceProviderList.add(new ServiceProvider("RenoSerV", "RenoSerV@gmail.com", "password3", 10, "98765643"));
 				
 		// Assert that the number of service providers is 0.
 		assertEquals(1, serviceProviderList.size());
@@ -80,15 +80,17 @@ public class ServiceProviderTest {
 	
 	// User Story: <Add a Service Provider> 
 	// Use Case No. 1
+	// Add a service provider to the current serviceProviderList (name: ServiceProviderA, email: ServiceProviderA@Gmail.com)
 	@Test
 	public void addSPTest1() {
 		// Create an ArrayList of service providers.
-		ArrayList<ServiceProvider> serviceProviderList = new ArrayList<>();
-		serviceProviderList.add(sp1);
-		serviceProviderList.add(sp2);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
 		    
 		// Add a service provider.
-	    serviceProviderList.add(new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", "10", "98765643"));
+		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
+
 				
 		// Assert that the number of service providers is 0.
 		assertEquals(3, serviceProviderList.size());
@@ -96,34 +98,45 @@ public class ServiceProviderTest {
 	
 	// User Story: <Add a Service Provider> 
 	// Use Case No. 2
+	// Add a service provider with the same name to the current serviceProviderList (name: ServiceProviderA)
 	@Test
 	public void addSPTest2() {
 		// Create an ArrayList of service providers.
-		ArrayList<ServiceProvider> serviceProviderList = new ArrayList<>();
-		serviceProviderList.add(sp1);
-		serviceProviderList.add(sp2);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
 			    
 		// Add a service provider.
-		serviceProviderList.add(new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", "10", "98765643"));
+		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
 		
 		// Add a service provider with the same name.
-        try {
-            ServiceProvider serviceProviderA = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password4", "11", "98765432");
-            serviceProviderList.add(serviceProviderA);
-        } catch (Exception e) {
-            // Handle the exception.
-            assertEquals("Username ServiceProviderA is already taken. Please choose a different username.", e.getMessage());
-        }
-        // View the current service provider list.
-        serviceProviderList2(serviceProviderList);
+		sp4 = new ServiceProvider("ServiceProviderA", "ServiceProviderB@Gmail.com", "password4", 11, "98765432");
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
+		
+		// Assert that the number of service providers is 0.
+		assertEquals(3, serviceProviderList.size());
 	}
-     private void serviceProviderList2(ArrayList<ServiceProvider> serviceProviderList) {
-            // Get the number of service providers in the list.
-            int numberOfServiceProviders = serviceProviderList.size();
-
-            // Assert that the number of service providers is 2.
-            assertEquals(2, numberOfServiceProviders);
-        }
+	
+	// User Story: <Add a Service Provider> 
+		// Use Case No. 3
+		// Add a service provider with the same e-mail to the current serviceProviderList (email: ServiceProviderA@Gmail.com)
+		@Test
+		public void addSPTest3() {
+			// Create an ArrayList of service providers.
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
+				    
+			// Add a service provider.
+			sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
+			
+			// Add a service provider with the same email.
+			sp4 = new ServiceProvider("ServiceProviderB", "ServiceProviderA@Gmail.com", "password4", 11, "98765432");
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
+			
+			// Assert that the number of service providers is 0.
+			assertEquals(3, serviceProviderList.size());
+		}
 	
 	
 	@After
@@ -136,4 +149,3 @@ public class ServiceProviderTest {
 
 
 }
-

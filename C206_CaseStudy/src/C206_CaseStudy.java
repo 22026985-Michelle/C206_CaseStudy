@@ -48,9 +48,9 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("thomas", "thomas@gmail.com", "adpassword2"));
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		serviceProviderList
-				.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "10", "98778976"));
-		serviceProviderList
-				.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", "6", "98777645"));
+		.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 10, "98778976"));
+serviceProviderList
+		.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", 6, "98777645"));
 		requestList.add(new Request(1, 1, "Bathroom", "Replace tiles", 400.00));
 		appointmentList.add(new Appointment("Replace Tiles", "Incomplete", LocalDate.parse("11/01/2023", dtFormat),
 				"Appointment Description", 3, 1));
@@ -726,74 +726,109 @@ public class C206_CaseStudy {
 	}
 
 	// ======================================================================================================
-	// ============================= Option 5 Add Service Provider (CREATE) ================================= (Izdihar)
-	public static ServiceProvider inputServiceProvider() {
-		ServiceProvider sp;
+		// ============================= Option 5 Add Service Provider (CREATE) ================================= (Izdihar)
+		public static ServiceProvider inputServiceProvider() {
+			ServiceProvider sp;
 
-		String name;
-		do {
-			name = Helper.readString("Enter Service Provider Name > ");
-			if (name.isEmpty()) {
-				System.out.println("Name cannot be left blank! Please input a Name.\n");
-			}else if (!isServiceProviderNameUnique(serviceProviderList, name)) {
-				System.out.println("Username " + name + " is already taken. Please choose a different username.\n");
+			String name;
+			do {
+				name = Helper.readString("Enter Service Provider Name > ");
+				if (name.isEmpty()) {
+					System.out.println("Name cannot be left blank! Please input a Name.\n");
+				}else if (!isServiceProviderNameUnique(serviceProviderList, name)) {
+					System.out.println("The Name " + name + " is already taken. Please choose a different name.\n");
+				}
+			} while (!isServiceProviderNameUnique(serviceProviderList, name) || name.isEmpty());
+
+			String email;
+			do {
+				email = Helper.readString("Enter email address > ");
+				if (email.isEmpty()) {
+					System.out.println("Email cannot be left blank! Please input an email.\n");
+				} else if (!isValidEmail(email)) {
+					System.out.println("Email " + email + " does not contain '@' and '.'. Please give a different email.\n");
+				}else if(!isServiceProviderEmailUnique(serviceProviderList, email)) {
+					System.out.println("The email " + email + " is already taken. Please choose a different email.\n");
+				}
+
+			} while (!isValidEmail(email) || email.isEmpty() || !isServiceProviderEmailUnique(serviceProviderList, email));
+
+			String password;
+			do {
+				password = Helper.readString("Enter password > ");
+				if (password.isEmpty()) {
+					System.out.println("Password cannot be left blank! Please input a Password.\n");
+				}else if (!isStrongPassword(password)) {
+					System.out.println("Password is not strong enough. Please choose a stronger password.");
+					System.out.println(
+							"A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
+				}
+			} while (!isStrongPassword(password) || password.isEmpty());
+			
+			int numOfDeisgners;
+			do {
+				numOfDeisgners = Helper.readInt("Enter Number of designers in Service Provider > ");
+				if (numOfDeisgners == 0 ) {
+					System.out.println("Number of Deisgners cannot be 0! Please input number of Deisgners.\n");
+				}
+			}while(numOfDeisgners == 0);
+			String contactNum;
+			do{
+				contactNum = Helper.readString("Enter Service Provider Contact Number > ");
+				if (!isServiceProviderContactUnique(serviceProviderList,contactNum)){
+					System.out.println("The contact number " + contactNum + " is already taken. Please choose a different contact number.\n");
+				}else if(contactNum.isBlank()) {
+					System.out.println("Contact number cannot be left blank! Please input a Contact number.\n");
+				}else if (!contactNum.matches("[89]\\d{7}")) {
+					System.out.println("Singapore contact number should start with 9 or 8 followed by 7 digits from 0-9\n");
+				} 
+			}while(!isServiceProviderContactUnique(serviceProviderList,contactNum)||contactNum.isBlank() || !contactNum.matches("[89]\\d{7}"));
+
+			sp = new ServiceProvider(name, email, password, numOfDeisgners, contactNum);
+			return sp;
+		}
+
+		public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
+			ServiceProvider serviceProvider;
+			for (int i = 0; i < serviceProviderList.size(); i++) {
+				serviceProvider = serviceProviderList.get(i);
+				if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
+					return;
 			}
-		} while (!isServiceProviderNameUnique(serviceProviderList, name) || name.isEmpty());
+			serviceProviderList.add(SP);
+			System.out.println("\nRegistration successful!");
 
-		String email;
-		do {
-			email = Helper.readString("Enter email address > ");
-			if (email.isEmpty()) {
-				System.out.println("Email cannot be left blank! Please input an email.\n");
-			} else if (!isValidEmail(email)) {
-				System.out
-						.println("Email " + email + " does not contain '@' and '.'. Please give a different email.\n");
+		}
+
+		public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,
+				String serviceProvider) {
+			for (ServiceProvider sp : serviceProviderList) {
+				if (sp.getSpName().equalsIgnoreCase(serviceProvider)) {
+					return false; // Service Provider Name is not unique
+				}
 			}
-
-		} while (!isValidEmail(email)||email.isEmpty());
-
-		String password;
-		do {
-			password = Helper.readString("Enter password > ");
-			if (password.isEmpty()) {
-				System.out.println("Password cannot be left blank! Please input a Password.\n");
-			}else if (!isStrongPassword(password)) {
-				System.out.println("Password is not strong enough. Please choose a stronger password.");
-				System.out.println(
-						"A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
-
-			}
-		} while (!isStrongPassword(password) || password.isEmpty());
+			return true; // Service Provider Name is unique
+		}
 		
-		String numOfDeisgners = Helper.readString("Enter Number of designers in Service Provider > ");
-		String contactNum = Helper.readString("Enter Service Provider Contact Number > ");
-
-		sp = new ServiceProvider(name, email, password, numOfDeisgners, contactNum);
-		return sp;
-	}
-
-	public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
-		ServiceProvider serviceProvider;
-		for (int i = 0; i < serviceProviderList.size(); i++) {
-			serviceProvider = serviceProviderList.get(i);
-			if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
-				return;
-		}
-		serviceProviderList.add(SP);
-		System.out.println("\nRegistration successful!");
-
-	}
-
-	public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,
-			String serviceProvider) {
-		for (ServiceProvider sp : serviceProviderList) {
-			if (sp.getSpName().equalsIgnoreCase(serviceProvider)) {
-				return false; // Service Provider Name is not unique
+		public static boolean isServiceProviderEmailUnique(ArrayList<ServiceProvider> serviceProviderList,
+				String serviceProvider) {
+			for (ServiceProvider sp : serviceProviderList) {
+				if (sp.getSpEmail().equalsIgnoreCase(serviceProvider)) {
+					return false; // Service Provider Name is not unique
+				}
 			}
+			return true; // Service Provider Name is unique
 		}
-		return true; // Service Provider Name is unique
-	}
-
+		
+		public static boolean isServiceProviderContactUnique(ArrayList<ServiceProvider> serviceProviderList,
+				String serviceProvider) {
+			for (ServiceProvider sp : serviceProviderList) {
+				if (sp.getSpContact().equalsIgnoreCase(serviceProvider)) {
+					return false; // Service Provider Name is not unique
+				}
+			}
+			return true; // Service Provider Name is unique
+		}
 	// ==================================================================================================
 	// ========================= Option 6 Delete Service Provider (DELETE) ============================== (Izdihar)
 
