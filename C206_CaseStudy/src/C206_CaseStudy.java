@@ -120,7 +120,7 @@ public class C206_CaseStudy {
 				deleteQuote(quoteList, loggedUrID);
 				}else if (memberOption == 6){
 				// View appointment (Create user view for appointments)
-				
+				viewAppointmentsUr(appointmentList,loggedUrID);
 			}else if (memberOption == USER_OPTION_QUIT) {
 			
 				System.out.println("Logging out.");
@@ -183,7 +183,8 @@ public class C206_CaseStudy {
 				//Option 3: Delete Appointment
 		   		//Option 4: Update Appointment (select field to edit and select record to edit)
 		   		
-		   
+		   		viewAppointmentsSP(appointmentList,loggedSpID);
+
 
 			} else if (serviceproviderOption == 2) {
 				// Manage Appointment Request (Xavier)
@@ -1000,7 +1001,45 @@ public class C206_CaseStudy {
 			}
 		}
 		
+		// ======================================= Option 1 View Appointment ===================================== (Cheryl)
 		
+				private static void viewAppointmentsSP(ArrayList<Appointment> appointmentList,int loggedSpID) {
+					
+					String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+					int check = 0;
+					if(!appointmentList.isEmpty()) {
+						for(Appointment ap: appointmentList) {
+							if(ap.getSPAppointment() == loggedSpID) {
+							output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+							check++;
+							}else if(check == 0) {
+								System.out.println("There are no appointments assigned to you");
+							}
+		 				}
+						System.out.println(output);
+					}else {
+						System.out.println("No appointments available");
+					}
+				}
+				
+                private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
+                String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+					int check = 0;
+					if(!appointmentList.isEmpty()) {
+						for(Appointment ap: appointmentList) {
+							if(ap.getUrAppointment() == loggedUrID) {
+							output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+							check++;
+							}else if(check == 0) {
+								System.out.println("There are no appointments assigned to you");
+							}
+		 				}
+						System.out.println(output);
+					}else {
+						System.out.println("No appointments available");
+					}
+				}
+			
 }
 
 
