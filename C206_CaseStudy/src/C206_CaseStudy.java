@@ -346,8 +346,9 @@ public class C206_CaseStudy {
 		System.out.println("2. Create a new User account");
 		System.out.println("3. Make Request"); // add in more options
 		System.out.println("4. View Request");
-		System.out.println("5. View Appointments");
-		System.out.println("6. Quit");
+		System.out.println("5. Delete Request");
+		System.out.println("6.View Appointments");
+		System.out.println("7. Quit");
 		Helper.line(80, "-");
 
 	}
