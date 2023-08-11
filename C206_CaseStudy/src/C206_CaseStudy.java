@@ -213,11 +213,11 @@ public class C206_CaseStudy {
 				quoteMenu();
 				int quoteChoice = Helper.readInt("Select option > ");
 				if(quoteChoice == 1) {
-					addQuote(userList, quoteList, requestList);
+					addQuote(userList, quoteList, requestList, loggedSpID);
 				}else if (quoteChoice == 2) {
-					viewQuote(quoteList);
+					viewQuote(quoteList, loggedSpID);
 				}else if (quoteChoice == 3) {
-					deleteQuote(quoteList);
+					deleteQuote(quoteList, loggedSpID);
 				}else {
 					System.out.println("Invalid Choice");
 				}
@@ -822,17 +822,14 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 4 Add Quote ===================================== (Edmund)
 
-		public static void addQuote(ArrayList<User> urList, ArrayList<Quote> quoteList, ArrayList<Request> rList) {
+		public static void addQuote(ArrayList<User> urList, ArrayList<Quote> quoteList, ArrayList<Request> rList, int loggedUser) {
 			boolean flag = false;
 			int reqId = 0;
-			System.out.println(loggedSpID);
 			while(!flag) {
 				if(!rList.isEmpty()) {
 					reqId = Helper.readInt("Input Request ID > ");
 					for (Request r: rList) {
-						System.out.println(r.getReqId());
-						System.out.println(r.getReqSpID());
-						if(reqId == r.getReqId() && loggedSpID == r.getReqSpID()) {
+						if(reqId == r.getReqId() && loggedUser == r.getReqSpID()) {
 							flag = true;
 						}else {
 							System.out.println("That request either does not exist or does not belong to you");
@@ -856,7 +853,7 @@ public class C206_CaseStudy {
 					}
 					double amount = Helper.readDouble("Input amount > ");
 					LocalDateTime today = LocalDateTime.now();
-					Quote quote = new Quote(urId,loggedSpID, qService, qDetails, amount, today);
+					Quote quote = new Quote(urId,loggedUser, qService, qDetails, amount, today);
 					quoteList.add(quote);
 						
 					System.out.println("Quote succesfully added");
@@ -867,13 +864,13 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 5 View Quote ===================================== (Edmund)
 		
-		public static void viewQuote(ArrayList<Quote> quoteList) {
+		public static void viewQuote(ArrayList<Quote> quoteList, int loggedUser) {
 			String output = String.format("%-7s %-7s %-7s %-13s %-30s %-7s %-10s\n", "Q ID", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
 			int check = 0;
 
 			if(!quoteList.isEmpty()) {
 				for(Quote q: quoteList) {
-					if(q.getQuoteSpID() == loggedSpID) {
+					if(q.getQuoteSpID() == loggedUser) {
 						output += q.toString();
 						check++;
 					}
@@ -888,12 +885,12 @@ public class C206_CaseStudy {
 		}
 		
 		// ======================================= Option 6 Delete Quote ===================================== (Edmund)
-		public static void deleteQuote(ArrayList<Quote> quoteList) {
+		public static void deleteQuote(ArrayList<Quote> quoteList, int loggedUser) {
 			if(!quoteList.isEmpty()) {
 				String output = String.format("%-7s %-7s %-7s %-13s %-30s %-7s %-10s\n", "Q ID", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
 				int check2 = 0;
 				for(Quote q: quoteList) {
-					if(q.getQuoteSpID() == loggedSpID) {
+					if(q.getQuoteSpID() == loggedUser) {
 						output += q.toString();
 					}
 				}
