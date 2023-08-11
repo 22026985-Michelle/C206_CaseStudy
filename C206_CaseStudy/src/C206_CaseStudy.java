@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class C206_CaseStudy {
-	
+
 	private static final int ADMIN_OPTION_SEARCH_USER_USERNAME = 1;
 	private static final int VISITOR_OPTION_CREATE_USER = 2;
 	private static final int VISITOR_OPTION_QUIT = 3;
@@ -290,23 +290,22 @@ public class C206_CaseStudy {
 		return loginAcc;
 	}
 	
-
 	private static ServiceProvider getLoginAccountServiceProvider(ArrayList<ServiceProvider> serviceProviderList) {
-		ServiceProvider loginAcc = null;
-		String inputUsername = Helper.readString("Name > ");
-		String inputPassword = Helper.readString("Password > ");
-		for (ServiceProvider sp : serviceProviderList) {
-			if (sp.login(inputUsername, inputPassword) == true) {
-				loginAcc = sp;
-				loggedSpID = sp.getSpId();
-				break;
-			} else {	
-				System.out.println("Invalid username or password!");
-				break;
+			ServiceProvider loginAcc = null;
+			String inputUsername = Helper.readString("Name > ");
+			String inputPassword = Helper.readString("Password > ");
+			
+			for (ServiceProvider sp : serviceProviderList) {
+				if (sp.login(inputUsername, inputPassword) == true) {
+					loginAcc = sp;
+					break;
+				} 
 			}
-		}
-		return loginAcc;
+			if (loginAcc == null) {
+				System.out.println("Invalid username or password!");
 	}
+			return loginAcc;
+		}
 
 	private static void mainMenu() {
 		// Write code here for the mainMenu method.
