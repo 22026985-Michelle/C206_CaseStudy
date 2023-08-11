@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Locale;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class C206_CaseStudy {
@@ -111,7 +112,7 @@ public class C206_CaseStudy {
 				C206_CaseStudy.addUser(userList, ur);
 			} else if (memberOption == 3) {
 				// Request quote (Edmund)
-				addQuote(serviceProviderList, quoteList, serviceList);
+				addQuote(userList, quoteList, requestList);
 			} else if (memberOption == 4){
 				// View quote
 				viewQuote(quoteList, loggedUrID);
@@ -763,36 +764,42 @@ public class C206_CaseStudy {
 		
 		// ======================================= Option 4 Add Quote ===================================== (Edmund)
 
-		public static void addQuote(ArrayList<ServiceProvider> spList, ArrayList<Quote> quoteList, ArrayList<Service> sList) {
+		public static void addQuote(ArrayList<User> urList, ArrayList<Quote> quoteList, ArrayList<Request> rList) {
 			boolean flag = false;
+			int reqId = 0;
 			while(!flag) {
-				int serviceID = Helper.readInt("Input Service ID > ");
-				for (ServiceProvider sp: spList) {
-					if(serviceID == sp.getSpId()) {
-						flag = true;
+				if(!rList.isEmpty()) {
+					reqId = Helper.readInt("Input Request ID > ");
+					for (Request r: rList) {
+						if( reqId == r.getReqId()) {
+							flag = true;
+						}else {
+							System.out.println("There are no requests");
+						}
 					}
 				}
 	
 				if(flag) {
-					if(!sList.isEmpty()) {
-						String output = String.format("%-7s %-15s\n", "SP ID", "SERVICES");
-						for(Service s: sList) {
-							output += String.format("%-7d %-15s\n", s.getSpId(),s.getService());
-							System.out.println(output);
+					int urId = 0;
+					String qService = "";
+					String qDetails = "";
+					for(Request r: rList) {
+						if(r.getReqId() == reqId) {
+							urId = r.getReqUrID();
+							qService = r.getRequestService();
+							qDetails = r.getRequestDetails();
 						}
-						String serviceType = Helper.readString("Input service > ");
-						String details = Helper.readString("Input details > ");
-						double amount = Helper.readDouble("Input amount > ");
-						Quote quote = new Quote(loggedUrID,serviceID, serviceType, details, amount);
-						quoteList.add(quote);
-						
-						System.out.println("Quote succesfully added");
-					}else {
-						System.out.println("This service provider has no services");
 					}
+					double amount = Helper.readDouble("Input amount > ");
+					LocalDateTime today = LocalDateTime.now();
+					Quote quote = new Quote(urId,loggedSpID, qService, qDetails, amount, today);
+					quoteList.add(quote);
+						
+					System.out.println("Quote succesfully added");
 				}
 			}
 		}
+		
 		
 		// ======================================= Option 5 View Quote ===================================== (Edmund)
 		

@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 
 public class Quote {
 	private static int nextQuoteId = 0;
@@ -7,14 +8,16 @@ public class Quote {
 	private String quoteService;
 	private String quoteDetails;
 	private double quoteAmount;
+	private LocalDateTime responseDate;
 	
-	public Quote(int reqUrID, int reqSpID, String quoteService, String quoteDetails, double quoteAmount) {
+	public Quote(int reqUrID, int reqSpID, String quoteService, String quoteDetails, double quoteAmount, LocalDateTime responseDate) {
 		this.quoteId = nextQuoteId;
 		this.quoteUrID = reqUrID;
 		this.quoteSpID = reqSpID;
 		this.quoteService = quoteService;
 		this.quoteDetails = quoteDetails;
 		this.quoteAmount = quoteAmount;
+		this.responseDate = responseDate;
 		
 		nextQuoteId++;
 	}
@@ -55,5 +58,7 @@ public class Quote {
 		return quoteSpID;
 	}
 
-	
+	public LocalDateTime getResponseDate() {
+		return responseDate;
+	}
 }
