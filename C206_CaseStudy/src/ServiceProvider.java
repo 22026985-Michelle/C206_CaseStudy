@@ -1,19 +1,21 @@
-
 public class ServiceProvider {
 
 	private String spName;
 	private String spEmail;
-	private String spServiceDescription;
+	private String numOfDeisgners;
 	private String spPassword;
 	private int spId;
+	private String spContact;	
 	private static int nextspId = 1;
 	
-	public ServiceProvider(String spName, String spEmail, String spPassword, String spServiceDescription ) {
+	public ServiceProvider(String spName, String spEmail, String spPassword, String numOfDeisgners, String spContact ) {
 		this.spName = spName;
 		this.spEmail = spEmail;
 		this.spPassword = spPassword;
-		this.spServiceDescription = spServiceDescription;
+		this.numOfDeisgners = numOfDeisgners;
+		this.spContact = spContact;
 		this.spId = nextspId;
+		
 		nextspId++;
 	}
 	
@@ -26,12 +28,13 @@ public class ServiceProvider {
 	public String toString() {
 		
 		// Write your codes here
-		String userInfo = String.format("%-5s %-20s %-30s %-15s %-20s",
+		String userInfo = String.format("%-5s %-20s %-30s %-15s %-20s %-10s",
 				spId,
 				spName,
 				spEmail,
 				spPassword, 
-				spServiceDescription);
+				numOfDeisgners, 
+				spContact);
 		
 		return userInfo;
 	}
@@ -49,7 +52,7 @@ public class ServiceProvider {
 	}
 
 	public String getSpServiceDescription() {
-		return spServiceDescription;
+		return numOfDeisgners;
 	}
 
 	public String getSpPassword() {
