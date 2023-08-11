@@ -37,13 +37,13 @@ public class QuoteTest {
 		u5 = new User("Emilly", "emilly@gmail.com", "password5", "92847563", "Bukit Timah St 18 Waterway #09-08");
 		
 		q1 = new Quote(1,1, "Bathroom", "Replace tiles", 600.00, LocalDateTime.now());
-		q2 = new Quote(1,1, "Kitchen", "Remodel floor", 1000.00, LocalDateTime.now());
+		q2 = new Quote(2,2, "Kitchen", "Remodel floor", 1000.00, LocalDateTime.now());
 
 		r1 = new Request(1, 1, "Bathroom", "Replace tiles", 400.00);
 		r2 = new Request(2, 2, "Kitchen", "Remodel floor", 700.00);
 		
-		sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A");
-		sp2 = new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B");
+		sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 2, "Renovation Description A");
+		sp2 = new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", 3, "Renovation Description B");
 		
 		userList = new ArrayList<User>();
 		quoteList =  new ArrayList<Quote>();
@@ -61,7 +61,7 @@ public class QuoteTest {
 		assertNotNull("Test that there is are quotes in the list", quoteList);
 		
 		// Test that there is 1 quote in the list
-		assertEquals("Test that there is 1 quote in the list", 1 , quoteList.size());
+		assertEquals("Test that there is 1 quote in the list", quoteList.size() , 1);
 		requestList.add(r2);
 		
 		// Test that Service provider cannot add quotes to request that do not belong to them
@@ -70,7 +70,15 @@ public class QuoteTest {
 	
 	@Test
 	public void testViewQuote() {
-		
+		// Add quote to quote list
+		quoteList.add(q1);
+		// Test that quote list is not empty
+		assertNotNull("Test that there is are quotes in the list", quoteList);
+		// Test that quoteList should display 1 quote
+		assertEquals("Test that there is 1 quote in the quote list", 1, quoteList.size());
+		// Test that q2 will not show up for sp1
+		quoteList.add(q2);
+		assertNotEquals("Test that q2 SpId is not 1", q2.getQuoteSpID(), 1);
 	}
 	
 	@Test
