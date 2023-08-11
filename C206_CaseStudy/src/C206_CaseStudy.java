@@ -194,11 +194,11 @@ public class C206_CaseStudy {
 		   		}
 		   		else if (serviceproviderOption1==3) {
 		   		//Option 3: Delete Appointment
-		   			
+		   			deleteApppointment(appointmentList ,loggedSpID);
 		   		}
 		   		else if (serviceproviderOption==4) {
 		   		//Option 4: Update Appointment (select field to edit and select record to edit)	
-		   			
+		   			updateAppointment(appointmentList,loggedSpID);
 		   		}
 		   		
 		   		else if (serviceproviderOption==5) {
