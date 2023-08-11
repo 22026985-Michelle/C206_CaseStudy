@@ -26,7 +26,7 @@ public class ServiceProviderTest {
 	}
 	
 	
-	// Michelle, Izdihar
+	// Izdihar
 	@Before
 	public void setUp() throws Exception {
 		
@@ -130,7 +130,7 @@ public class ServiceProviderTest {
 	    assertEquals("Test that ViewAllServiceProvider after delete", expectedOutput, allServiceProviders);
 	}
 	
-	// Michelle, Izdihar
+	// Izdihar
 	@After
 	public void tearDown() throws Exception {
 		a1 = null;
