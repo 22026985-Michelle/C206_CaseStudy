@@ -185,7 +185,7 @@ public class C206_CaseStudy {
 		   		}
 		   		else if (serviceproviderOption1==2) {
 		   		//Option 2: Add Appointment
-		   			
+		   			addAppointment(appointmentList,loggedSpID);
 		   		}
 		   		else if (serviceproviderOption1==3) {
 		   		//Option 3: Delete Appointment
@@ -202,8 +202,6 @@ public class C206_CaseStudy {
 		   		}
 		   		
 		   		}
-
-
 
 			} else if (serviceproviderOption == 2) {
 				// Manage Quotes (Edmund)
@@ -1101,7 +1099,34 @@ public class C206_CaseStudy {
 					}
 				}
 				
-
+//================================Option 2 Add Appointment=========================(Cheryl)
+			private static void addAppointment(ArrayList<Appointment> appointmentList,int loggedSpID) {
+					
+					String appservice = Helper.readString("Enter the Appointment Service > ");
+					String appstatus = "Incomplete";
+					String appdatestring = Helper.readString("Enter the appointment's date in the 'dd/MM/yyyy' format > ");
+					LocalDate appdate = LocalDate.parse(appdatestring, dtFormat);
+					String appdescription = Helper.readString("Enter a description to add to the appointment > ");
+					int customerid = Helper.readInt("Enter the customer id of the customer involved > ");
+					int spid = loggedSpID;
+					
+					appointmentList.add(new Appointment(appservice,appstatus,appdate,appdescription,customerid,spid));
+				}
+				
+		//================================Option 3 Delete Appointment=====================(Cheryl)
+			
+			private void deleteApppointment(ArrayList<Appointment> appointmentList , int loggedSpID) {
+				
+				String deleteapp ="N";
+				
+				int deleteappid = Helper.readInt("Select an appointment to delete by entering its appointment id > ");
+				
+				
+				
+			}
+				
+				
+		//================================Option 4 Update Appointment ===============(Cheryl)
 			
 }
 
