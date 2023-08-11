@@ -169,19 +169,41 @@ public class C206_CaseStudy {
 	
 	private static void runServiceProvider(ServiceProvider loginAcc) {
 		int serviceproviderOption = -1;
+		int serviceproviderOption1 = -1;
 
 		while (serviceproviderOption != 6) {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
 		   	if (serviceproviderOption == 1) {
-				// Manage Appoinment (Cheryl)
-				//Option 1: View Appointment
-				//Option 2: Add Appointment
-				//Option 3: Delete Appointment
-		   		//Option 4: Update Appointment (select field to edit and select record to edit)
+	   	
+
+		   		while (serviceproviderOption1!=5) {
+		  
+		   		if(serviceproviderOption1 ==1) {
+		   		//Option 1: View Appointment
+		   			viewAppointmentsSP(appointmentList,loggedSpID);
+		   		}
+		   		else if (serviceproviderOption1==2) {
+		   		//Option 2: Add Appointment
+		   			
+		   		}
+		   		else if (serviceproviderOption1==3) {
+		   		//Option 3: Delete Appointment
+		   			
+		   		}
+		   		else if (serviceproviderOption==4) {
+		   		//Option 4: Update Appointment (select field to edit and select record to edit)	
+		   			
+		   		}
 		   		
-		   		viewAppointmentsSP(appointmentList,loggedSpID);
+		   		else if (serviceproviderOption==5) {
+		   		// Option 5 : Quit	
+		   			System.out.println("Exiting appointment menu...");
+		   		}
+		   		
+		   		}
+
 
 
 			} else if (serviceproviderOption == 2) {
@@ -356,7 +378,7 @@ public class C206_CaseStudy {
 	// Log in as Service Provider
 	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
-		System.out.println("1. Manage Quotes"); 
+		System.out.println("1. Manage Appointments"); 
 		System.out.println("2. Manage Appointment Request");
 		System.out.println("3. View Services");
 		System.out.println("4. Add Services");
@@ -1029,6 +1051,26 @@ public class C206_CaseStudy {
 			}
 		}
 		
+		//====================================== Option 6 View Appointment=================================
+		
+        private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
+        String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+			int check = 0;
+			if(!appointmentList.isEmpty()) {
+				for(Appointment ap: appointmentList) {
+					if(ap.getUrAppointment() == loggedUrID) {
+					output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+					check++;
+					}else if(check == 0) {
+						System.out.println("There are no appointments assigned to you");
+					}
+ 				}
+				System.out.println(output);
+			}else {
+				System.out.println("No appointments available");
+			}
+		}
+		
 		// ======================================= Option 1 View Appointment ===================================== (Cheryl)
 		
 				private static void viewAppointmentsSP(ArrayList<Appointment> appointmentList,int loggedSpID) {
@@ -1050,23 +1092,7 @@ public class C206_CaseStudy {
 					}
 				}
 				
-                private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
-                String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
-					int check = 0;
-					if(!appointmentList.isEmpty()) {
-						for(Appointment ap: appointmentList) {
-							if(ap.getUrAppointment() == loggedUrID) {
-							output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
-							check++;
-							}else if(check == 0) {
-								System.out.println("There are no appointments assigned to you");
-							}
-		 				}
-						System.out.println(output);
-					}else {
-						System.out.println("No appointments available");
-					}
-				}
+
 			
 }
 
