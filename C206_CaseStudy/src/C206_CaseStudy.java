@@ -868,13 +868,13 @@ public class C206_CaseStudy {
 		// ======================================= Option 5 View Quote ===================================== (Edmund)
 		
 		public static void viewQuote(ArrayList<Quote> quoteList) {
-			String output = String.format("%-7s %-7s %-13s %-30s %-7s %-10s\n", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
+			String output = String.format("%-7s %-7s %-7s %-13s %-30s %-7s %-10s\n", "Q ID", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
 			int check = 0;
 
 			if(!quoteList.isEmpty()) {
 				for(Quote q: quoteList) {
 					if(q.getQuoteSpID() == loggedSpID) {
-						output += String.format("%-7d %-7d %-13s %-30s %-7.2f %-10s\n", q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount(),q.getResponseDate().format(dtFormat));
+						output += q.toString();
 						check++;
 					}
 					if(check == 0) {
