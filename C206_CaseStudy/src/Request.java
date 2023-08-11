@@ -6,6 +6,7 @@ public class Request {
 	private String requestService;
 	private String requestDetails;
 	private double reqAmount;
+	private boolean reqCheck;
 	
 	public Request(int reqUrID, int reqSpID, String requestService, String requestDetails, double reqAmount) {
 		this.reqId = nextReqId;
@@ -14,6 +15,7 @@ public class Request {
 		this.requestService = requestService;
 		this.requestDetails = requestDetails;
 		this.reqAmount = reqAmount;
+		this.reqCheck = false;
 		
 		nextReqId++;
 	}
@@ -55,7 +57,11 @@ public class Request {
 		return reqAmount;
 	}
 
-	
+	public boolean getReqCheck() {
+		return reqCheck;
+	}
 
-	
+	public void setReqCheck(boolean reqCheck) {
+		this.reqCheck = reqCheck;
+	}
 }

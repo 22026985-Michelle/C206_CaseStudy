@@ -7,7 +7,6 @@ public class Quote {
 	private String quoteService;
 	private String quoteDetails;
 	private double quoteAmount;
-	private boolean quoteCheck;
 	
 	public Quote(int reqUrID, int reqSpID, String quoteService, String quoteDetails, double quoteAmount) {
 		this.quoteId = nextQuoteId;
@@ -16,7 +15,6 @@ public class Quote {
 		this.quoteService = quoteService;
 		this.quoteDetails = quoteDetails;
 		this.quoteAmount = quoteAmount;
-		this.quoteCheck = false;
 		
 		nextQuoteId++;
 	}
@@ -47,14 +45,6 @@ public class Quote {
 
 	public void setQuoteAmount(double quoteAmount) {
 		this.quoteAmount = quoteAmount;
-	}
-
-	public boolean isQuoteCheck() {
-		return quoteCheck;
-	}
-
-	public void setQuoteCheck(boolean quoteCheck) {
-		this.quoteCheck = quoteCheck;
 	}
 
 	public int GetQuoteUrID() {
