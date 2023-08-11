@@ -53,10 +53,28 @@ public class QuoteTest {
 
 	@Test
 	public void testAddQuote() {
+		// Add request to request list
+		requestList.add(r1);
 		// Add quote into quote list
-		C206_CaseStudy.addQuote(userList, quoteList, requestList);
+		C206_CaseStudy.addQuote(userList, quoteList, requestList,1);
 		// Test that quoteList is not empty
-		assertNotNull("Test that there is are quotes in the list");
+		assertNotNull("Test that there is are quotes in the list", quoteList);
+		
+		// Test that there is 1 quote in the list
+		assertEquals("Test that there is 1 quote in the list", 1 , quoteList.size());
+		requestList.add(r2);
+		
+		// Test that Service provider cannot add quotes to request that do not belong to them
+		assertNotSame("Test that the request does not belong to Service provider", r2.getReqSpID(), 1);
+	}
+	
+	@Test
+	public void testViewQuote() {
+		
+	}
+	
+	@Test
+	public void testDeleteQuote() {
 		
 	}
 }
