@@ -44,7 +44,7 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A"));
 		serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B"));
-		requestList.add(new Request(1, 2, "Bathroom", "Replace tiles", 400.00));
+		requestList.add(new Request(1, 1, "Bathroom", "Replace tiles", 400.00));
 		int option = 0;
 		int opt1 = 0;
 
@@ -75,7 +75,6 @@ public class C206_CaseStudy {
 						ServiceProvider loginAccSP = getLoginAccountServiceProvider(serviceProviderList);
 						if (loginAccSP != null) {
 							runServiceProvider(loginAccSP);
-							loggedSpID = loginAccSP.getSpId();
 						}
 					} else if (opt1 == LOGIN_OPTION_QUIT) {
 						System.out.println("Returning to main menu...");
@@ -300,6 +299,7 @@ public class C206_CaseStudy {
 		for (ServiceProvider sp : serviceProviderList) {
 			if (sp.login(inputUsername, inputPassword) == true) {
 				loginAcc = sp;
+				loggedSpID = sp.getSpId();
 				break;
 			} else {	
 				System.out.println("Invalid username or password!");
@@ -355,8 +355,8 @@ public class C206_CaseStudy {
 	// Log in as Service Provider
 	public static void serviceProviderMenu() {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
-		System.out.println("1. Manage Quotes"); 
-		System.out.println("2. Manage Appointment Request");
+		System.out.println("1. Manage Appointments"); 
+		System.out.println("2. Manage Request and Quotes");
 		System.out.println("3. View Services");
 		System.out.println("4. Add Services");
 		System.out.println("5. Delete Services");
@@ -780,10 +780,13 @@ public class C206_CaseStudy {
 		public static void addQuote(ArrayList<User> urList, ArrayList<Quote> quoteList, ArrayList<Request> rList) {
 			boolean flag = false;
 			int reqId = 0;
+			System.out.println(loggedSpID);
 			while(!flag) {
 				if(!rList.isEmpty()) {
 					reqId = Helper.readInt("Input Request ID > ");
 					for (Request r: rList) {
+						System.out.println(r.getReqId());
+						System.out.println(r.getReqSpID());
 						if(reqId == r.getReqId() && loggedSpID == r.getReqSpID()) {
 							flag = true;
 						}else {
@@ -841,11 +844,11 @@ public class C206_CaseStudy {
 		// ======================================= Option 6 Delete Quote ===================================== (Edmund)
 		public static void deleteQuote(ArrayList<Quote> quoteList) {
 			if(!quoteList.isEmpty()) {
-				String output = String.format("%-7s %-7s %-13s %-30s %-7s %-10s\n", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
+				String output = String.format("%-7s %-7s %-7s %-13s %-30s %-7s %-10s\n", "Q ID", "UR ID", "SP ID", "SERVICE TYPE", "DETAILS", "AMOUNT", "RESPONSE DATE");
 				
 				for(Quote q: quoteList) {
 					if(q.getQuoteSpID() == loggedSpID) {
-						output += String.format("%-7d %-7d %-13s %-30s %-7.2f %-10s\n", q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount(),q.getResponseDate().format(dtFormat));
+						output += String.format("%-7d %-7d %-7d %-13s %-30s %-7.2f %-10s\n",q.getQuoteId(), q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount(),q.getResponseDate().format(dtFormat));
 					}
 				}
 				System.out.println(output);
@@ -853,8 +856,13 @@ public class C206_CaseStudy {
 				int check = 0;
 				for(Quote q: quoteList) {
 					if(q.getQuoteId() == quoteID) {
-						quoteList.remove(q);
-						check++;
+						char uSure = Helper.readChar("Are you sure you wish to delete quote? (Y/N) > ");
+						if(uSure == 'y' || uSure == 'Y') {
+							quoteList.remove(q);
+							check++;
+							System.out.println("Quote was successfully deleted");
+						}
+						break;
 					}else if (check == 0) {
 						System.out.println("No quote ID of " + quoteID + " was found");
 					}
