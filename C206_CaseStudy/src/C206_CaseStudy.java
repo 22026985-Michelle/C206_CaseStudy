@@ -168,19 +168,41 @@ public class C206_CaseStudy {
 	
 	private static void runServiceProvider(ServiceProvider loginAcc) {
 		int serviceproviderOption = -1;
+		int serviceproviderOption1 = -1;
 
 		while (serviceproviderOption != 6) {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
 		   	if (serviceproviderOption == 1) {
-				// Manage Appoinment (Cheryl)
-				//Option 1: View Appointment
-				//Option 2: Add Appointment
-				//Option 3: Delete Appointment
-		   		//Option 4: Update Appointment (select field to edit and select record to edit)
+	   	
+
+		   		while (serviceproviderOption1!=5) {
+		  
+		   		if(serviceproviderOption1 ==1) {
+		   		//Option 1: View Appointment
+		   			viewAppointmentsSP(appointmentList,loggedSpID);
+		   		}
+		   		else if (serviceproviderOption1==2) {
+		   		//Option 2: Add Appointment
+		   			
+		   		}
+		   		else if (serviceproviderOption1==3) {
+		   		//Option 3: Delete Appointment
+		   			
+		   		}
+		   		else if (serviceproviderOption==4) {
+		   		//Option 4: Update Appointment (select field to edit and select record to edit)	
+		   			
+		   		}
 		   		
-		   		viewAppointmentsSP(appointmentList,loggedSpID);
+		   		else if (serviceproviderOption==5) {
+		   		// Option 5 : Quit	
+		   			System.out.println("Exiting appointment menu...");
+		   		}
+		   		
+		   		}
+
 
 
 			} else if (serviceproviderOption == 2) {
@@ -346,8 +368,9 @@ public class C206_CaseStudy {
 		System.out.println("2. Create a new User account");
 		System.out.println("3. Make Request"); // add in more options
 		System.out.println("4. View Request");
-		System.out.println("5. View Appointments");
-		System.out.println("6. Quit");
+		System.out.println("5. Delete Request");
+		System.out.println("6.View Appointments");
+		System.out.println("7. Quit");
 		Helper.line(80, "-");
 
 	}
@@ -357,6 +380,7 @@ public class C206_CaseStudy {
 		C206_CaseStudy.setHeader("WELCOME BACK, SERVICE PROVIDER");
 		System.out.println("1. Manage Appointments"); 
 		System.out.println("2. Manage Request and Quotes");
+		System.out.println("2. Manage Appointment Request");
 		System.out.println("3. View Services");
 		System.out.println("4. Add Services");
 		System.out.println("5. Delete Services");
@@ -653,55 +677,56 @@ public class C206_CaseStudy {
 			}
 		}
 		
-	// ======================================================================================================
-	// ============================= Option 5 Add Service Provider (CREATE) ================================= (Izdihar)
-		public static ServiceProvider inputServiceProvider() {
-		    ServiceProvider sp;
+		// ======================================================================================================
+		// ============================= Option 5 Add Service Provider (CREATE) ================================= (Izdihar)
+			public static ServiceProvider inputServiceProvider() {
+			    ServiceProvider sp;
 
-		    String name;
-		    do {
-		    	name = Helper.readString("Enter Service Provider Name > ");
-		        if (!isServiceProviderNameUnique(serviceProviderList, name)) {
-		            System.out.println("Username " + name + " is already taken. Please choose a different username.\n");
-		        }
-		    } while (!isServiceProviderNameUnique(serviceProviderList, name));
+			    String name;
+			    do {
+			    	name = Helper.readString("Enter Service Provider Name > ");
+			        if (!isServiceProviderNameUnique(serviceProviderList, name)) {
+			            System.out.println("Username " + name + " is already taken. Please choose a different username.\n");
+			        }
+			    } while (!isServiceProviderNameUnique(serviceProviderList, name));
 
-		    String email = Helper.readString("Enter email address > ");
+			    String email = Helper.readString("Enter email address > ");
 
-		    String password;
-		    do {
-		        password = Helper.readString("Enter password > ");
-		        if (!isStrongPassword(password)) {
-		            System.out.println("Password is not strong enough. Please choose a stronger password.");
-		            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
-		        }
-		    } while (!isContactNumUnique(userList, password));
-		    String description = Helper.readString("Enter service description > ");
+			    String password;
+			    do {
+			        password = Helper.readString("Enter password > ");
+			        if (!isStrongPassword(password)) {
+			            System.out.println("Password is not strong enough. Please choose a stronger password.");
+			            System.out.println("A strong password should have at least 8 characters and include at least one uppercase letter, one lowercase letter, \none digit, and one special character.\n");
+			            
+			        }
+			    } while (!isStrongPassword(password));
+			    String description = Helper.readString("Enter service description > ");
 
-		    sp = new ServiceProvider(name, email, password, description );
-		    return sp;
-		}
-
-		public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
-			ServiceProvider serviceProvider;
-			for (int i = 0; i < serviceProviderList.size(); i++) {
-				serviceProvider = serviceProviderList.get(i);
-				if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
-					return;
+			    sp = new ServiceProvider(name, email, password, description );
+			    return sp;
 			}
-			serviceProviderList.add(SP);
-			System.out.println("\nRegistration successful!");
 
-		}
-		
-		public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,String serviceProvider) {
-			for (ServiceProvider sp : serviceProviderList) {
-		        if (sp.getSpName().equalsIgnoreCase(serviceProvider)) {
-		            return false; // Service Provider Name is not unique
-		        }
-		    }
-		    return true; // Service Provider Name is unique
-		}
+			public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
+				ServiceProvider serviceProvider;
+				for (int i = 0; i < serviceProviderList.size(); i++) {
+					serviceProvider = serviceProviderList.get(i);
+					if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
+						return;
+				}
+				serviceProviderList.add(SP);
+				System.out.println("\nRegistration successful!");
+
+			}
+			
+			public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,String serviceProvider) {
+				for (ServiceProvider sp : serviceProviderList) {
+			        if (sp.getSpName().equalsIgnoreCase(serviceProvider)) {
+			            return false; // Service Provider Name is not unique
+			        }
+			    }
+			    return true; // Service Provider Name is unique
+			}
 		
 		// ==================================================================================================
 		// ========================= Option 6 Delete Service Provider (DELETE) ============================== (Izdihar)
@@ -1035,6 +1060,26 @@ public class C206_CaseStudy {
 			}
 		}
 		
+		//====================================== Option 6 View Appointment=================================
+		
+        private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
+        String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+			int check = 0;
+			if(!appointmentList.isEmpty()) {
+				for(Appointment ap: appointmentList) {
+					if(ap.getUrAppointment() == loggedUrID) {
+					output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+					check++;
+					}else if(check == 0) {
+						System.out.println("There are no appointments assigned to you");
+					}
+ 				}
+				System.out.println(output);
+			}else {
+				System.out.println("No appointments available");
+			}
+		}
+		
 		// ======================================= Option 1 View Appointment ===================================== (Cheryl)
 		
 				private static void viewAppointmentsSP(ArrayList<Appointment> appointmentList,int loggedSpID) {
@@ -1056,23 +1101,7 @@ public class C206_CaseStudy {
 					}
 				}
 				
-                private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
-                String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
-					int check = 0;
-					if(!appointmentList.isEmpty()) {
-						for(Appointment ap: appointmentList) {
-							if(ap.getUrAppointment() == loggedUrID) {
-							output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
-							check++;
-							}else if(check == 0) {
-								System.out.println("There are no appointments assigned to you");
-							}
-		 				}
-						System.out.println(output);
-					}else {
-						System.out.println("No appointments available");
-					}
-				}
+
 			
 }
 
