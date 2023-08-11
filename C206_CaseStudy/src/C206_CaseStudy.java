@@ -46,6 +46,9 @@ public class C206_CaseStudy {
 		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", "Renovation Description A"));
 		serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2","Renovation Description B"));
 		requestList.add(new Request(1, 1, "Bathroom", "Replace tiles", 400.00));
+		appointmentList.add(new Appointment("Replace Tiles","Incomplete",LocalDate.parse("11/01/2023", dtFormat),"Appointment Description",3,1));
+		appointmentList.add(new Appointment("Replace Pipes","Incomplete",LocalDate.parse("23/01/2023", dtFormat),"Appointment Description",3,1));
+		appointmentList.add(new Appointment("Replace Walls","Incomplete",LocalDate.parse("11/02/2023", dtFormat),"Appointment Description",3,2));
 		int option = 0;
 		int opt1 = 0;
 
@@ -180,9 +183,10 @@ public class C206_CaseStudy {
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
 		   	if (serviceproviderOption == 1) {
-	   	
-
+		   		
 		   		while (serviceproviderOption1!=5) {
+		   			
+		   	  		serviceproviderOption1= Helper.readInt("Enter choice > ");
 		  
 		   		if(serviceproviderOption1 ==1) {
 		   		//Option 1: View Appointment
@@ -393,6 +397,17 @@ public class C206_CaseStudy {
 		System.out.println("4. Quit");
 		Helper.line(80, "-");
     }
+	
+	public static void appointmentMenu() {
+		C206_CaseStudy.setHeader("MANAGE APPOINTMENTS");
+		System.out.println("1. View Appointments");
+		System.out.println("2. Add Appointment");
+		System.out.println("3. Delete Appointment");
+		System.out.println("4. Update Appointment");
+		System.out.println("5. Quit");
+		Helper.line(80, "-");
+		
+	}
 	
 	public static void  updateAppMenu() {
 		C206_CaseStudy.setHeader("UPDATE APPOINTMENT RECORD");
@@ -1095,12 +1110,12 @@ public class C206_CaseStudy {
 //====================================== Option 6 View Appointment=================================
 		
         private static void viewAppointmentsUr(ArrayList<Appointment>appointmentList,int loggedUrID) {
-        String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+        String output = String.format("%8s %8s %8s %8s \n", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
 			int check = 0;
 			if(!appointmentList.isEmpty()) {
 				for(Appointment ap: appointmentList) {
 					if(ap.getUrAppointment() == loggedUrID) {
-					output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+					output += String.format("%8d %8s %8s %8s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
 					check++;
 					}else if(check == 0) {
 						System.out.println("There are no appointments assigned to you");
@@ -1116,12 +1131,12 @@ public class C206_CaseStudy {
 		
 				private static void viewAppointmentsSP(ArrayList<Appointment> appointmentList,int loggedSpID) {
 					
-					String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+					String output = String.format("%8s %8s %8s %8s\n", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
 					int check = 0;
 					if(!appointmentList.isEmpty()) {
 						for(Appointment ap: appointmentList) {
 							if(ap.getSPAppointment() == loggedSpID) {
-							output += String.format("%d %s %s %s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
+							output += String.format("%8d %8s %8s %8s\n",ap.getAppointmentId(),ap.getAppointmentStatus(),ap.getAppointmentDate().toString(),ap.getAppointmentDescription());
 							check++;
 							}else if(check == 0) {
 								System.out.println("There are no appointments assigned to you");
@@ -1154,7 +1169,7 @@ public class C206_CaseStudy {
 				
 				String deleteapp ="N";
 				int check =0;
-				String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+				String output = String.format("%s %s %s %s\n", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
 
 				int deleteappid = Helper.readInt("Select an appointment to delete by entering its appointment id > ");
 				
@@ -1198,7 +1213,7 @@ public class C206_CaseStudy {
 	 private static void updateAppointment(ArrayList<Appointment> appointmentList,int loggedSpID){
 		 
 			int check =0;
-			String output = String.format("%s %s %s %s", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
+			String output = String.format("%s %s %s %s\n", "APPOINTMENT ID","APPOINTMENT STATUS","APPOINTMENT DATE","APPOINTMENT DESCRIPTION");
 			int updateopt=0;
 
 			int upappid = Helper.readInt("Select an appointment to update by entering its appointment id > ");
