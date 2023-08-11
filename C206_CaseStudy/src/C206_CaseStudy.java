@@ -721,19 +721,35 @@ public class C206_CaseStudy {
 		    }
 		}
 
+//		public static void deleteServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider serviceProvider) {
+//		    if (serviceProvider != null) {
+//		        String option = Helper.readString("Delete Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
+//		        if (option.equalsIgnoreCase("Y")) {
+//		            String opt = Helper.readString("Confirm deletion of Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
+//		            if (opt.equalsIgnoreCase("Y")) {
+//		            	serviceProviderList.remove(serviceProvider);
+//		                System.out.println("User with ID " + serviceProvider.getSpId() + " deleted successfully.");
+//		            } else if (opt.equalsIgnoreCase("N")) {
+//		                System.out.println("Deletion aborted.");
+//		            } else {
+//		                System.out.println("Invalid input. Deletion aborted.");
+//		            }
+//		        } else if (option.equalsIgnoreCase("N")) {
+//		            System.out.println("Deletion aborted.");
+//		        } else {
+//		            System.out.println("Invalid input. Deletion aborted.");
+//		        }
+//		    } else {
+//		        System.out.println("Service Provider not found.");
+//		    }
+//		}
+		
 		public static void deleteServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider serviceProvider) {
 		    if (serviceProvider != null) {
 		        String option = Helper.readString("Delete Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
 		        if (option.equalsIgnoreCase("Y")) {
-		            String opt = Helper.readString("Confirm deletion of Service Provider " + serviceProvider.getSpId() + "? (Y/N) > ");
-		            if (opt.equalsIgnoreCase("Y")) {
 		            	serviceProviderList.remove(serviceProvider);
 		                System.out.println("User with ID " + serviceProvider.getSpId() + " deleted successfully.");
-		            } else if (opt.equalsIgnoreCase("N")) {
-		                System.out.println("Deletion aborted.");
-		            } else {
-		                System.out.println("Invalid input. Deletion aborted.");
-		            }
 		        } else if (option.equalsIgnoreCase("N")) {
 		            System.out.println("Deletion aborted.");
 		        } else {
