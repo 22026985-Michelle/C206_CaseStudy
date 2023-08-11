@@ -876,7 +876,8 @@ public class C206_CaseStudy {
 					if(q.getQuoteSpID() == loggedSpID) {
 						output += String.format("%-7d %-7d %-13s %-30s %-7.2f %-10s\n", q.GetQuoteUrID(),q.getQuoteSpID(),q.getQuoteService(),q.getQuoteDetails(),q.getQuoteAmount(),q.getResponseDate().format(dtFormat));
 						check++;
-					}else if(check == 0) {
+					}
+					if(check == 0) {
 						System.out.println("No quotes created by you");
 					}
 				}
@@ -908,7 +909,8 @@ public class C206_CaseStudy {
 							System.out.println("Quote was successfully deleted");
 						}
 						break;
-					}else if (check == 0) {
+					}
+					if (check == 0) {
 						System.out.println("No quote ID of " + quoteID + " was found");
 					}
 				}
