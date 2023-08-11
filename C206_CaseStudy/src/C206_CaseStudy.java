@@ -111,13 +111,12 @@ public class C206_CaseStudy {
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
 			} else if (memberOption == 3) {
-				// Request quote (Edmund)
-				addQuote(userList, quoteList, requestList);
+				// Send Request
 			} else if (memberOption == 4){
-				// View quote
+				// View Request
 				viewQuote(quoteList, loggedUrID);
 			}else if (memberOption == 5){
-				// Delete quote 
+				// Delete Request 
 				deleteQuote(quoteList, loggedUrID);
 				}else if (memberOption == 6){
 				// View appointment (Create user view for appointments)
@@ -190,9 +189,8 @@ public class C206_CaseStudy {
 			} else if (serviceproviderOption == 2) {
 				// Manage Appointment Request (Xavier)
 				runRequest();
-				//Option 1: View Appointment Request
-				//Option 2: Add Appointment Request
-				//Option 3: Delete Appointment Request
+				addQuote(userList, quoteList, requestList);
+
 			}else if (serviceproviderOption == 3) {
 				viewServiceSP(serviceList, loggedSpID);
 			}else if (serviceproviderOption == 4) {
