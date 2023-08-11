@@ -3,6 +3,7 @@ import java.time.LocalDate;
 
 public class Appointment {
 	
+	private static int newAppointmentId =0;
 	private int appointmentId;
 	private String appointmentService;
 	private String appointmentStatus;
@@ -12,15 +13,16 @@ public class Appointment {
 	private int spAppointment;
 
 	
-	public Appointment(int appointmentId,String appointmentService, String appointmentStatus, LocalDate appointmentDate,
+	public Appointment(String appointmentService, String appointmentStatus, LocalDate appointmentDate,
 			String appointmentDescription,int UrAppointment,int SPAppointment) {
-		this.appointmentId=appointmentId;
+		this.appointmentId=newAppointmentId;
 		this.appointmentService = appointmentService;
 		this.appointmentStatus = appointmentStatus;
 		this.appointmentDate = appointmentDate;
 		this.appointmentDescription = appointmentDescription;
 		this.urAppointment = urAppointment;
 		this.spAppointment = spAppointment;
+		newAppointmentId++;
 	
 	}
 	
