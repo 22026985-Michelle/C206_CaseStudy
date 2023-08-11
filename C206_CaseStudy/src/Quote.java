@@ -1,4 +1,6 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class Quote {
 	private static int nextQuoteId = 0;
@@ -9,6 +11,12 @@ public class Quote {
 	private String quoteDetails;
 	private double quoteAmount;
 	private LocalDateTime responseDate;
+	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH); // Date time format
+
+	public String toString() {
+		String toString = String.format("%-7d %-7d %-7d %-13s %-30s %-7.2f %-10s\n",getQuoteId(), GetQuoteUrID(),getQuoteSpID(),getQuoteService(),getQuoteDetails(),getQuoteAmount(),getResponseDate().format(dtFormat));
+		return toString;
+	}
 	
 	public Quote(int reqUrID, int reqSpID, String quoteService, String quoteDetails, double quoteAmount, LocalDateTime responseDate) {
 		this.quoteId = nextQuoteId;
