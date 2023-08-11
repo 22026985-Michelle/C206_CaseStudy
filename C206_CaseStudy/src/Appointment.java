@@ -8,12 +8,12 @@ public class Appointment {
 	private String appointmentStatus;
 	private LocalDate appointmentDate;
 	private String appointmentDescription;
-	private String urAppointment;
-	private String spAppointment;
+	private int urAppointment;
+	private int spAppointment;
 
 	
 	public Appointment(int appointmentId,String appointmentService, String appointmentStatus, LocalDate appointmentDate,
-			String appointmentDescription,String UrAppointment,String SPAppointment) {
+			String appointmentDescription,int UrAppointment,int SPAppointment) {
 		this.appointmentId=appointmentId;
 		this.appointmentService = appointmentService;
 		this.appointmentStatus = appointmentStatus;
@@ -22,6 +22,10 @@ public class Appointment {
 		this.urAppointment = urAppointment;
 		this.spAppointment = spAppointment;
 	
+	}
+	
+	public int getAppointmentId(){
+		return appointmentId;
 	}
 
 
@@ -65,21 +69,21 @@ public class Appointment {
 	}
 	
 	
-	public String getUrAppointment() {
+	public int getUrAppointment() {
 		return urAppointment;
 	}
 
 
-	public void setUrAppointment(String urAppointment) {
+	public void setUrAppointment(int urAppointment) {
 		this.urAppointment = urAppointment;
 	}
 	
-	public String getSPAppointment() {
+	public int getSPAppointment() {
 		return spAppointment;
 	}
 
 
-	public void setSPAppointment(String spAppointment) {
+	public void setSPAppointment(int spAppointment) {
 		this.spAppointment = spAppointment;
 	}
 	
