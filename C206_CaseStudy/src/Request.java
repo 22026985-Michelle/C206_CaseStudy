@@ -20,16 +20,17 @@ public class Request {
 		nextReqId++;
 	}
 	
-    public String toString() {
+   public String toString() {
 		
-		// Write your codes here
-		String requestInfo = String.format("%-10s %-25s %-15s %-25s %-16s\n",
-				reqUrID,
-				reqSpID,
-				requestService,
-				requestDetails);
+	   // Write your codes here
+	   String requestInfo = String.format("%-10s %-25s %-15s %-25s %-16.2f\n",
+			   reqUrID,
+			   reqSpID,
+			   requestService,
+			   requestDetails,
+			   reqAmount);
 		
-		return requestInfo;
+	   return requestInfo;
 	}
 
 	public String getRequestDetails() {

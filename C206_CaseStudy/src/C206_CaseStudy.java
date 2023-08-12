@@ -51,7 +51,6 @@ public class C206_CaseStudy {
 		.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 10, "98778976"));
 serviceProviderList
 		.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", 6, "98777645"));
-		requestList.add(new Request(1, 1, "Bathroom", "Replace tiles", 400.00));
 		appointmentList.add(new Appointment("Replace Tiles", "Incomplete", LocalDate.parse("11/01/2023", dtFormat),
 				"Appointment Description", 3, 1));
 		appointmentList.add(new Appointment("Replace Pipes", "Incomplete", LocalDate.parse("23/01/2023", dtFormat),
@@ -127,7 +126,7 @@ serviceProviderList
 				addRequest(serviceProviderList, serviceList, requestList);
 			} else if (memberOption == 4) {
 				// View Request
-				viewAllRequests(requestList);
+				viewAllRequests(requestList, loggedUrID);
 			} else if (memberOption == 5) {
 				// Delete Request
 				deleteRequest(requestList, loggedUrID);
@@ -984,7 +983,7 @@ serviceProviderList
 	// ================================= Option 1 Add (CRUD -
 	// Create)=================================
 
-	// ========================= Option 1 Add Appointment Request
+	// ========================= Option 1 Add Service Request
 	// ============================= (Xavier)
 
 	public static void addRequest(ArrayList<ServiceProvider> spList, ArrayList<Service> sList,
@@ -1017,43 +1016,51 @@ serviceProviderList
 	// ================================= Option 2 View (CRUD - Read)
 	// ========================================
 
-	// ========================= Option 2 View Appointment Requests
+	// ========================= Option 2 View Service Requests
 	// ========================= (Xavier)
 
-	public static void viewAllRequests(ArrayList<Request> requestList) {
-		String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", "SERVICE",
-				"DETAILS", "AMOUNT");
+	public static void viewAllRequests(ArrayList<Request> requestList, int loggedUr) {
+		String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+                      "SERVICE", "DETAILS", "AMOUNT");
+		int check = 0;
 
 		if (!requestList.isEmpty()) {
+			for (Request r: requestList) {
+                 if (r.getReqUrID() == loggedUr) {
+				          output += r.toString();
+                          check++;
+                 }
 
-			for (Request r : requestList) {
-				output += String.format("%-10d %-25d %-15s %-25s %-16f\n", r.getReqUrID(), r.getReqSpID(),
-						r.getRequestService(), r.getRequestDetails(), r.getReqAmount());
-			}
-
-			System.out.println(output);
+                 if (check == 0) {
+					     System.out.println("No requests created by you");
+				 }
+			 }
+			 
+			 System.out.println(output);
 		}
-
+		
 		else {
 			System.out.println("No requests available");
 		}
-	}
+    }
 
 	// ================================= Option 3 Delete (CRUD - Delete)
 	// ========================================
 
-	// ========================= Option 3 Delete Appointment Request
+	// ========================= Option 3 Delete Service Request
 	// ========================= (Xavier)
 
-	public static void deleteRequest(ArrayList<Request> RequestList, int loggedUr) {
+	public static void deleteRequest(ArrayList<Request> requestList, int loggedUr) {
 		if (!requestList.isEmpty()) {
-
-			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID",
-					"SERVICE", "DETAILS", "AMOUNT");
-
-			for (Request r : requestList) {
-				output += String.format("%-10d %-25d %-15s %-25s %-16f\n", r.getReqUrID(), r.getReqSpID(),
-						r.getRequestService(), r.getRequestDetails(), r.getReqAmount());
+			
+			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+                      "SERVICE", "DETAILS", "AMOUNT");
+			
+			for (Request r: requestList) {
+				
+				if (r.getReqUrID() == loggedUr) {
+				   output += r.toString();
+				}
 			}
 
 			System.out.println(output);
@@ -1061,25 +1068,25 @@ serviceProviderList
 			int requestID = Helper.readInt("Insert request ID you wish to delete > ");
 			int check = 0;
 
-			for (Request r : requestList) {
-
-				if (r.getReqId() == requestID) {
-					requestList.remove(r);
-					check++;
+			for(Request r: requestList) {
+				
+                if(r.getReqId() == requestID) {
+					   requestList.remove(r);
+					   check++;
 				}
 
-				else if (check == 0) {
+                if (check == 0) {
 					System.out.println("No request ID of " + requestID + " was found");
 				}
-
+                
 			}
 
 		}
 
-		else {
+        else {
 			System.out.println("There are no requests that have been created by you yet");
 		}
-
+		
 	}
 
 	// ========================= View Services ========================= (Thiha)
