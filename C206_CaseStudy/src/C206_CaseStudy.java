@@ -764,13 +764,13 @@ serviceProviderList
 				}
 			} while (!isStrongPassword(password) || password.isEmpty());
 			
-			int numOfDeisgners;
+			int numOfDesigners;
 			do {
-				numOfDeisgners = Helper.readInt("Enter Number of designers in Service Provider > ");
-				if (numOfDeisgners == 0 ) {
+				numOfDesigners = Helper.readInt("Enter Number of designers in Service Provider > ");
+				if (numOfDesigners == 0 ) {
 					System.out.println("Number of Deisgners cannot be 0! Please input number of Deisgners.\n");
 				}
-			}while(numOfDeisgners == 0);
+			}while(numOfDesigners == 0);
 			String contactNum;
 			do{
 				contactNum = Helper.readString("Enter Service Provider Contact Number > ");
@@ -783,7 +783,7 @@ serviceProviderList
 				} 
 			}while(!isServiceProviderContactUnique(serviceProviderList,contactNum)||contactNum.isBlank() || !contactNum.matches("[89]\\d{7}"));
 
-			sp = new ServiceProvider(name, email, password, numOfDeisgners, contactNum);
+			sp = new ServiceProvider(name, email, password, numOfDesigners, contactNum);
 			return sp;
 		}
 
