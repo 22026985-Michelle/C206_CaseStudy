@@ -137,8 +137,28 @@ public class ServiceProviderTest {
 			// Assert that the number of service providers is 0.
 			assertEquals(3, serviceProviderList.size());
 		}
-	
-	
+		
+	// User Story: <Add a Service Provider> 
+		// Use Case No. 3
+		// Add a service provider with the same e-mail to the current serviceProviderList (email: ServiceProviderA@Gmail.com)
+		@Test
+		public void addSPTest4() {
+			// Create an ArrayList of service providers.
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
+
+			// Add a service provider.
+			sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
+			
+			// Add a service provider with the same contact number.
+			sp4 = new ServiceProvider("ServiceProviderB", "ServiceProviderB@Gmail.com", "password4", 11, "98765643");
+			C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
+			
+			// Assert that the number of service providers is 0.
+			assertEquals(3, serviceProviderList.size());
+		}
+
 	@After
 	public void tearDown() throws Exception {
 		sp1 = null;

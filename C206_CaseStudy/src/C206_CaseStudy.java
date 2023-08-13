@@ -788,15 +788,22 @@ serviceProviderList
 		}
 
 		public static void addServiceProvider(ArrayList<ServiceProvider> serviceProviderList, ServiceProvider SP) {
-			ServiceProvider serviceProvider;
-			for (int i = 0; i < serviceProviderList.size(); i++) {
-				serviceProvider = serviceProviderList.get(i);
-				if (serviceProvider.getSpName().equalsIgnoreCase(SP.getSpName()))
-					return;
-			}
-			serviceProviderList.add(SP);
-			System.out.println("\nRegistration successful!");
-
+		    ServiceProvider serviceProvider;
+		    for (int i = 0; i < serviceProviderList.size(); i++) {
+		        serviceProvider = serviceProviderList.get(i);
+		        if (serviceProvider.getSpEmail().equals(SP.getSpEmail())) {
+		        	return;
+		        }
+		        if (serviceProvider.getSpName().equals(SP.getSpName())) {
+		        	return;
+		        }
+		        
+		        if (serviceProvider.getSpContact().equals(SP.getSpContact())) {
+		        	return;
+		        }
+		    }
+		        serviceProviderList.add(SP);
+		        System.out.println("Registration successful!\n");
 		}
 
 		public static boolean isServiceProviderNameUnique(ArrayList<ServiceProvider> serviceProviderList,
