@@ -30,162 +30,139 @@ public class ServiceProviderTest {
 
 		serviceProviderList = new ArrayList<ServiceProvider>();
 
+		// Create an ArrayList of service providers.
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
+
 		// Redirect System.in for testing input
 		ByteArrayInputStream userInput = new ByteArrayInputStream("Y\n".getBytes());
 		System.setIn(userInput);
 
 	}
 
-	// User Story: <View all Service Providers>
-	// Use Case No. 1
-	// View current serviceProviderList
+	// User Story: As an Administrator, I want to view all the service providers so
+	// that I can ensure the platform's
+	// user base is well-monitored.
+	// No. 1 - 3
 	@Test
-	public void viewSPTest1() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
+	public void viewServiceProviderTest() {
+		// ===================================================
+		// No.1 Normal Test - View current serviceProviderList
+		// ===================================================
 		// Assert that the number of service providers is 2.
 		assertEquals(2, serviceProviderList.size());
-	}
 
-	// User Story: <View all Service Providers>
-	// Use Case No. 2
-	// Delete all service provider and view the serviceProviderList
-	@Test
-	public void viewSPTest2() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
+		// ===================================================
+		// No.2 Boundary Test - Delete all service provider and view the
+		// serviceProviderList
+		// ===================================================
 		// Delete all service providers.
 		serviceProviderList.clear();
 
-		// Assert that the number of service providers is 0.
+		// Assert that the serviceproviderList is empty (No records)
 		assertEquals(0, serviceProviderList.size());
-	}
 
-	// User Story: <View all Service Providers>
-	// Use Case No. 3
-	// Add a service provider and view the serviceProviderList
-	@Test
-	public void viewSPTest3() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
-		// Delete all service providers.
-		serviceProviderList.clear();
-
+		// ===================================================
+		// No. 3 Normal Test - Add a service provider and view the serviceProviderList
+		// ===================================================
 		// Add a service provider.
 		serviceProviderList.add(new ServiceProvider("RenoSerV", "RenoSerV@gmail.com", "password3", 10, "98765643"));
 
 		// Assert that the number of service providers is 1.
 		assertEquals(1, serviceProviderList.size());
+
 	}
 
-	// User Story: <Add a Service Provider>
-	// Use Case No. 1
-	// Add a service provider to the current serviceProviderList (name:
-	// ServiceProviderA, email: ServiceProviderA@Gmail.com)
+	// User Story: As an Administrator, I want to add new service providers so that
+	// they can use the portal to offer
+	// renovation services to users with ease.
+	// No. 1 - 5
 	@Test
-	public void addSPTest1() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
+	public void addServiceProviderTest() {
+		// ===================================================
+		// No.1 Boundary Test - Check if the Service Provider List exists
+		// ===================================================
+		// Assert that serviceProviderList contains records
+		assertNotNull(serviceProviderList);
 
+		// ===================================================
+		// No.2 Normal Test - Add a service provider to the current serviceProviderList
+		// (name: ServiceProviderA,
+		// email: ServiceProviderA@Gmail.com, Contact num: 98765643)
+		// ===================================================
 		// Add a service provider.
 		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
 		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
 
-		// Assert that the number of service providers is 3.
+		// Assert that the serviceproviderList now contains 3 records
 		assertEquals(3, serviceProviderList.size());
-	}
 
-	// User Story: <Add a Service Provider>
-	// Use Case No. 2
-	// Add a service provider with the same name to the current serviceProviderList
-	// (name: ServiceProviderA)
-	@Test
-	public void addSPTest2() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
-		// Add a service provider.
-		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
-
+		// ===================================================
+		// No. 3 Error Test - Add a service provider with the same name to the current
+		// serviceProviderList (name: ServiceProviderA)
+		// ===================================================
 		// Add a service provider with the same name.
 		sp4 = new ServiceProvider("ServiceProviderA", "ServiceProviderB@Gmail.com", "password4", 11, "98765432");
 		C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
 
-		// Assert that the number of service providers is 3.
+		// Assert that the serviceproviderList now contains 3 records (4th record
+		// rejected)
 		assertEquals(3, serviceProviderList.size());
-	}
 
-	// User Story: <Add a Service Provider>
-	// Use Case No. 3
-	// Add a service provider with the same e-mail to the current
-	// serviceProviderList (email: ServiceProviderA@Gmail.com)
-	@Test
-	public void addSPTest3() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
-		// Add a service provider.
-		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
-
+		// ===================================================
+		// No. 4 Error Test - Add a service provider with the same e-mail to the current
+		// serviceProviderList (email: ServiceProviderA@Gmail.com)
+		// ===================================================
 		// Add a service provider with the same email.
 		sp4 = new ServiceProvider("ServiceProviderB", "ServiceProviderA@Gmail.com", "password4", 11, "98765432");
 		C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
 
-		// Assert that the number of service providers is 3.
+		// Assert that the serviceproviderList now contains 3 records (4th record
+		// rejected)
 		assertEquals(3, serviceProviderList.size());
-	}
 
-	// User Story: <Add a Service Provider>
-	// Use Case No. 3
-	// Add a service provider with the same e-mail to the current
-	// serviceProviderList (email: ServiceProviderA@Gmail.com)
-	@Test
-	public void addSPTest4() {
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
-		// Add a service provider.
-		sp3 = new ServiceProvider("ServiceProviderA", "ServiceProviderA@Gmail.com", "password3", 10, "98765643");
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp3);
-
+		// ===================================================
+		// No. 5 Error Test - Add a service provider with the same contact number to the
+		// current serviceProviderList (number: 98765643)
+		// ===================================================
 		// Add a service provider with the same contact number.
 		sp4 = new ServiceProvider("ServiceProviderB", "ServiceProviderB@Gmail.com", "password4", 11, "98765643");
 		C206_CaseStudy.addServiceProvider(serviceProviderList, sp4);
 
-		// Assert that the number of service providers is 3.
+		// Assert that the serviceproviderList now contains 3 records (4th record
+		// rejected)
 		assertEquals(3, serviceProviderList.size());
 	}
 
-	// User Story: <Delete a Service Provider>
-	// Use Case No. 1
-	// Add a service provider and delete it
+	// User Story: As an Administrator, I want to delete service providers so that I
+	// can remove service providers
+	// that are no longer using the Renovation Portal and not mislead users.
+	// No. 1 - 3
 	@Test
-	public void deleteSPTest1() {
+	public void deleteServiceProviderTest() {
+		// ===================================================
+		// No. 1 Boundary Test - Check if the Service Provider List exists
+		// ===================================================
+		// Assert that serviceProviderList contains records
+		assertNotNull(serviceProviderList);
 
-		// Create an ArrayList of service providers.
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
-		C206_CaseStudy.addServiceProvider(serviceProviderList, sp2);
-
+		// ===================================================
+		// No. 2 Normal Test - Delete a service provider record
+		// ===================================================
 		// Delete a service provider.
-		C206_CaseStudy.deleteServiceProvider(serviceProviderList, sp2);
+		C206_CaseStudy.deleteServiceProvider(serviceProviderList, sp1);
 
-		// Reset System.in to its original state
-		System.setIn(System.in);
-
-		// Assert that the number of service providers is 2.
+		// Assert that the serviceproviderList now contains 1 records (1st record
+		// deleted)
 		assertEquals(1, serviceProviderList.size());
+
+		// ===================================================
+		// No. 3 Normal Test - Check if deleted service provider is in the
+		// serviceProviderList
+		// ===================================================
+		// Find Service Provider with name "ServiceProviderA". Assert Null when method
+		// find return null. (Record not found)
+		assertNull(C206_CaseStudy.findServiceProviderByName(serviceProviderList, "ServiceProviderA"));
 	}
 
 	@After
