@@ -83,6 +83,22 @@ public class QuoteTest {
 	
 	@Test
 	public void testDeleteQuote() {
+		quoteList.add(q1);
+		// Test that quote list is not empty
+		assertNotNull("Test that there is are quotes in the list", quoteList);
 		
+		C206_CaseStudy.deleteQuote(quoteList, 1);
+		
+		// Test that quote list is empty after delete
+		assertNull("Test that the quote it successfully deleted", quoteList);
+		
+		quoteList.add(q1);
+		quoteList.add(q2);
+		
+		C206_CaseStudy.deleteQuote(quoteList, 1);
+		
+		assertEquals("Test that quote list still has 2 records after attempting to delete an unaffilated record", quoteList.size(), 2);
+		
+
 	}
 }
