@@ -1059,7 +1059,6 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 			
 			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
                       "SERVICE", "DETAILS", "AMOUNT");
-			
 			for (Request r: requestList) {
 				
 				if (r.getReqUrID() == loggedUr) {
@@ -1179,8 +1178,9 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 					"APPOINTMENT DESCRIPTION");
 			int check = 0;
 			if (!appointmentList.isEmpty()) {
+				//System.out.println(loggedUser);
 				for (Appointment ap : appointmentList) {
-					if (ap.getUrAppointment()==loggedUser) {
+					if (ap.getUrAppointment()==loggedUrID) {
 						output += ap.toString();
 						check++;
 					} 
@@ -1205,6 +1205,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 					"APPOINTMENT DESCRIPTION");
 			int check = 0;
 			if (!appointmentList.isEmpty()) {
+				
 				for (Appointment ap : appointmentList) {
 					if (ap.getSPAppointment()==loggedSp) {
 						output += ap.toString();
