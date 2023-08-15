@@ -19,6 +19,9 @@ public class C206_CaseStudy {
 	private static final int ADMIN_OPTION_VIEW_USERS = 1;
 	private static final int ADMIN_OPTION_QUIT = 7;
 	private static final int USER_OPTION_ADD_USER = 2;
+	private static final int USER_OPTION_ADD_REQUEST = 3;
+	private static final int USER_OPTION_VIEW_REQUEST = 4;
+	private static final int USER_OPTION_DELETE_REQUEST = 5;
 	private static final int USER_OPTION_QUIT = 7;
 	private static final int LOGIN_OPTION_ADMINISTRATOR = 2;
 	private static final int MAINMENU_OPTION_LOGIN = 1;
@@ -122,13 +125,13 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 				// Create a new User account
 				User ur = inputUser();
 				C206_CaseStudy.addUser(userList, ur);
-			} else if (memberOption == 3) {
+			} else if (memberOption == USER_OPTION_ADD_REQUEST) {
 				// Send Request
 				addRequest(requestList, serviceList, loggedUrID);
-			} else if (memberOption == 4) {
+			} else if (memberOption == USER_OPTION_VIEW_REQUEST) {
 				// View Request
 				viewAllRequests(requestList, loggedUrID);
-			} else if (memberOption == 5) {
+			} else if (memberOption == USER_OPTION_DELETE_REQUEST) {
 				// Delete Request
 				deleteRequest(requestList, loggedUrID);
 			} else if (memberOption == 6) {
@@ -1021,7 +1024,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 				double amount = Helper.readDouble("Enter amount > ");
 				Request request = new Request(loggedUrID, serviceID, serviceType, details, amount);
 				requestList.add(request);
-				System.out.println("Request succesfully added");
+				System.out.println("Request successfully added");
 			}
 		}
 	}
@@ -1035,25 +1038,20 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 	public static void viewAllRequests(ArrayList<Request> requestList, int loggedUr) {
 		String output = String.format("%-15s %-10s %-15s %-15s %-15s %-16s\n", "REQUEST ID", "USER ID", "SERVICE ID", 
                       "SERVICE", "DETAILS", "AMOUNT");
-		int check = 0;
 
 		if (!requestList.isEmpty()) {
 			for (Request r: requestList) {
                  if (r.getReqUrID() == loggedUr) {
 				          output += r.toString();
-                          check++;
                  }
 
-                 if (check == 0) {
-					     System.out.println("No requests created by you");
-				 }
 			 }
 			 
 			 System.out.println(output);
 		}
 		
 		else {
-			System.out.println("No requests available");
+			System.out.println("No requests have been created by you yet");
 		}
     }
 
@@ -1070,8 +1068,6 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
                       "SERVICE", "DETAILS", "AMOUNT");
 
 			boolean requestExists = false;
-			
-			int requestID = Helper.readInt("Enter request ID you want to delete > ");
 			int check = 0;
 			
 			for (Request r: requestList) {
@@ -1079,27 +1075,38 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 				if (r.getReqUrID() == loggedUr) {
 				   output += r.toString();
 				}
-				
-				if (r.getReqId() == requestID) {
-					requestExists = true;
-					break;
-				}	
 					
 			}
 			
 			System.out.println(output);
 			
+			int requestID = Helper.readInt("Enter request ID you want to delete > ");
+			
+            for (Request r: requestList) {
+				
+				if (r.getReqId() == requestID) {
+					requestExists = true;
+					break;
+				}		
+			}
+			
 			if (requestExists == true) {
-				char delete_confirmation = Helper.readChar("Confirm deletion of item? (Y/N) > ");
+				char delete_confirmation = Helper.readChar("Confirm deletion of request? (Y/N) > ");
 				
 				if (delete_confirmation == 'y' || delete_confirmation == 'Y') {
-					for (Request r: requestList ) {
-						if (r.getReqId() == requestID) {
-							requestList.remove(r);
+					for (int i = 0; i < requestList.size(); i++) {
+						Request request = requestList.get(i);
+						if (request.getReqId() == requestID) {
+							requestList.remove(i);
+							System.out.println("Request successfully deleted"); 
+							check++;
+						}
+						
+						else {
+							System.out.println("Request deletion aborted");
 							check++;
 						}
 					}
-					
 				}
 				
 					   
@@ -1108,15 +1115,13 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 				}	   
 			
 		    }
-
-           else {
+			
+		}	
+        
+		else {
         	   System.out.println("There are no requests that have been created by you yet");
-           }
-		}
-		
+        }
    }
-	
-	
 
 	// ========================= View Services ========================= (Thiha)
 

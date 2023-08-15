@@ -20,6 +20,7 @@ public class RequestTest {
 	private Request r2;
     private ServiceProvider sp1;
     private ServiceProvider sp2;
+    private Service service1;
 	
     private ArrayList<User> userList;
     private ArrayList<Request> requestList;
@@ -47,11 +48,21 @@ public class RequestTest {
 
         r1 = new Request(1, 1, "Bathroom", "Fix tiles", 300.00);
 		r2 = new Request(2, 2, "Kitchen", "Repaint walls", 900.00);
+		
+		service1 = new Service(0, "Bathroom");
+		
+		userList = new ArrayList<User>();    
+		requestList = new ArrayList<Request>();    
+		serviceProviderList = new ArrayList<ServiceProvider>();    
+		serviceList = new ArrayList<Service>();    
     }
 	  
     // Xavier
     @Test
     public void testAddRequest() {
+    	// Add service to the service list
+    	serviceList.add(service1);
+    	
 		// Add request to the request list
         C206_CaseStudy.addRequest(requestList, serviceList, 0);
 
@@ -66,15 +77,15 @@ public class RequestTest {
 
         // Test that there are 2 requests in the List
         assertEquals("Test that the second request is added", 2, requestList.size());
-        
-        // Test that the request just added is the same as the second item of the list
-        assertSame("Test that the second request is the second item in the list", r2, requestList.get(1));
 
     }
 
     // Xavier
     @Test
     public void testViewRequest() {
+    	// Add service to the service list
+    	serviceList.add(service1);
+    	
 		// View the empty request list
         C206_CaseStudy.viewAllRequests(requestList, 0);
 
@@ -82,31 +93,40 @@ public class RequestTest {
         assertEquals("Test that the request list is empty", 0, requestList.size());
 
         // Add 2 requests to the request list
-        requestList.add(r1);
-        requestList.add(r2);
+        C206_CaseStudy.addRequest(requestList, serviceList, 0);
+        C206_CaseStudy.addRequest(requestList, serviceList, 0);
 
-        // View the empty request list
 		// Test that there are 2 requests in the list
 		assertEquals("Test that there are 2 requests in the list", 2, requestList.size());
+		
+		// View the request list with 2 newly added requests
+        C206_CaseStudy.viewAllRequests(requestList, 0);
     }
 
     // Xavier
     @Test
     public void testDeleteRequest() {
-
+    	// Add service to the service list
+    	serviceList.add(service1);
+    	
         // Ensure there is a valid User ArrayList to delete from
 	    assertNotNull("Test if there is a valid Request ArrayList to delete from", requestList);
 
 		// Add a request
-        requestList.add(r1);
+	    C206_CaseStudy.addRequest(requestList, serviceList, 0);
 
+	    // View the request list with 1 newly added request
+        C206_CaseStudy.viewAllRequests(requestList, 0);
+        
         // Test that there is now 1 request in the list
 		assertEquals("Test that there is 1 request in the list", 1, requestList.size());
-
 
         // Delete the request by id
 	    C206_CaseStudy.deleteRequest(requestList, 0);
 
+	    // View the empty request list
+        C206_CaseStudy.viewAllRequests(requestList, 0);
+	    
         // Check that the Request ArrayList size is 0 after deleting request
 	    assertEquals("Test that User ArrayList size is 0 after deletion", 0, requestList.size());
     }
@@ -124,9 +144,12 @@ public class RequestTest {
 		r1 = null;
 		r2 = null;
 		
+		service1 = null;
+		
 	    userList.clear(); // Clear the list to reset the state
         serviceProviderList.clear(); // Clear the list to reset the state
 	    requestList.clear(); // Clear the list to reset the state
+	    serviceList.clear(); // Clear the list to reset the state
 	    System.setIn(System.in);
     }
 
