@@ -1058,14 +1058,12 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 			
 			String output = String.format("%-15s %-10s %-15s %-15s %-15s %-16s\n", "REQUEST ID", "USER ID", "SERVICE ID", 
                       "SERVICE", "DETAILS", "AMOUNT");
-<<<<<<< HEAD
+
 			boolean requestExists = false;
 			
 			int requestID = Helper.readInt("Enter request ID you want to delete > ");
 			int check = 0;
 			
-=======
->>>>>>> branch 'master' of https://github.com/22026985-Michelle/C206_CaseStudy.git
 			for (Request r: requestList) {
 				
 				if (r.getReqUrID() == loggedUr) {
