@@ -6,6 +6,11 @@ import java.time.format.DateTimeFormatter;
 
 public class C206_CaseStudy {
 
+	private static final int SERVICE_PROVIDER_QUIT = 6;
+	private static final int ADMIN_OPTION_LOG_OUT = 7;
+	private static final int ADMIN_OPTION_DELETE_SERVICE_PROVIDER = 6;
+	private static final int ADMIN_OPTION_ADD_SERVICE_PROVIDER = 5;
+	private static final int ADMIN_OPTION_VIEW_SERVICE_PROVIDER = 4;
 	private static final int ADMIN_OPTION_SEARCH_USER_USERNAME = 1;
 	private static final int VISITOR_OPTION_CREATE_USER = 2;
 	private static final int VISITOR_OPTION_QUIT = 3;
@@ -158,19 +163,20 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 				// Delete a user
 				User userToDelete = inputUserToDelete(userList);
 				C206_CaseStudy.deleteUser(userList, userToDelete);
-			} else if (memberOption == 4) { // View all service providers
+				
+			} else if (memberOption == ADMIN_OPTION_VIEW_SERVICE_PROVIDER) { // View all service providers
 				viewAllServiceProviders(serviceProviderList);
 
-			} else if (memberOption == 5) { // Add service providers
+			} else if (memberOption == ADMIN_OPTION_ADD_SERVICE_PROVIDER) { // Add service providers
 				ServiceProvider SP = inputServiceProvider();
 				C206_CaseStudy.addServiceProvider(serviceProviderList, SP);
 				System.out.println("Service Provider added");
 
-			} else if (memberOption == 6) { // delete service providers
+			} else if (memberOption == ADMIN_OPTION_DELETE_SERVICE_PROVIDER) { // delete service providers
 				ServiceProvider serviceProviderToDelete = inputServiceProviderToDelete(serviceProviderList);
 				C206_CaseStudy.deleteServiceProvider(serviceProviderList, serviceProviderToDelete);
 
-			} else if (memberOption == 7) {
+			} else if (memberOption == ADMIN_OPTION_LOG_OUT) {
 				System.out.println("Logging out.");
 			}
 		}
@@ -180,7 +186,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 		int serviceproviderOption = -1;
 		int serviceproviderOption1 = -1;
 
-		while (serviceproviderOption != 6) {
+		while (serviceproviderOption != SERVICE_PROVIDER_QUIT) {
 			serviceProviderMenu();
 			serviceproviderOption = Helper.readInt("Enter choice > ");
 
