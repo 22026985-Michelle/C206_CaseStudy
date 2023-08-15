@@ -54,9 +54,9 @@ public class C206_CaseStudy {
 		adminList.add(new Administrator("bom", "bom@gmail.com", "adpassword3"));
 		serviceProviderList.add(new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 10, "98778976"));
 serviceProviderList.add(new ServiceProvider("EcoConstructors", "EcoConstructors@Gmail.com", "password2", 6, "98777645"));
-appointmentList.add(new Appointment(3,2,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description"));
-appointmentList.add(new Appointment(4,2,"Replace Floors","Incomplete",LocalDate.parse("12/01/2023", dtFormat),"Appointment Description"));
-appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description"));
+appointmentList.add(new Appointment(4,2,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description"));
+appointmentList.add(new Appointment(3,2,"Replace Floors","Incomplete",LocalDate.parse("12/01/2023", dtFormat),"Appointment Description"));
+appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description"));
 
 		int option = 0;
 		int opt1 = 0;
@@ -194,7 +194,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 
 				while (serviceproviderOption1 != 5) {
 					
-					updateAppMenu();
+					appointmentMenu();
 					serviceproviderOption1 = Helper.readInt("Enter choice > ");
 
 					if (serviceproviderOption1 == 1) {
@@ -206,12 +206,12 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 					} else if (serviceproviderOption1 == 3) {
 						// Option 3: Delete Appointment
 						deleteApppointment(appointmentList, loggedSpID);
-					} else if (serviceproviderOption == 4) {
+					} else if (serviceproviderOption1 == 4) {
 						// Option 4: Update Appointment (select field to edit and select record to edit)
 						updateAppointment(appointmentList, loggedSpID);
 					}
 
-					else if (serviceproviderOption == 5) {
+					else if (serviceproviderOption1 == 5) {
 						// Option 5 : Quit
 						System.out.println("Exiting appointment menu...");
 					}
@@ -274,6 +274,9 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 		for (User ur : userList) {
 			if (ur.login(inputUsername, inputPassword) == true) {
 				loginAcc = ur;
+				loggedUrID = ur.getUrId();
+				
+				
 				break;
 			}
 		}
@@ -308,6 +311,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 		for (ServiceProvider sp : serviceProviderList) {
 			if (sp.login(inputUsername, inputPassword) == true) {
 				loginAcc = sp;
+				loggedSpID=sp.getSpId();
 				break;
 			}
 		}
@@ -417,7 +421,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 
 	public static void updateAppMenu() {
 		C206_CaseStudy.setHeader("UPDATE APPOINTMENT RECORD");
-		System.out.println("1. Update Appointments");
+		System.out.println("1. Update Appointment Status");
 		System.out.println("2. Update Appointment Date");
 		System.out.println("3. Update Appointment Description");
 		System.out.println("4. Quit");
@@ -1196,7 +1200,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 	//====================================== Option 6 View Appointment=================================
 
 		private static void viewAppointmentsUr(ArrayList<Appointment> appointmentList, int loggedUser) {
-			String output = String.format("%-6s %-6s %-6s %-6s %-6s %-6s %-6s\n","APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
+			String output = String.format("%-10s  %s   %s   %s   %s   %s   %s\n","APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
 					"APPOINTMENT DESCRIPTION");
 			int check = 0;
 			if (!appointmentList.isEmpty()) {
@@ -1223,7 +1227,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 
 		private static void viewAppointmentsSP(ArrayList<Appointment> appointmentList, int loggedSp) {
 
-			String output = String.format("%-6s %-6s %-6s %-6s %-6s %-6s %-6s\n", "APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
+			String output = String.format("%-10s  %s   %s   %s   %s   %s   %s\n", "APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
 					"APPOINTMENT DESCRIPTION");
 			int check = 0;
 			if (!appointmentList.isEmpty()) {
@@ -1266,7 +1270,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 
 			String deleteapp = "N";
 			int check = 0;
-			String output = String.format("%-6s %-6s %-6s %-6s %-6s %-6s %-6s\n","APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
+			String output = String.format("%-10s  %s   %s   %s   %s   %s   %s\n","APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
 					"APPOINTMENT DESCRIPTION");
 
 			int deleteappid = Helper.readInt("Select an appointment to delete by entering its appointment id > ");
@@ -1274,9 +1278,9 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 			for (Appointment ap : appointmentList) {
 				if (ap.getAppointmentId() == deleteappid) {
 
-					check++;
+					
 					if (ap.getSPAppointment()==loggedSp) {
-
+						check++;
 						output += ap.toString();
 						System.out.println(output);
 
@@ -1285,21 +1289,22 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 						if (deleteapp.equalsIgnoreCase("Y")) {
 
 							appointmentList.remove(ap);
-							System.out.println("Appointment record has been deleted");
+							System.out.println("Appointment record has been deleted\n");
+							break;
 						}
 
 						else {
-							System.out.println("No changes made");
+							System.out.println("No changes made\n");
 						}
 
 					} else {
-						System.out.println("You do not have access to that appointment record");
+						System.out.println("You do not have access to that appointment record\n");
 					}
 				}
 
-				if (check == 0) {
-					System.out.println("There is no appointment with that id number");
-				}
+				
+			}if (check == 0) {
+				System.out.println("There is no appointment with that id number\n");
 			}
 
 		}
@@ -1310,7 +1315,7 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 		private static void updateAppointment(ArrayList<Appointment> appointmentList, int loggedSp) {
 
 			int check = 0;
-			String output = String.format("%-6s %-6s %-6s %-6s %-6s %-6s %-6s\n", "APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
+			String output = String.format("%-10s  %s   %s   %s   %s   %s   %s\n", "APPOINTMENT ID","USER ID" ,"SERVICE PROVIDER ID","APPOINTMENT SERVICE","APPOINTMENT STATUS" ,"APPOINTMENT DATE",
 					"APPOINTMENT DESCRIPTION");
 			int updateopt = 0;
 
@@ -1330,34 +1335,34 @@ appointmentList.add(new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.p
 						if (updateopt == 1) {
 							String newstatus = Helper.readString("Enter the new appointment status > ");
 							ap.setAppointmentStatus(newstatus);
-							System.out.print("Appointment Status Updated!");
+							System.out.print("Appointment Status Updated!\n");
 						}
 
 						else if (updateopt == 2) {
 							String newdatestring = Helper.readString("Enter the new appointment date > ");
 							LocalDate newdate = LocalDate.parse(newdatestring, dtFormat);
 							ap.setAppointmentDate(newdate);
-							System.out.println("Appointment Date Updated!");
+							System.out.println("Appointment Date Updated!\n");
 						}
 
 						else if (updateopt == 3) {
-							String newdescript = Helper.readString("");
+							String newdescript = Helper.readString("Enter the new description date > ");
 							ap.setAppointmentDescription(newdescript);
-							System.out.println("Appointment Description Updated!");
+							System.out.println("Appointment Description Updated!\n");
 
 						}
 
 						else {
-							System.out.println("No changes made");
+							System.out.println("No changes made\n");
 						}
 
 					} else {
-						System.out.println("You do not have access to that appointment record");
+						System.out.println("You do not have access to that appointment record\n");
 					}
 				}
 
 				if (check == 0) {
-					System.out.println("There is no appointment with that id number");
+					System.out.println("There is no appointment with that id number\n");
 				}
 			}
 
