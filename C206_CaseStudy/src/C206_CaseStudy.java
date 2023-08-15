@@ -123,7 +123,7 @@ serviceProviderList
 				C206_CaseStudy.addUser(userList, ur);
 			} else if (memberOption == 3) {
 				// Send Request
-				addRequest(serviceProviderList, serviceList, requestList);
+				addRequest(requestList, serviceList, loggedUrID);
 			} else if (memberOption == 4) {
 				// View Request
 				viewAllRequests(requestList, loggedUrID);
@@ -986,17 +986,16 @@ serviceProviderList
 	// ========================= Option 1 Add Service Request
 	// ============================= (Xavier)
 
-	public static void addRequest(ArrayList<ServiceProvider> spList, ArrayList<Service> sList,
-			ArrayList<Request> requestList) {
+	public static void addRequest(ArrayList<Request> requestList, ArrayList<Service> serviceList, int loggedUr) {
 		boolean flag = false;
 
 		while (!flag) {
 
-			int spID = Helper.readInt("Enter Service Provider ID > ");
+			int serviceID = Helper.readInt("Enter Service ID > ");
 
-			for (ServiceProvider sp : spList) {
+			for (Service service : serviceList) {
 
-				if (spID == sp.getSpId()) {
+				if (serviceID == service.getSpId()) {
 					flag = true;
 				}
 			}
@@ -1006,7 +1005,7 @@ serviceProviderList
 				String serviceType = Helper.readString("Enter renovation service type > ");
 				String details = Helper.readString("Enter details for enquired renovation service request > ");
 				double amount = Helper.readDouble("Enter amount > ");
-				Request request = new Request(loggedUrID, spID, serviceType, details, amount);
+				Request request = new Request(loggedUrID, serviceID, serviceType, details, amount);
 				requestList.add(request);
 				System.out.println("Request succesfully added");
 			}
@@ -1020,7 +1019,7 @@ serviceProviderList
 	// ========================= (Xavier)
 
 	public static void viewAllRequests(ArrayList<Request> requestList, int loggedUr) {
-		String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+		String output = String.format("%-15s %-10s %-15s %-15s %-15s %-16s\n", "REQUEST ID", "USER ID", "SERVICE ID", 
                       "SERVICE", "DETAILS", "AMOUNT");
 		int check = 0;
 
@@ -1053,41 +1052,56 @@ serviceProviderList
 	public static void deleteRequest(ArrayList<Request> requestList, int loggedUr) {
 		if (!requestList.isEmpty()) {
 			
-			String output = String.format("%-10s %-25s %-15s %-25s %-16s\n", "USER ID", "SERVICE PROVIDER ID", 
+			String output = String.format("%-15s %-10s %-15s %-15s %-15s %-16s\n", "REQUEST ID", "USER ID", "SERVICE ID", 
                       "SERVICE", "DETAILS", "AMOUNT");
+			boolean requestExists = false;
+			
+			int requestID = Helper.readInt("Enter request ID you want to delete > ");
+			int check = 0;
 			
 			for (Request r: requestList) {
 				
 				if (r.getReqUrID() == loggedUr) {
 				   output += r.toString();
 				}
-			}
-
-			System.out.println(output);
-
-			int requestID = Helper.readInt("Insert request ID you wish to delete > ");
-			int check = 0;
-
-			for(Request r: requestList) {
 				
-                if(r.getReqId() == requestID) {
-					   requestList.remove(r);
-					   check++;
-				}
-
-                if (check == 0) {
-					System.out.println("No request ID of " + requestID + " was found");
-				}
-                
+				if (r.getReqId() == requestID) {
+					requestExists = true;
+					break;
+				}	
+					
 			}
+			
+			System.out.println(output);
+			
+			if (requestExists == true) {
+				char delete_confirmation = Helper.readChar("Confirm deletion of item? (Y/N) > ");
+				
+				if (delete_confirmation == 'y' || delete_confirmation == 'Y') {
+					for (Request r: requestList ) {
+						if (r.getReqId() == requestID) {
+							requestList.remove(r);
+							check++;
+						}
+					}
+					
+				}
+				
+					   
+			    if (check == 0) {
+			    	System.out.println("No request ID of " + requestID + " was found");
+				}	   
+			
+		    }
 
-		}
-
-        else {
-			System.out.println("There are no requests that have been created by you yet");
+           else {
+        	   System.out.println("There are no requests that have been created by you yet");
+           }
 		}
 		
-	}
+   }
+	
+	
 
 	// ========================= View Services ========================= (Thiha)
 

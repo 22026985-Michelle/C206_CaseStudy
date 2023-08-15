@@ -1,5 +1,5 @@
 public class Request {
-	private static int nextReqId = 0;
+	private static int nextReqId = 1;
 	private int reqId;
 	private int reqUrID;
 	private int reqSpID;
@@ -10,6 +10,7 @@ public class Request {
 	
 	public Request(int reqUrID, int reqSpID, String requestService, String requestDetails, double reqAmount) {
 		this.reqId = nextReqId;
+		nextReqId++;
 		this.reqUrID = reqUrID;
 		this.reqSpID = reqSpID;
 		this.requestService = requestService;
@@ -17,13 +18,13 @@ public class Request {
 		this.reqAmount = reqAmount;
 		this.reqCheck = false;
 		
-		nextReqId++;
 	}
 	
    public String toString() {
 		
 	   // Write your codes here
-	   String requestInfo = String.format("%-10s %-25s %-15s %-25s %-16.2f\n",
+	   String requestInfo = String.format("%-15s %-10s %-15s %-15s %-15s %-16.2f\n",
+			   reqId,
 			   reqUrID,
 			   reqSpID,
 			   requestService,
@@ -36,12 +37,15 @@ public class Request {
 	public String getRequestDetails() {
 		return requestDetails;
 	}
+	
+	public void setRequestDetails(String requestDetails) {
+		this.requestDetails = requestDetails;
+	}
 
 	public int getReqUrID() {
 		return reqUrID;
 	}
 	
-
 	public int getReqSpID() {
 		return reqSpID;
 	}
@@ -54,8 +58,16 @@ public class Request {
 		return requestService;
 	}
 	
+	public void setRequestService(String requestService) {
+		this.requestService = requestService;
+	}
+	
 	public double getReqAmount() {
 		return reqAmount;
+	}
+	
+	public void setReqAmount(double requestAmount) {
+		this.reqAmount = requestAmount;
 	}
 
 	public boolean getReqCheck() {

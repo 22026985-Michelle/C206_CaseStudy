@@ -53,7 +53,7 @@ public class RequestTest {
     @Test
     public void testAddRequest() {
 		// Add request to the request list
-        C206_CaseStudy.addRequest(serviceProviderList, serviceList, requestList);
+        C206_CaseStudy.addRequest(requestList, serviceList, 0);
 
 	    // Test that requestList is not empty
 		assertNotNull("Test that there are requests in the list", requestList);
@@ -62,7 +62,7 @@ public class RequestTest {
 		assertEquals("Test that there is 1 request in the list", 1, requestList.size());
 
         // Add another request
-        C206_CaseStudy.addRequest(serviceProviderList, serviceList, requestList);
+        C206_CaseStudy.addRequest(requestList, serviceList, 0);
 
         // Test that there are 2 requests in the List
         assertEquals("Test that the second request is added", 2, requestList.size());
