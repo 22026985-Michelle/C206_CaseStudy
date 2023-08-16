@@ -205,7 +205,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 						viewAppointmentsSP(appointmentList, loggedSpID);
 					} else if (serviceproviderOption1 == 2) {
 						// Option 2: Add Appointment
-						addAppointment(appointmentList, loggedSpID);
+						addAppointment(appointmentList,loggedSpID);
 					} else if (serviceproviderOption1 == 3) {
 						// Option 3: Delete Appointment
 						deleteApppointment(appointmentList, loggedSpID);
@@ -1255,7 +1255,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 		
 
 	//================================Option 2 Add Appointment=========================(Cheryl)
-		private static void addAppointment(ArrayList<Appointment> appointmentList, int loggedSp) {
+		public static void addAppointment(ArrayList<Appointment> appointmentList,int loggedSp) {
 
 			String appservice = Helper.readString("Enter the Appointment Service > ");
 			String appstatus = "Incomplete";
@@ -1271,7 +1271,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 		// ================================Option 3 Delete
 		// Appointment=====================(Cheryl)
 
-		private static void deleteApppointment(ArrayList<Appointment> appointmentList, int loggedSp) {
+		public static void deleteApppointment(ArrayList<Appointment> appointmentList, int loggedSp) {
 
 			String deleteapp = "N";
 			int check = 0;

@@ -43,21 +43,7 @@ public class AppointmentTest {
     	ap1 = new Appointment(3,1,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description");
     	ap2 = new Appointment(4,2,"Replace Floors","Incomplete",LocalDate.parse("12/01/2023", dtFormat),"Appointment Description");
     	ap3 = new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.parse("10/01/2023", dtFormat),"Appointment Description");
-    	
-    	appointmentList.add(ap1);
-    	appointmentList.add(ap2);
-    	appointmentList.add(ap3);
 
-    	
-        user1 = new User("Addy", "addy@gmail.com", "password1", "95846024", "Choa Chu Kang St 21 Blk 398 #05-28");
-		user2 = new User("Billy", "billy@yahoo.com", "password2", "86957206", "Hougang St 3 Blk 864 #21-09");
-		user3 = new User("Celine", "celine@yahoo.com", "password3", "95726174", "Tampines 53 Pan Pacific Drive #11-35");
-	    user4 = new User("Daniel", "daniel@yahoo.com", "password4", "82910569", "Sengkang St 54 Rochester Drive #09-08");
-	    
-	    userList.add(user1);
-	    userList.add(user2);
-	    userList.add(user3);
-	    userList.add(user4);
     	
     	sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 2, "Renovation Description A");
     	C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
@@ -68,35 +54,78 @@ public class AppointmentTest {
     	
     }
     
- // Cheryl
-    @Test
-	public void testViewAppointmentsUr() {
-    	
-    }
+
     
  // Cheryl
     @Test
 	public void testViewAppointmentsSp() {
     	
+    	appointmentList.add(ap1);
+    	appointmentList.add(ap2);
+    	appointmentList.add(ap3);
+    	
+    	//Test that appointmentList is not empty
+    	assertNotNull("Test that there are appointment records in the list", appointmentList);
+    	
+    	//Test that there are three records in the current appointmentList
+    	assertEquals("Test that there are 3 appointment records in the list", appointmentList.size() , 3);
+    	
+    	//Test that sp1 would only be able to view two of the records
+    	assertEquals("Test that ap1 spAppointment is the same as sp1's id(1)", ap1.getSPAppointment(),1);
+    	assertEquals("Test that ap3 spAppointment is the same as sp1's id(1)", ap3.getSPAppointment(),1);
+    	
+    	//Test that sp1 will not have access to ap2
+    	assertNotEquals("Test that ap2 spAppointment is not the same as sp1's id(1)", ap2.getSPAppointment(), 1);
     }
     
  // Cheryl
     @Test
 	public void testAddApppointment() {
     	
+    	//Test that appointmentList is initially empty
+    	assertNotNull("Test if there is valid Appointment arraylist to add to", appointmentList);
+    	assertEquals("Test that the Appointment arraylist is empty.", 0, appointmentList.size());
+    	
+    	//Test that appointmentList is not empty
+    	appointmentList.add(ap1);
+    	appointmentList.add(ap2);
+    	appointmentList.add(ap3);
+    	   	
+    	assertNotNull("Test that there are appointment records in the list", appointmentList);
+    	assertEquals("Test that the appointment records have been added to the list.", 3, appointmentList.size());
+    	
+    	//Test that appointments can be added to the appointmentList
+    	appointmentList.add(new Appointment(5,1,"Repair Toliet","Incomplete",LocalDate.parse("01/04/2023", dtFormat),"Appointment Description"));
+    	
+    	//Test that appointments now has 4 records
+    	assertEquals("Test that the appointment records have been added to the list.", 4, appointmentList.size());
+    	
+
     }
     
  // Cheryl
     @Test
 	public void testDeleteAppointment() {
     	
-    }
-    
- // Cheryl
-    @Test
-	public void testUpdateAppointment() {
+    	appointmentList.add(ap1);
+    	appointmentList.add(ap2);
+    	appointmentList.add(ap3);
+    	
+    	//Test that appointmentList is not empty
+    	assertNotNull("Test if there is valid Appointment arraylist to add to", appointmentList);
+    	
+    	appointmentList.remove(ap1);
+    	
+    	//Test that appointmentList has has only 2 records
+    	assertEquals("Test that there are 3 appointment records in the list", appointmentList.size() , 3);
+    	//Test that deleted record is no longer in the appointmentList
+    	
+    	//Test that sp1 is not given access to delete ap2
+    	assertNotEquals("Test that ap2 spAppointment is not the same as sp1's id(1)", ap2.getSPAppointment(), 1);
+
     	
     }
+    
     
  // Cheryl
 	@After
