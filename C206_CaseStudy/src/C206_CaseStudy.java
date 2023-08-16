@@ -6,6 +6,14 @@ import java.time.format.DateTimeFormatter;
 
 public class C206_CaseStudy {
 
+	private static final int UPDATE_AP_DESCRIPTION = 3;
+	private static final int UPDATE_AP_DATE = 2;
+	private static final int UPDATE_AP_STATUS = 1;
+	private static final int SP_OPTION_UPDATEAPPOINTMENT = 4;
+	private static final int SP_OPTION_DELETEAPPOINTMENT = 3;
+	private static final int SP_OPTION_ADDAPPOINTMENT = 2;
+	private static final int USER_OPTION_VIEW_APPOINTMENT = 6;
+	private static final int SP_OPTION_VIEWAPPOINTMENTS = 1;
 	private static final int SERVICE_PROVIDER_QUIT = 6;
 	private static final int ADMIN_OPTION_LOG_OUT = 7;
 	private static final int ADMIN_OPTION_DELETE_SERVICE_PROVIDER = 6;
@@ -30,6 +38,7 @@ public class C206_CaseStudy {
 	private static final int MAINMENU_OPTION_VISITOR = 2;
 	private static final int MAINMENU_OPTION_QUIT = 3;
 	private static final int ADMIN_OPTION_VIEW_SERVICES = 1;
+	private static final int APPOINTMENT_SP_QUIT = 5;
 	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH); // Date time
 																											// format
 	private static ArrayList<User> userList = new ArrayList<User>();
@@ -134,7 +143,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 			} else if (memberOption == USER_OPTION_DELETE_REQUEST) {
 				// Delete Request
 				deleteRequest(requestList, loggedUrID);
-			} else if (memberOption == 6) {
+			} else if (memberOption == USER_OPTION_VIEW_APPOINTMENT) {
 				// View appointment (Create user view for appointments)
 				viewAppointmentsUr(appointmentList,loggedUrID);
 			} else if (memberOption == USER_OPTION_QUIT) {
@@ -195,26 +204,26 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 
 			if (serviceproviderOption == 1) {
 
-				while (serviceproviderOption1 != 5) {
+				while (serviceproviderOption1 != APPOINTMENT_SP_QUIT) {
 					
 					appointmentMenu();
 					serviceproviderOption1 = Helper.readInt("Enter choice > ");
 
-					if (serviceproviderOption1 == 1) {
+					if (serviceproviderOption1 == SP_OPTION_VIEWAPPOINTMENTS) {
 						// Option 1: View Appointment
 						viewAppointmentsSP(appointmentList, loggedSpID);
-					} else if (serviceproviderOption1 == 2) {
+					} else if (serviceproviderOption1 == SP_OPTION_ADDAPPOINTMENT) {
 						// Option 2: Add Appointment
 						addAppointment(appointmentList,loggedSpID);
-					} else if (serviceproviderOption1 == 3) {
+					} else if (serviceproviderOption1 == SP_OPTION_DELETEAPPOINTMENT) {
 						// Option 3: Delete Appointment
 						deleteApppointment(appointmentList, loggedSpID);
-					} else if (serviceproviderOption1 == 4) {
+					} else if (serviceproviderOption1 == SP_OPTION_UPDATEAPPOINTMENT) {
 						// Option 4: Update Appointment (select field to edit and select record to edit)
 						updateAppointment(appointmentList, loggedSpID);
 					}
 
-					else if (serviceproviderOption1 == 5) {
+					else if (serviceproviderOption1 == APPOINTMENT_SP_QUIT) {
 						// Option 5 : Quit
 						System.out.println("Exiting appointment menu...");
 					}
@@ -241,7 +250,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 				addService(serviceList, loggedSpID);
 			} else if (serviceproviderOption == 5) {
 				deleteService(serviceList, loggedSpID);
-			} else if (serviceproviderOption == 6) {
+			} else if (serviceproviderOption == SERVICE_PROVIDER_QUIT) {
 				System.out.println("Logging out.");
 			}
 
@@ -1211,7 +1220,8 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 			if (!appointmentList.isEmpty()) {
 				//System.out.println(loggedUser);
 				for (Appointment ap : appointmentList) {
-					if (ap.getUrAppointment()==loggedUrID) {
+					int urAppointment = ap.getUrAppointment();
+					if (urAppointment==loggedUrID) {
 						output += ap.toString();
 						check++;
 					} 
@@ -1238,7 +1248,8 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 			if (!appointmentList.isEmpty()) {
 				
 				for (Appointment ap : appointmentList) {
-					if (ap.getSPAppointment()==loggedSp) {
+					int spAppointment = ap.getSPAppointment();
+					if (spAppointment==loggedSp) {
 						output += ap.toString();
 						check++;
 					} 
@@ -1281,10 +1292,12 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 			int deleteappid = Helper.readInt("Select an appointment to delete by entering its appointment id > ");
 
 			for (Appointment ap : appointmentList) {
-				if (ap.getAppointmentId() == deleteappid) {
+				int appointmentId = ap.getAppointmentId();
+				if (appointmentId == deleteappid) {
 
 					
-					if (ap.getSPAppointment()==loggedSp) {
+					int spAppointment = ap.getSPAppointment();
+					if (spAppointment==loggedSp) {
 						check++;
 						output += ap.toString();
 						System.out.println(output);
@@ -1327,31 +1340,33 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 			int upappid = Helper.readInt("Select an appointment to update by entering its appointment id > ");
 
 			for (Appointment ap : appointmentList) {
-				if (ap.getAppointmentId() == upappid) {
+				int appointmentId = ap.getAppointmentId();
+				if (appointmentId == upappid) {
 
 					check++;
-					if (ap.getSPAppointment() == loggedSp) {
+					int spAppointment = ap.getSPAppointment();
+					if (spAppointment == loggedSp) {
 
 						output += ap.toString();
 						System.out.println(output);
 						updateAppMenu();
 						updateopt = Helper.readInt("Select appointment detail to update > ");
 
-						if (updateopt == 1) {
+						if (updateopt == UPDATE_AP_STATUS) {
 							String newstatus = Helper.readString("Enter the new appointment status > ");
 							ap.setAppointmentStatus(newstatus);
 							System.out.print("Appointment Status Updated!\n");
 						}
 
-						else if (updateopt == 2) {
+						else if (updateopt == UPDATE_AP_DATE) {
 							String newdatestring = Helper.readString("Enter the new appointment date > ");
 							LocalDate newdate = LocalDate.parse(newdatestring, dtFormat);
 							ap.setAppointmentDate(newdate);
 							System.out.println("Appointment Date Updated!\n");
 						}
 
-						else if (updateopt == 3) {
-							String newdescript = Helper.readString("Enter the new description date > ");
+						else if (updateopt == UPDATE_AP_DESCRIPTION) {
+							String newdescript = Helper.readString("Enter the new appointment description > ");
 							ap.setAppointmentDescription(newdescript);
 							System.out.println("Appointment Description Updated!\n");
 
