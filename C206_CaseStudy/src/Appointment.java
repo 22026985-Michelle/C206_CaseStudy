@@ -1,30 +1,48 @@
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 
 public class Appointment {
 	
-	private static int newAppointmentId =0;
+	private static int nextAppointmentId =0;
 	private int appointmentId;
 	private String appointmentService;
 	private String appointmentStatus;
 	private LocalDate appointmentDate;
+	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 	private String appointmentDescription;
 	private int urAppointment;
 	private int spAppointment;
 
+
 	
-	public Appointment(String appointmentService, String appointmentStatus, LocalDate appointmentDate,
-			String appointmentDescription,int UrAppointment,int SPAppointment) {
-		this.appointmentId=newAppointmentId;
+	public Appointment(int urAppointment,int spAppointment ,String appointmentService,String appointmentStatus,LocalDate appointmentDate,String appointmentDescription) {
+		this.appointmentId=nextAppointmentId;
 		this.appointmentService = appointmentService;
 		this.appointmentStatus = appointmentStatus;
 		this.appointmentDate = appointmentDate;
 		this.appointmentDescription = appointmentDescription;
 		this.urAppointment = urAppointment;
 		this.spAppointment = spAppointment;
-		newAppointmentId++;
+		nextAppointmentId++;
 	
 	}
+	
+	public String toString() {
+		   // Write your codes here
+		   String AppointmentInfo = String.format("%-15d %-9d %-21d %-9s %-10s %-9s %-9s \n",
+				   getAppointmentId(),
+				   getUrAppointment(),
+				   getSPAppointment(),
+				   getAppointmentService(),
+				   getAppointmentStatus(),
+				   getAppointmentDate().toString(),
+				   getAppointmentDescription());
+			
+		   return AppointmentInfo;
+		}
 	
 	public int getAppointmentId(){
 		return appointmentId;
@@ -56,8 +74,8 @@ public class Appointment {
 	}
 
 
-	public void setAppointmentDate(LocalDate appointmentDate) {
-		this.appointmentDate = appointmentDate;
+	public void setAppointmentDate(LocalDate newdate) {
+		this.appointmentDate = newdate;
 	}
 
 	
