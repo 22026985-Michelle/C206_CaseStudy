@@ -17,16 +17,11 @@ public class AppointmentTest {
 	private Appointment ap2;
 	private Appointment ap3;
 	
-	private ArrayList<User> userList;
 	private ArrayList<Appointment> appointmentList;
 	private ArrayList<ServiceProvider> serviceProviderList;
 	
-	private User user1;
-	private User user2;
-	private User user3;
-	private User user4;
-	private ServiceProvider sp1;
-	
+
+	private ServiceProvider sp1;	
 	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 	
 	
@@ -46,10 +41,10 @@ public class AppointmentTest {
 
     	
     	sp1 = new ServiceProvider("LiveSpaceReno", "LiveSpaceReno@Gmail.com", "password1", 2, "Renovation Description A");
-    	C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
+    	
     	
     	appointmentList = new ArrayList<Appointment>();
-    	userList = new ArrayList<User>();
+    	
     	serviceProviderList = new ArrayList<ServiceProvider>();
     	
     }
@@ -63,6 +58,8 @@ public class AppointmentTest {
     	appointmentList.add(ap1);
     	appointmentList.add(ap2);
     	appointmentList.add(ap3);
+    	
+    	C206_CaseStudy.addServiceProvider(serviceProviderList, sp1);
     	
     	//Test that appointmentList is not empty
     	assertNotNull("Test that there are appointment records in the list", appointmentList);
@@ -117,7 +114,7 @@ public class AppointmentTest {
     	appointmentList.remove(ap1);
     	
     	//Test that appointmentList has has only 2 records
-    	assertEquals("Test that there are 3 appointment records in the list", appointmentList.size() , 3);
+    	assertEquals("Test that there are 3 appointment records in the list", appointmentList.size() , 2);
     	//Test that deleted record is no longer in the appointmentList
     	
     	//Test that sp1 is not given access to delete ap2
@@ -133,15 +130,11 @@ public class AppointmentTest {
 		ap1=null;
 		ap2=null;
 		ap3=null;
-		
-		user1=null;
-		user2=null;
-		user3=null;
-		user4=null;
+	
 		
 		sp1=null;
 		
-	    userList.clear(); 
+
         serviceProviderList.clear(); 
 	    appointmentList.clear();
 		

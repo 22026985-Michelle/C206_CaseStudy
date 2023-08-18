@@ -100,6 +100,7 @@ appointmentList.add(new Appointment(4,1,"Replace Tiles","Incomplete",LocalDate.p
 						ServiceProvider loginAccSP = getLoginAccountServiceProvider(serviceProviderList);
 						if (loginAccSP != null) {
 							runServiceProvider(loginAccSP);
+							loggedSpID= loginAccSP.getSpId();
 						}
 					} else if (opt1 == LOGIN_OPTION_QUIT) {
 						System.out.println("Returning to main menu...");

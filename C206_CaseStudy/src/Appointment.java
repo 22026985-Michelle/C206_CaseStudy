@@ -11,7 +11,6 @@ public class Appointment {
 	private String appointmentService;
 	private String appointmentStatus;
 	private LocalDate appointmentDate;
-	private static DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
 	private String appointmentDescription;
 	private int urAppointment;
 	private int spAppointment;
